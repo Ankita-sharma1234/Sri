@@ -1,0 +1,474 @@
+import React, { useEffect, useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  TableCell,
+  Box
+} from "@mui/material";
+import axios from "axios";
+import closebutton from "../../images/close-button.png"
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import { Button, TextField } from "@mui/material";
+import TableRow from "@mui/material/TableRow";
+import { useParams } from 'react-router-dom';
+import CardContent from "@mui/material/CardContent";
+import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
+// import Sidebar from "./Sidebar";
+import SearchIcon from '@mui/icons-material/Search';
+import DatePicker from "react-datepicker";
+
+
+
+const theme = createTheme({
+  typography: {
+    fontWeightBold: 700,
+  },
+});
+
+const Adminser = () => {
+  const [page, setPage] = React.useState(0);
+  const [rows, setRows] = React.useState([]);
+  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [studentdata1, setStudentData] = useState({ students: [] });
+  const [dataNotFound, setDataNotFound] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // State variable for search query
+  const [filteredData, setFilteredData] = useState([]);
+
+  const { admissionSession, courseType, courseName, courseBranch } = useParams();
+  console.log(admissionSession, courseType, courseName, courseBranch, "data from query")
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = 'https://sssutms.ac.in/apitest/admin/statusofstudent';
+
+        const requestData = {
+          admissionSession,
+          courseType,
+          courseName,
+          courseBranch,
+
+        };
+
+        const response = await axios.post(url, requestData);
+
+        const data = response.data;
+        console.log(data, "data")
+        if (!data.students || data.students.length === 0) {
+          setDataNotFound(true);
+        } else {
+          setDataNotFound(false);
+          setStudentData(data);
+          setFilteredData(data.students);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setDataNotFound(true);
+      }
+    };
+
+
+    fetchData();
+  }, [admissionSession, courseType, courseName, courseBranch]);
+
+
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
+
+  /////////////////////datepicker/////////////////
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+    // Filter data based on search query
+    const filteredResults = studentdata1.students.filter(student => {
+      return student.randomId.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        student.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        student.courseBranch.toLowerCase().includes(event.target.value.toLowerCase());
+    });
+    setFilteredData(filteredResults);
+  };
+
+
+
+
+  console.log(studentdata1, "helllo world")
+  return (
+    <ThemeProvider theme={theme}>
+      <AdminDashboard />
+      <>
+        <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "100px" }}>
+          <CardContent>
+            <Paper sx={{ width: "100%", overflow: "auto" }}>
+            <Box sx={{ p: 2 }}>
+              <SearchIcon sx={{ mr: 1 }} />
+              <input
+                type="text"
+                placeholder="Search by ID,Name or Branch"
+                onChange={handleSearchInputChange} 
+                value={searchQuery}
+              />
+               </Box>
+              {dataNotFound ? (
+                <div>
+                  <h2>Oops! No Student Available in this Course!!!!</h2>
+                </div>
+              ) : (
+
+                <Paper sx={{ width: "100%" }}>
+                  <TableContainer sx={{ maxHeight: "440px" }}>
+                    <Table stickyHeader aria-label="sticky table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            align="left"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>S.No.</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>Session</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Registration No.</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Student Name</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Professional</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>Email</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white',
+                            }}
+                          >
+                            <h5>
+                              <b>Date of Birth</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '150px'
+                            }}>
+
+                            <h5>
+                              <b>Father's Name</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '150px'
+                            }}>
+
+                            <h5>
+                              <b>Mother's Name</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>Contact</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>Nationality</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Address</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>Qualification</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '150px'
+                            }}>
+
+                            <h5>
+                              <b>Qualification %</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                          >
+                            <h5>
+                              <b>Course Type</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Course Name</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Course Branch</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Academic Details</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Documents</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '100px'
+                            }}>
+
+                            <h5>
+                              <b>Enrolled Student</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '100px'
+                            }}>
+
+                            <h5>
+                              <b>Register Student</b>
+                            </h5>
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '100px'
+                            }}>
+
+                            <h5>
+                              <b>Fees Status</b>
+                            </h5>
+                          </TableCell>
+
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {filteredData.map((student, index) => (
+                          <TableRow key={index}>
+                            <TableCell align="center">{index + 1}</TableCell>
+                            <TableCell align="center">2023</TableCell>
+                            <TableCell
+                              align="center">{student.randomId}</TableCell>
+                            <TableCell align="center">{student.name}</TableCell>
+                            <TableCell align="center"
+                              style={{ backgroundColor: "red", color: "whitesmoke", fontWeight: "bold" }}>
+                              {Object.values(student.professional ||
+                                {}).some(value => value === "") ? 'Pending' : 'Update'}
+                            </TableCell>
+                            <TableCell align="center">{student.email}</TableCell>
+                            <TableCell align="center">
+                              <DatePicker
+                                selected={selectedDate || new Date(student.dob)}
+                                onChange={(date) => handleDateChange(date)}
+                                dateFormat="dd/MM/yyyy"
+                                className="text-center"
+                              />
+                            </TableCell>
+                            <TableCell
+                              align="center">{student.fathersname}</TableCell>
+                            <TableCell
+                              align="center">{student.mothersname}</TableCell>
+                            <TableCell align="center">{student.mobile}</TableCell>
+
+                            <TableCell
+                              align="center">{student.domicile}</TableCell>
+                            <TableCell align="center"
+                              style={{ backgroundColor: "green", color: "whitesmoke", fontWeight: "bold" }}>
+                              {student.address ?
+                                (Object.values(student.address ||
+                                  {}).some(value => value === "") ? 'Pending' : 'Update')
+                                : 'Pending'
+                              }
+                            </TableCell>
+
+                            <TableCell
+                              align="center">{student.qualification}</TableCell>
+                            <TableCell
+                              align="center">{student.qualificationPercentage}</TableCell>
+                            <TableCell
+                              align="center">{student.courseType}</TableCell>
+                            <TableCell
+                              align="center">{student.courseName}</TableCell>
+                            <TableCell
+                              align="center">{student.courseBranch}</TableCell>
+
+                            <TableCell align="center" style={{
+                              backgroundColor: "cadetblue",
+                              color: "whitesmoke", fontWeight: "bold"
+                            }}>
+                              {student.academicDetails ?
+                                (Object.values(student.academicDetails
+                                  || {}).every(value => value === "") ? 'Pending' : 'Update')
+                                : 'Pending'
+                              }
+                            </TableCell>
+                            <TableCell
+                              align="center" style={{ backgroundColor: "grey", color: "whitesmoke", fontWeight: "bold" }}>
+                              {student.Documents ?
+                                (Object.values(student.Documents ||
+                                  {}).some(value => value === "") ? 'Pending' : 'Update')
+                                : 'Pending'
+                              }
+                            </TableCell>
+                            <TableCell align="center">
+                              {student?.isEnrolled ? "Yes" : "No"}
+                            </TableCell>
+                            <TableCell align="center">
+                              {student?.isRegistered ? "True" : "False"}
+                            </TableCell>
+                            <TableCell align="center">
+                              {student?.isPaid ? "Paid" : "Not Paid"}
+                            </TableCell>
+
+                          </TableRow>
+                        ))}
+                      </TableBody>
+
+
+
+
+
+
+
+
+                    </Table>
+                  </TableContainer>
+
+                  <TablePagination
+                    rowsPerPageOptions={[25, 50, 100]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </Paper>
+              )
+              }
+            </Paper>
+          </CardContent>
+          <br></br>
+        </Box>
+      </>
+    </ThemeProvider>
+  )
+}
+export default Adminser;
