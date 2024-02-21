@@ -41,15 +41,13 @@ function StudentAllDetail() {
 
   const userData = JSON.parse(sessionStorage.getItem("currentUser"));
 
-  // Check IsEnrollGenerated in Session
+
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem("currentUser"));
     setIsEnrollGenerated(userData.IsEnrollGenerated);
-    // console.log(isEnrollGenerated , "status of isenroll generated")
-    // console.log(userData.IsEnrollGenerated , "Message from Kali ")
+
     if (userData.IsEnrollGenerated === true) {
-      // setIsEnrollGenerated(true)
-      // console.log("Upar wala if ")
+
     } else {
       // setIsEnrollGenerated(false)
       swal({
@@ -58,8 +56,6 @@ function StudentAllDetail() {
         text: 'Please contact the admin to generate the enrollment Number.',
       })
     }
-
-
   }, []);
 
   const handleDownloadClick = () => {
@@ -93,9 +89,8 @@ function StudentAllDetail() {
     };
     const imageDataUrl = await getImageDataUrl(userData.Documents?.applicantPhoto);
 
-    // Header
-    // Header and Logo on the First Page
-    pdf.addImage(logo, "JPEG", 10, 7, 30, 30); // Replace 'logo' with your logo import
+
+    pdf.addImage(logo, "JPEG", 10, 7, 30, 30); 
     pdf.setFont("helvetica", "bold");
     pdf.text("Sri Satya Sai University of Technology and Medical Science Sehore", 105, 10, { align: "center" });
     pdf.text("[Establiish Under Govt. of (M.P.) & Registered UGC 2(F),1956]", 105, 18, { align: "center" });
@@ -116,7 +111,7 @@ function StudentAllDetail() {
 
     const detailsHeaders = ["", ""];
     const detailsData = [
-      ["Enrollment No.", userData.randomId],
+      ["Enrollment No.", userData?.enrollmentNumber],
       ["Name", userData.name],
       ["Father's Name", userData.fathersname],
       ["Mother's Name", userData.mothersname],
@@ -298,6 +293,10 @@ function StudentAllDetail() {
                       <strong class="pr-1">Branch: </strong>
                       {userData?.courseBranch}
                     </p>
+                    <p class="mb-0" >
+                      <strong class="pr-1">Fee Status: </strong>
+                      {userData?.isPaid ? "Paid" : "Not Paid"}
+                    </p>
 
                   </div>
                 </div>
@@ -342,6 +341,21 @@ function StudentAllDetail() {
                           class="table "
                           style={{ marginTop: "20px", marginLeft: "20px" }}
                         >
+                          <tr>
+                            <th
+                              width="30%"
+                              style={{
+                                color: "#233d4d",
+                                fontSize: "15px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Enrollment Number
+                            </th>
+                            <td width="2%">:</td>
+                            <td>{userData.enrollmentNumber ? `${userData.enrollmentNumber}`: "Not Generated"}</td>
+                          </tr>
+
                           <tr>
                             <th
                               width="30%"
@@ -555,20 +569,7 @@ function StudentAllDetail() {
                             <td>{userData?.address?.state}</td>
                           </tr>
 
-                          <tr>
-                            <th
-                              width="30%"
-                              style={{
-                                color: "#233d4d",
-                                fontSize: "15px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              City
-                            </th>
-                            <td width="2%">:</td>
-                            <td>Male</td>
-                          </tr>
+
                           <tr>
                             <th
                               width="30%"

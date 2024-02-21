@@ -483,7 +483,7 @@ const RegisterDetailed = ({
               <Col md={4}>
                 <Form.Group className="mb-3" controlId="passingYear">
                   <Form.Label>
-                    <b>Last Year Passing Year</b>
+                    <b>Last Passing Year</b>
                     <span style={{ color: "red" }}>*</span>
                   </Form.Label>
                   <Form.Select
@@ -501,8 +501,24 @@ const RegisterDetailed = ({
                     <option value="2019">2019</option>
                     <option value="2018">2018</option>
                     <option value="2017">2017</option>
-                    <option value="1999">1999</option>
-                    <option value="2021">1986</option>
+                    <option value="2017">2016</option>
+                    <option value="2017">2015</option>
+                    <option value="2017">2014</option>
+                    <option value="2017">2013</option>
+                    <option value="2017">2012</option>
+                    <option value="2017">2011</option>
+                    <option value="2017">2010</option>
+                    <option value="2017">2009</option>
+                    <option value="2017">2008</option>
+                    <option value="2017">2007</option>
+                    <option value="2017">2006</option>
+                    <option value="2017">2005</option>
+                    <option value="2017">2004</option>
+                    <option value="2017">2003</option>
+                    <option value="2017">2002</option>
+                    <option value="2017">2001</option>
+                    <option value="1999">2000-1995</option>
+              
                     {errors.passingYear && touched.passingYear ? (
                       <p className="error">{errors.passingYear}</p>
                     ) : null}
@@ -678,9 +694,8 @@ const RegisterDetailed = ({
                       handleChange(e);
                       handleFileChange(e);
                     }}
-
                   />
-                  <p>(Image format accepted only JPG PNG & JPEG)</p>
+                  <p style={{color:"red"}}>(Image format accepted only JPG PNG & JPEG)</p>
                   {errors.marksheet12th && touched.marksheet12th ? (
                     <p className="error">{errors.marksheet12th}</p>
                   ) : null}

@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import HodDashboard from "./HodDashboard"
-import {Container} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 // import Sidebar from "./Sidebar";
 
 const theme = createTheme({
@@ -33,17 +33,17 @@ const TotalEnrolled = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
   const [studentdata, setStudentData] = useState([]);
 
- /////////////////////datepicker/////////////////
- const [selectedDate, setSelectedDate] = useState(null);
+  /////////////////////datepicker/////////////////
+  const [selectedDate, setSelectedDate] = useState(null);
 
- const handleDateChange = (date) => {
-   setSelectedDate(date);
- };
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
 
   const userData = JSON.parse(sessionStorage.getItem("AnkitHOD"));
   const branch1 = userData?.Branch;
- 
+
   const { session, courseType, course, branch, college } = useParams();
   // console.log(session, courseType, course, branch, college, "data from query");
   useEffect(() => {
@@ -79,10 +79,11 @@ const TotalEnrolled = () => {
   };
   // console.log(studentdata, "data of student from use state");
 
-  const branchname = studentdata.courseBranch;
-  const coursename = studentdata.coursename;
-  const studentId = studentdata._id;
-  const assignedCollege = studentdata.assignedCollege;
+  const branchname = studentdata?.courseBranch; // Using optional chaining to handle null or undefined
+  const coursename = studentdata?.coursename;
+  const studentId = studentdata?._id;
+  const assignedCollege = studentdata?.assignedCollege;
+
 
   const handleClick = async () => {
     try {
@@ -127,8 +128,8 @@ const TotalEnrolled = () => {
   return (
     <ThemeProvider theme={theme}>
       <HodDashboard />
-      <> 
-      <Container
+      <>
+        <Container
           className="shadow p-3  bg-body rounded"
           style={{
             marginTop: "80px",
@@ -137,235 +138,235 @@ const TotalEnrolled = () => {
             justifyContent: "center",
           }}
         >
-          <h4 style={{textAlign:'center'}}>TODAY'S ENROLLED STUDENT</h4>
-            <Paper sx={{ width: "100%", overflow: "auto" }}>
-              <TableContainer sx={{ maxHeight: "440px" }}>
-                <Table stickyHeader aria-label="sticky table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+          <h4 style={{ textAlign: 'center' }}>TODAY'S ENROLLED STUDENT</h4>
+          <Paper sx={{ width: "100%", overflow: "auto" }}>
+            <TableContainer sx={{ maxHeight: "440px" }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          S.No.
-                        </h1>
-                      </TableCell>
+                        S.No.
+                      </h1>
+                    </TableCell>
 
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" ,minWidth:'200px'}}
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0", minWidth: '200px' }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Enrollment Status
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0"}}
+                        Enrollment Status
+                      </h1>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Registration ID
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                        Registration ID
+                      </h1>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                            Registration Password
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                        Registration Password
+                      </h1>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                            Registered On
-                        </h1>
-                      </TableCell>
+                        Registered On
+                      </h1>
+                    </TableCell>
 
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                          minWidth: '200px'
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                            minWidth:'200px'
-                          }}
-                        >
-                          Candidate Name
-                        </h1>
-                      </TableCell>
+                        Candidate Name
+                      </h1>
+                    </TableCell>
 
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                          minWidth: '200px'
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                            minWidth:'200px'
-                          }}
-                        >
-                          Father's Name
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                        Father's Name
+                      </h1>
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                          minWidth: '200px'
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                            minWidth:'200px'
-                          }}
-                        >
-                          Mother's Name
-                        </h1>
-                      </TableCell>
-                    
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                        Mother's Name
+                      </h1>
+                    </TableCell>
+
+                    <TableCell
+                      align="left"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                  Contact
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ backgroundColor: "#e6ecf0" }}
+                        Contact
+                      </h1>
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ backgroundColor: "#e6ecf0" }}
+                    >
+                      <h1
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "bolder",
+                          color: 'black',
+                          fontFamily: "-moz-initial",
+                          minWidth: '200px'
+                        }}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: 'black',
-                            fontFamily: "-moz-initial",
-                            minWidth:'200px'
-                          }}
-                        >
-                         Email
-                        </h1>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {studentdata &&
-                      studentdata?.map((student, index) => (
-                        <TableRow key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
-                          {/* <TableCell align="center">2023</TableCell>
+                        Email
+                      </h1>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {studentdata &&
+                    studentdata?.map((student, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        {/* <TableCell align="center">2023</TableCell>
                         <TableCell align="center">{student.name}</TableCell>
                         <TableCell align="center">{student.email}</TableCell>
                         {/* Replace the line below with the DatePicker component */}
 
-                          <TableCell align="center">
-                            <Button variant="danger">Not generated</Button>
-                          </TableCell>
-                          <TableCell align="left">
-                            {student?.randomId}
-                          </TableCell>
-                          <TableCell align="left">
-                            {student?.randomPassword}
-                          </TableCell>
-                          
-                          <TableCell align="center">
-                            <DatePicker
-                              selected={selectedDate || (student?.createdAt ? new Date(student.createdAt) : null)}
-                              onChange={(date) => handleDateChange(date)}
-                              dateFormat="dd/MM/yyyy"
-                              className="text-center"
-                            />
-                          </TableCell>
-              
-                          <TableCell align="left">
-                            {student?.name}
-                            </TableCell>
-                          <TableCell align="left">
-                            {student?.fathersname}
-                          </TableCell>
-                          <TableCell align="left">
-                            {student?.mothersname}
-                          </TableCell>
-                      
-                          <TableCell align="center">
-                            {student?.mobile}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.email}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[2, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </Paper>
-         </Container>
-          {/* </Card> */}
-          <br></br>
+                        <TableCell align="center">
+                          <Button variant="danger">Not generated</Button>
+                        </TableCell>
+                        <TableCell align="left">
+                          {student?.randomId}
+                        </TableCell>
+                        <TableCell align="left">
+                          {student?.randomPassword}
+                        </TableCell>
+
+                        <TableCell align="center">
+                          <DatePicker
+                            selected={selectedDate || (student?.createdAt ? new Date(student.createdAt) : null)}
+                            onChange={(date) => handleDateChange(date)}
+                            dateFormat="dd/MM/yyyy"
+                            className="text-center"
+                          />
+                        </TableCell>
+
+                        <TableCell align="left">
+                          {student?.name}
+                        </TableCell>
+                        <TableCell align="left">
+                          {student?.fathersname}
+                        </TableCell>
+                        <TableCell align="left">
+                          {student?.mothersname}
+                        </TableCell>
+
+                        <TableCell align="center">
+                          {student?.mobile}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.email}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[2, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Container>
+        {/* </Card> */}
+        <br></br>
       </>
     </ThemeProvider>
   );

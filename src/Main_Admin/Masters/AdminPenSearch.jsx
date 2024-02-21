@@ -413,7 +413,7 @@ function AdminPenSearch() {
           <Col xs={12} sm={12} md={10} lg={9} xl={8} className="custom-laptop-style">
             <div className="shadow-box">
               <div className="header">Student Pending List</div>
-              <div className="scroll-container" style={{ height: "460px" }}>
+              <div className="scroll-container" style={{ height: "520px" }}>
                 <form style={{ padding: "30px" }}>
                   <Row>
                     <FormControl>

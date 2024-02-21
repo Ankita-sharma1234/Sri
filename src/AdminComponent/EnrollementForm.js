@@ -2086,7 +2086,7 @@ const EnrollementForm = () => {
                     <div style={{ display: "flex" }}>
                       <h5>
                         Applicant's Signature{" "}
-                        <span style={{ color: "red" }}> *</span>
+                        <span style={{ color: "red" }}>*</span>
                       </h5>
                     </div>
                     <div style={{ display: "flex" }}>
@@ -2110,7 +2110,7 @@ const EnrollementForm = () => {
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
                       <h5>
-                        Aadhar Card <span style={{ color: "red" }}> *</span>
+                        Aadhar Card
                       </h5>
                     </div>
                     <div style={{ display: "flex" }}>
@@ -2124,16 +2124,16 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-                  {errors7.aadharCard && (
+                  {/* {errors7.aadharCard && (
                     <div style={{ color: 'red' }}>{errors7.aadharCard}</div>
-                  )}
+                  )} */}
                   <hr></hr>
                 </Grid>
                 <Grid item xs={12}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
                       <h5>
-                        Marksheet of 10th Examination <span style={{ color: "red" }}> *</span>
+                        Marksheet of 10th Examination{" "}  <span style={{ color: "red" }}>*</span>
                       </h5>
                     </div>
 
@@ -2154,9 +2154,9 @@ const EnrollementForm = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
-                      <h5>Marksheet of 12th Examination<span style={{ color: "red" }}> *</span></h5>
+                      <h5>Marksheet of 12th Examination</h5>
                     </div>
                     <div style={{ display: "flex" }}>
                       <input
@@ -2168,18 +2168,18 @@ const EnrollementForm = () => {
                         Maximum 1000KB
                       </h6>
                     </div>
-                  </div>
-                  {errors7.marksheet12th && (
+                  </div> */}
+                  {/* {errors7.marksheet12th && (
                     <div style={{ color: 'red' }}>{errors7.marksheet12th}</div>
-                  )}
+                  )} */}
 
-                  <hr></hr>
+                  {/* <hr></hr> */}
                 </Grid>
 
                 <Grid item xs={12}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
-                      <h5>Domicile Certificate<span style={{ color: "red" }}> *</span></h5>
+                      <h5>Domicile Certificate</h5>
                     </div>
                     <div style={{ display: "flex" }}>
                       <input
@@ -2192,16 +2192,16 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-                  {errors7.domicileCertificate && (
+                  {/* {errors7.domicileCertificate && (
                     <div style={{ color: 'red' }}>{errors7.domicileCertificate}</div>
-                  )}
+                  )} */}
 
                   <hr></hr>
                 </Grid>
                 <Grid item xs={12}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
-                      <h5>Transfer Certificate<span style={{ color: "red" }}> *</span></h5>
+                      <h5>Transfer Certificate</h5>
                     </div>
                     <div style={{ display: "flex" }}>
                       <input
@@ -2214,16 +2214,16 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-                  {errors7.transferCertificate && (
+                  {/* {errors7.transferCertificate && (
                     <div style={{ color: 'red' }}>{errors7.transferCertificate}</div>
-                  )}
+                  )} */}
 
                   <hr></hr>
                 </Grid>
                 <Grid item xs={12}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
-                      <h5>Income Certificate<span style={{ color: "red" }}> *</span></h5>
+                      <h5>Income Certificate</h5>
                     </div>
                     <div style={{ display: "flex" }}>
                       <input
@@ -2236,15 +2236,13 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-                  
-
                   <hr></hr>
                 </Grid>
 
                 <Grid item xs={12}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex" }}>
-                      <h5>Migration Certificate<span style={{ color: "red" }}> *</span></h5>
+                      <h5>Migration Certificate</h5>
                     </div>
                     <div style={{ display: "flex" }}>
                       <input
@@ -2259,9 +2257,9 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-                  {errors7.migrationCertificate && (
+                  {/* {errors7.migrationCertificate && (
                     <div style={{ color: 'red' }}>{errors7.migrationCertificate}</div>
-                  )}
+                  )} */}
 
                   <hr></hr>
                 </Grid>
@@ -2282,7 +2280,6 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-
                   <hr></hr>
                 </Grid>
               </Grid>
@@ -2520,8 +2517,8 @@ const EnrollementForm = () => {
                       </h6>
                     </div>
                   </div>
-                 
-                 
+
+
                   <hr></hr>
                 </Grid>
 
@@ -2925,16 +2922,25 @@ const EnrollementForm = () => {
 
   const handleFileChange = async (fieldName, e) => {
     const file = e.target.files[0];
-
     if (!file) return;
 
-    try {
+    const fileSizeKB = file.size / 1024;
+    if (fileSizeKB > 1000) {
+      setErrors7((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: 'File size exceeds 1000KB',
+      }));
 
+      swal('Error', 'File size exceeds 1000KB', 'error');
+      return;
+    }
+
+    try {
       const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
       if (!allowedTypes.includes(file.type)) {
         setErrors7((prevErrors) => ({
           ...prevErrors,
-          [fieldName]: 'Please choose a JPEG JPG or PNG file.',
+          [fieldName]: 'Please choose a JPEG, JPG, or PNG file.',
         }));
         return;
       }
@@ -2954,7 +2960,6 @@ const EnrollementForm = () => {
       const cloudinaryData = await cloudinaryResponse.json();
       const fileUrl = cloudinaryData.secure_url;
 
-
       setFileUrls((prevFileUrls) => ({
         ...prevFileUrls,
         [fieldName]: fileUrl,
@@ -2965,16 +2970,18 @@ const EnrollementForm = () => {
         ...prevErrors,
         [fieldName]: '',
       }));
-    }
-    catch (error) {
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      // Handle error if necessary
     }
   };
+
 
 
   const handleSubmit5 = () => {
 
     const selectedQualification = 'UG';
-  
+
     const requiredFields = getRequiredFieldsByQualification(selectedQualification);
 
     let isFormValid = true;
@@ -2994,10 +3001,10 @@ const EnrollementForm = () => {
       return;
     }
 
- 
+
     // console.log('Form submitted successfully!');
   };
- 
+
   const getRequiredFieldsByQualification = (qualification) => {
     const qualificationFields = [
       'applicantPhoto',
@@ -3038,7 +3045,8 @@ const EnrollementForm = () => {
           fileUrls
         }),
       });
-      // console.log(formData, formData1, formData2, formData3, 'data to check ')
+
+      console.log(formData, formData1, formData2, formData3, 'data to check ')
       if (!response.ok) {
 
         const errorData = await response.json()
@@ -3434,18 +3442,20 @@ const EnrollementForm = () => {
                       Nationality <span style={{ color: "red" }}> *</span>
                     </b>
                   </Form.Label>
-                  <Form.Select
+                  <Form.Control
                     aria-label="Default select example"
                     name="Nationality"
-                    value={formData1.Nationality}
+                    value={userData?.nationality
+                    }
                     onChange={handleChange2}
                   >
-                    <option value="">-- Select Nationality--</option>
-                    <option value="1">Indian</option>
-                  </Form.Select>
-                  {errors1.Nationality && (
-                    <p style={{ color: "red" }}>{errors1.Nationality}</p>
-                  )}
+
+                  </Form.Control>
+                  {errors1.nationality
+                    && (
+                      <p style={{ color: "red" }}>{errors1.nationality
+                      }</p>
+                    )}
                 </Form.Group>
               </Grid>
               <Grid
@@ -3460,18 +3470,16 @@ const EnrollementForm = () => {
                       Domicile <span style={{ color: "red" }}> *</span>
                     </b>
                   </Form.Label>
-                  <Form.Select
+                  <Form.Control
                     name="Domicile"
-                    value={formData1.Domicile}
+                    value={userData?.domicile}
                     onChange={handleChange2}
                   >
-                    <option value="">--Select Domicile --</option>
-                    <option value="MP">MP</option>
-                    <option value="Other">Other </option>
-                  </Form.Select>
-                  {errors1.Domicile && (
+
+                  </Form.Control>
+                  {/* {errors1.Domicile && (
                     <p style={{ color: "red" }}>{errors1.Domicile}</p>
-                  )}
+                  )} */}
                 </Form.Group>
               </Grid>
               {/* <Grid

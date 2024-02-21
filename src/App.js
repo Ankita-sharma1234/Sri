@@ -122,11 +122,12 @@ import SearchPen from "./Main_Admin/Masters/SearchPen.jsx";
 import SearchVer from "./Main_Admin/Masters/SearchVer.jsx";
 import Admissionstatus from "./Main_Admin/Masters/Admissionstatus.jsx";
 import Adminser from "./Main_Admin/Masters/Adminser.jsx"
+import ManualEnrol_G from "./Main_Admin/Masters/ManualEnrol_G.jsx";
+import Paym from "./Main_Admin/Masters/Admin_Dashboard/Paym.jsx";
+import Paymen from "./Main_Admin/Masters/Admin_Dashboard/Paymen.jsx";
 
 
 function App() {
-
-
   const location = useLocation();
   function isAuthenticated() {
     const userData = JSON.parse(sessionStorage.getItem("AnkitHOD"));
@@ -138,31 +139,20 @@ function App() {
     // const accessToken = document.cookie.split(";").find((cookie) => cookie.trim().startsWith("access-token="));
     // return accessToken ? true : false;
   }
-
   function PrivateRoute({ element, ...rest }) {
     if (isAuthenticated()) {
       return element;
     } else {
       return <Navigate to={`/erp`} />;
     }
-
   }
-  // useEffect(() => {
-  //   const logoutTimer = setTimeout(() => {
-  //     sessionStorage.clear();
-  //     navigate('/studentlogin');
-  //   }, 20 * 60 * 1000);
-  //   return () => clearTimeout(logoutTimer);
-  // }, []);
-
   useEffect(() => {
     console.log("Location changed:", location.pathname);
   }, [location]);
-
   return (
     <>
       <Routes>
-         {/*------------------------Student Routes-----------------------------------------*/}
+        {/*------------------------Student Routes-----------------------------------------*/}
         <Route path="/erp/studentregister" element={<Signup />} />
         <Route path="/erp/studentlogin" element={<Signin />} />
         <Route path="/studentlogin/selectCourse" element={<PrivateRoute element={<Course />} />} />
@@ -178,7 +168,6 @@ function App() {
         <Route path='/student/dashboard/home' element={<StudentDashboardHome />} />
         <Route path='/studentUpdateDetail' element={<Registrationn />} />
 
-       
         <Route path='/PaymentPage' element={<PrivateRoute element={<PaymentPage />} />} />
         <Route path='/success' element={<Success />} />
         <Route path='/failure' element={<Failure />} />
@@ -187,7 +176,7 @@ function App() {
 
         <Route path='/' element={<MainPage />} />
         <Route path='/erp' element={<Erp />} />
-        
+
         <Route path="/notification" element={<Notification />} />
         <Route path="/imp" element={<Imp />} />
         <Route path="/off" element={<Off />} />
@@ -203,14 +192,14 @@ function App() {
         <Route path='/totalenrolled' element={<TotalEnrolled />} />
         <Route path='/total/student/Registered' element={<TotalRegisStdtHod />} />
         <Route path='/total/student/branch' element={<TotalSession />} />
-        <Route path='/total/student/feepaid' element={<TotalFeePaidHod/>}/> 
+        <Route path='/total/student/feepaid' element={<TotalFeePaidHod />} />
 
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/studentverifieddetailed/:id" element={<PrivateRoute element={<VerifyDetailed />} />} />
         <Route path='/hodDashboard' element={<PrivateRoute element={<HodDashboard />} />} />
         <Route path='/hodDetail' element={<PrivateRoute element={<HodMainDetails />} />} />
-     
+
 
         {/*------------------------Admin Routes-----------------------------------------*/}
 
@@ -225,24 +214,24 @@ function App() {
         <Route path='/registered/studentlist' element={< StudentRegistrationList />} />
 
         <Route path='/erpdashboard/student/updatedetails' element={<AdminUpdtStdt_Detail />} />
-        <Route path="/erpdashboard/student/updatealldetails/:id" element={<AdminUpdateAllDetail/>} />
+        <Route path="/erpdashboard/student/updatealldetails/:id" element={<AdminUpdateAllDetail />} />
         <Route path="/erpdashboard/student/search" element={<AdminStdtSearch />} />
 
-        <Route path="/erpdashboard/pending/student/search" element={<AdminPenSearch/>} />
-        <Route path="/search/:admissionSession/:courseType/:courseName/:courseBranch" element={<SearchPen/>} />
-        <Route path="/searchver/:admissionSession/:courseType/:courseName/:courseBranch" element={<SearchVer/>} />
+        <Route path="/erpdashboard/pending/student/search" element={<AdminPenSearch />} />
+        <Route path="/search/:admissionSession/:courseType/:courseName/:courseBranch" element={<SearchPen />} />
+        <Route path="/searchver/:admissionSession/:courseType/:courseName/:courseBranch" element={<SearchVer />} />
         <Route path="/sea/:admissionSession/:courseType/:courseName/:courseBranch" element={<Adminser />} />
-        <Route path="/student/status" element={<Admissionstatus/>}/>
-        <Route path="/erpdashboard/verified/student/search" element={<AdminVeriStdSearch/>} />
-      
+        <Route path="/student/status" element={<Admissionstatus />} />
+        <Route path="/erpdashboard/verified/student/search" element={<AdminVeriStdSearch />} />
+
         <Route path="/erpdashboard/student/document/search" element={<AdminDocumentSearch />} />
-        <Route path="/erpdashboard/student/updatedocuments/:id" element={<AdminUpdate_Documents/>} />
+        <Route path="/erpdashboard/student/updatedocuments/:id" element={<AdminUpdate_Documents />} />
 
-        <Route path="/admin/search/student-pending/list" element={<Admin_Pending/>} />
+        <Route path="/admin/search/student-pending/list" element={<Admin_Pending />} />
 
-       
+
         <Route path="/enrollment" element={<EnrollementG />} />
-
+        <Route path="/manual/enrollment/generation" element={<ManualEnrol_G />} />
 
         <Route path="/search-result/:session/:courseType/:course/:branch/:college" element={<Search />} />
         <Route path="/enrolled/student/list/:session/:courseType/:course/:branch/:college" element={<EnrolledStudentlist />} />
@@ -274,51 +263,55 @@ function App() {
         <Route path="/transfer-subject" element={<TransferSubject />} />
         <Route path="/transfer-subject-group" element={<TransferSubjectGroup />} />
         <Route path="/program-scheduling" element={<ProgramScheduling />} />
-         
-         
-         
-         
-         {/* ======================================================= */}
-     <Route path="/contact" element={<Contactpage/>} />
-    <Route path="/background-page" element={<BackgroundPage/>} />
-    <Route path="/institutes" element={<Institutepage/>} />
-    <Route path="/promoting-society" element={<PromotingSociety/>} />
-    <Route path="/vision-mission" element={<VisionMission/>} />
-    <Route path="/core-values" element={<CoreValues/>} />
-    <Route path="/best-practicess" element={<BestPractices/>} />
-
-    <Route path="/chancellor" element={<Chancellor/>} />
-    <Route path="/vice-chancellor" element={<ViceChancellorr/>} />
-    <Route path="/registrar" element={<Registrar/>} />
-    <Route path="/deputy-registrar" element={<DeputyRegistrar/>} />
 
 
-  {/* ======================== Examination =============================== */}
-  <Route path="/entrance-exam-alert" element={<EntranceExamAlert/>} />
-  <Route path="/exam-notifications" element={<ExamNotifications/>} />
-  <Route path="/exam-schedule" element={<ExamSchedule/>} />
-  <Route path="/interface" element={<Interface/>} />
-  <Route path="/result" element={<Result/>} />
+
+        <Route path="/paym" element={<Paym />} />
+        <Route path="/paymen" element={<Paymen />} />
 
 
-{/* ========================= Academic  =========================================== */}
 
-<Route path="/phd-page" element={<PhdPage />} />
-<Route path="/academic-calender" element={<AcademicCalendar />} />
-<Route path="/scholarship" element={<Scholarship />} />
-<Route path="/constituent-units" element={<ConstituentUnits />} />
-<Route path="/Hei-handbook" element={<HEIHandbook />} />
-<Route path="/constituent-units" element={<ConstituentUnits />} />
-<Route path="/constituent-units" element={<ConstituentUnits />} />
-<Route path="/mandatory-discIosures" element={<MandatoryDisclosures />} />
+        {/* ======================================================= */}
+        <Route path="/contact" element={<Contactpage />} />
+        <Route path="/background-page" element={<BackgroundPage />} />
+        <Route path="/institutes" element={<Institutepage />} />
+        <Route path="/promoting-society" element={<PromotingSociety />} />
+        <Route path="/vision-mission" element={<VisionMission />} />
+        <Route path="/core-values" element={<CoreValues />} />
+        <Route path="/best-practicess" element={<BestPractices />} />
 
-{/* ========================= Research ============================================ */}
+        <Route path="/chancellor" element={<Chancellor />} />
+        <Route path="/vice-chancellor" element={<ViceChancellorr />} />
+        <Route path="/registrar" element={<Registrar />} />
+        <Route path="/deputy-registrar" element={<DeputyRegistrar />} />
 
-<Route path="/director(R&D)" element={<Director/>} />
-<Route path="/R&D-cell" element={<RDCell/>} />
-<Route path="/consultancy-services" element={<ConsultancyServices/>} />
 
- 
+        {/* ======================== Examination =============================== */}
+        <Route path="/entrance-exam-alert" element={<EntranceExamAlert />} />
+        <Route path="/exam-notifications" element={<ExamNotifications />} />
+        <Route path="/exam-schedule" element={<ExamSchedule />} />
+        <Route path="/interface" element={<Interface />} />
+        <Route path="/result" element={<Result />} />
+
+
+        {/* ========================= Academic  =========================================== */}
+
+        <Route path="/phd-page" element={<PhdPage />} />
+        <Route path="/academic-calender" element={<AcademicCalendar />} />
+        <Route path="/scholarship" element={<Scholarship />} />
+        <Route path="/constituent-units" element={<ConstituentUnits />} />
+        <Route path="/Hei-handbook" element={<HEIHandbook />} />
+        <Route path="/constituent-units" element={<ConstituentUnits />} />
+        <Route path="/constituent-units" element={<ConstituentUnits />} />
+        <Route path="/mandatory-discIosures" element={<MandatoryDisclosures />} />
+
+        {/* ========================= Research ============================================ */}
+
+        <Route path="/director(R&D)" element={<Director />} />
+        <Route path="/R&D-cell" element={<RDCell />} />
+        <Route path="/consultancy-services" element={<ConsultancyServices />} />
+
+
       </Routes >
     </>
 

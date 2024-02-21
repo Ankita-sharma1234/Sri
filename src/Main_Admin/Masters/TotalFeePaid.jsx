@@ -23,6 +23,9 @@ const theme = createTheme({
 
 function TotalFeePaid() {
   const [selectedOption, setSelectedOption] = React.useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
@@ -31,7 +34,7 @@ function TotalFeePaid() {
   const [filteredData, setFilteredData] = useState([]);
 
 
-  const { session, courseType, course, branch, college } = useParams();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,9 +55,9 @@ function TotalFeePaid() {
 
     fetchData();
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     filterData()
-  },[searchQuery,studentdata])
+  }, [searchQuery, studentdata])
 
   const filterData = () => {
     const filtered = studentdata.filter(student =>
@@ -66,16 +69,13 @@ function TotalFeePaid() {
   };
 
 
-  const handleDropdownChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
   const handleSearchChange = (e) => {
@@ -83,48 +83,34 @@ function TotalFeePaid() {
   }
 
 
-  const branchname = studentdata.courseBranch;
-  const coursename = studentdata.coursename;
-  const studentId = studentdata._id;
-  const assignedCollege = studentdata.assignedCollege;
 
-  const handleClick = async () => {
-    try {
-      const response = await fetch(
-        "https://sssutms.ac.in/apitest/generate-enrollment2",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            branchname,
-            studentId,
-            coursename,
-            assignedCollege,
-          }),
-        }
-      );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+
+  // /////////////////////////////////name sort/////////////////////////
+
+  const getSortedAndSlicedData = () => {
+    // Sort the data
+    const sortedData = [...filteredData].sort((a, b) => {
+      if (sortBy === "name") {
+        return sortOrder === "asc"
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
       }
+      // Handle other columns for sorting if needed
+      return 0;
+    });
 
-      const data = await response.json();
-      // console.log(data.message);
+    // Get the sliced data based on current page and rows per page
+    const startIndex = page * rowsPerPage;
+    return sortedData.slice(startIndex, startIndex + rowsPerPage);
+  };
 
-      swal({
-        title: "Success",
-        text: "Enrollment Generated Successfully!",
-        icon: "success",
-        buttons: "OK",
-      });
-
-      setStudentData((prevStudentData) => {
-        return prevStudentData.filter((student) => student._id !== studentId);
-      });
-    } catch (error) {
-      console.error("Error:", error);
+  const handleSort = (column) => {
+    if (column === sortBy) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortOrder("asc");
     }
   };
   return (
@@ -190,7 +176,7 @@ function TotalFeePaid() {
                             fontFamily: "-moz-initial",
                           }}
                         >
-                       AdmissionSession
+                          AdmissionSession
                         </h1>
                       </TableCell>
                       <TableCell
@@ -226,22 +212,24 @@ function TotalFeePaid() {
                       </TableCell>
 
                       <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
+                        align="center"
+                        style={{
+                          backgroundColor: "#004e92", color: 'white', minWidth: '200px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                        // /////////////for sorting name//////////////////
+                        onClick={() => handleSort("name")}
                       >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                            width: "200px"
-                          }}
-                        >
-                          Candidate Name
-                        </h1>
-                      </TableCell>
 
+                        <h5>
+                          <b>Student Name</b>
+                          {/* /////////////name sort////////////////////////// */}
+                          {sortBy === "name" && (
+                            <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
+                          )}
+                        </h5>
+                      </TableCell>
                       <TableCell
                         align="left"
                         style={{ backgroundColor: "#004e92" }}
@@ -369,65 +357,65 @@ function TotalFeePaid() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filteredData &&
-                      filteredData?.map((student, index) => (
-                        <TableRow key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
+                    {getSortedAndSlicedData().map((student, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        <TableCell align="center">
+                          {student?.IsEnrollGenerated ? <Button variant="success"> Generated</Button> : <Button variant="danger">Not generated</Button>}
 
-                          <TableCell align="center">
-                            <Button variant="danger">Not generated</Button>
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.admissionSession}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.randomId}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.randomPassword}
-                          </TableCell>
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.admissionSession}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.randomId}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.randomPassword}
+                        </TableCell>
 
-                          <TableCell align="center" sx={{ width: "500px" }}>
-                            {student?.name}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.fathersname}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.mothersname}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.email}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.mobile}
-                          </TableCell>
-                          <TableCell align="center" >
-                            {student?.courseType}
-                          </TableCell>
-                          <TableCell align="center" sx={{ width: "500px" }}>
-                            {student?.courseName}
-                          </TableCell>
-                          <TableCell align="center" sx={{ width: "500px" }}>
-                            {student?.courseBranch}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.isPaid ? "Paid" : "Not Paid"}
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                        <TableCell align="center" sx={{ width: "500px" }}>
+                          {student?.name}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.fathersname}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.mothersname}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.email}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.mobile}
+                        </TableCell>
+                        <TableCell align="center" >
+                          {student?.courseType}
+                        </TableCell>
+                        <TableCell align="center" sx={{ width: "500px" }}>
+                          {student?.courseName}
+                        </TableCell>
+                        <TableCell align="center" sx={{ width: "500px" }}>
+                          {student?.courseBranch}
+                        </TableCell>
+                        <TableCell align="center" style={{ fontSize: "20px", color: "green", font: "bold" }}>
+                          {student?.isPaid ? "Paid" : "Not Paid"}
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[2, 25, 100]}
+                rowsPerPageOptions={[5, 25, 100]}
                 component="div"
-                count={rows.length}
+                count={filteredData.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
+
             </Paper>
           </CardContent>
           {/* </Card> */}

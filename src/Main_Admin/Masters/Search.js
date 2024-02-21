@@ -27,8 +27,12 @@ const theme = createTheme({
 });
 
 const Search = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+
   const [studentdata, setStudentData] = useState([]);
   const [dataNotFound, setDataNotFound] = useState(false);
   const [enrollmentGenerated, setEnrollmentGenerated] = useState(false);
@@ -85,15 +89,15 @@ const Search = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleClick = async (studentId) => {
+  const handleClick = async () => {
+    const  studentId = studentdata[0]?._id
     try {
       const response = await axios.post(`https://sssutms.ac.in/apitest/generate-enrollment2/`, {
         branchname: studentdata[0]?.courseBranch,
@@ -116,6 +120,32 @@ const Search = () => {
     }
   };
 
+
+  /////////////////////////name sort ////////////////////////////
+  const handleSort = (column) => {
+    if (column === sortBy) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortOrder("asc");
+    }
+  };
+  const getSortedAndSlicedData = () => {
+    // Sort the data
+    const sortedData = [...filteredData].sort((a, b) => {
+      if (sortBy === "name") {
+        return sortOrder === "asc"
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
+      }
+      // Handle other columns for sorting if needed
+      return 0;
+    });
+
+    // Get the sliced data based on current page and rows per page
+    const startIndex = page * rowsPerPage;
+    return sortedData.slice(startIndex, startIndex + rowsPerPage);
+  };
   return (
     <ThemeProvider theme={theme}>
       <AdminDashboard />
@@ -127,17 +157,18 @@ const Search = () => {
                 <h2>Oops! No Student Available in this Course!!!!</h2>
               </div>
             ) : (
-        
-              <Paper sx={{ width: "100%", overflow: "auto" }}>
-            
-                <SearchIcon sx={{ mr: 1 }} />
-                <input
-                  type="text"
-                  placeholder="Search  by ID or Name"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
 
+              <Paper sx={{ width: "100%", overflow: "auto" }}>
+
+                <Box sx={{ p: 2 }}>
+                  <SearchIcon sx={{ mr: 1 }} />
+                  <input
+                    type="text"
+                    placeholder="Search  by ID or Name"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                </Box>
                 <TableContainer sx={{ maxHeight: 440 }}>
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -209,8 +240,13 @@ const Search = () => {
                               color: "white",
                               fontFamily: "-moz-initial",
                             }}
+                            // /////////////for sorting name//////////////////
+                            onClick={() => handleSort("name")}
                           >
                             Candidate Name
+                            {sortBy === "name" && (
+                              <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
+                            )}
                           </h1>
                         </TableCell>
 
@@ -293,7 +329,7 @@ const Search = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {filteredData && filteredData.map((student, index) => (
+                      {getSortedAndSlicedData().map((student, index) => (
                         <TableRow key={index}>
 
                           <TableCell align="center">{index + 1}</TableCell>
@@ -338,14 +374,14 @@ const Search = () => {
                   </Table>
                 </TableContainer>
                 <TablePagination
-                rowsPerPageOptions={[2, 25, 100]}
-                component="div"
-                count={filteredData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
+                  rowsPerPageOptions={[5, 25, 100]}
+                  component="div"
+                  count={filteredData.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
               </Paper>
             )
             }

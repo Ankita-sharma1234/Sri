@@ -35,11 +35,13 @@ const Adminser = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
   const [studentdata1, setStudentData] = useState({ students: [] });
   const [dataNotFound, setDataNotFound] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // State variable for search query
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
-  const { admissionSession, courseType, courseName, courseBranch } = useParams();
-  console.log(admissionSession, courseType, courseName, courseBranch, "data from query")
+  const { admissionSession, courseType, courseName, courseBranch } =
+    useParams();
+  console.log(admissionSession, courseType, courseName, courseBranch,
+    "data from query")
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,7 +99,8 @@ const Adminser = () => {
     setSearchQuery(event.target.value);
     // Filter data based on search query
     const filteredResults = studentdata1.students.filter(student => {
-      return student.randomId.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      return student.randomId.toLowerCase().includes(event.target.value.toLowerCase())
+        ||
         student.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
         student.courseBranch.toLowerCase().includes(event.target.value.toLowerCase());
     });
@@ -115,15 +118,15 @@ const Adminser = () => {
         <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "100px" }}>
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
-            <Box sx={{ p: 2 }}>
-              <SearchIcon sx={{ mr: 1 }} />
-              <input
-                type="text"
-                placeholder="Search by ID,Name or Branch"
-                onChange={handleSearchInputChange} 
-                value={searchQuery}
-              />
-               </Box>
+              <Box sx={{ p: 2 }}>
+                <SearchIcon sx={{ mr: 1 }} />
+                <input
+                  type="text"
+                  placeholder="Search by ID,Name or Branch"
+                  onChange={handleSearchInputChange}
+                  value={searchQuery}
+                />
+              </Box>
               {dataNotFound ? (
                 <div>
                   <h2>Oops! No Student Available in this Course!!!!</h2>
@@ -137,7 +140,10 @@ const Adminser = () => {
                         <TableRow>
                           <TableCell
                             align="left"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>S.No.</b>
@@ -145,7 +151,10 @@ const Adminser = () => {
                           </TableCell>
                           <TableCell
                             align="left"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>Session</b>
@@ -186,7 +195,10 @@ const Adminser = () => {
                           </TableCell>
                           <TableCell
                             align="center"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>Email</b>
@@ -227,7 +239,10 @@ const Adminser = () => {
                           </TableCell>
                           <TableCell
                             align="left"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>Contact</b>
@@ -235,7 +250,10 @@ const Adminser = () => {
                           </TableCell>
                           <TableCell
                             align="left"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>Nationality</b>
@@ -254,7 +272,10 @@ const Adminser = () => {
                           </TableCell>
                           <TableCell
                             align="left"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>Qualification</b>
@@ -273,7 +294,10 @@ const Adminser = () => {
                           </TableCell>
                           <TableCell
                             align="left"
-                            style={{ backgroundColor: "#004e92", color: 'white' }}
+                            style={{
+                              backgroundColor: "#004e92",
+                              color: 'white'
+                            }}
                           >
                             <h5>
                               <b>Course Type</b>
@@ -320,9 +344,20 @@ const Adminser = () => {
                             }}>
 
                             <h5>
-                              <b>Documents</b>
+                              <b>Enrollment Documents</b>
                             </h5>
                           </TableCell>
+                          {/* <TableCell
+                            align="left"
+                            style={{
+                              backgroundColor: "#004e92", color:
+                                'white', minWidth: '200px'
+                            }}>
+
+                            <h5>
+                              <b>Registration Documents</b>
+                            </h5>
+                          </TableCell> */}
                           <TableCell
                             align="left"
                             style={{
@@ -367,12 +402,18 @@ const Adminser = () => {
                             <TableCell
                               align="center">{student.randomId}</TableCell>
                             <TableCell align="center">{student.name}</TableCell>
-                            <TableCell align="center"
-                              style={{ backgroundColor: "red", color: "whitesmoke", fontWeight: "bold" }}>
-                              {Object.values(student.professional ||
-                                {}).some(value => value === "") ? 'Pending' : 'Update'}
+                            <TableCell align="center" style={{
+                              backgroundColor: "red", color: "whitesmoke", fontWeight: "bold"
+                            }}>
+                              {(!student.professional ||
+                                !student.professional.SamagraId ||
+                                !student.professional.ScholarshipRequired) ? 'Update' :
+
+                                (Object.values(student.professional).some(value => value === "") ?
+                                  'Pending' : 'Update')}
                             </TableCell>
-                            <TableCell align="center">{student.email}</TableCell>
+                            <TableCell
+                              align="center">{student.email}</TableCell>
                             <TableCell align="center">
                               <DatePicker
                                 selected={selectedDate || new Date(student.dob)}
@@ -385,15 +426,20 @@ const Adminser = () => {
                               align="center">{student.fathersname}</TableCell>
                             <TableCell
                               align="center">{student.mothersname}</TableCell>
-                            <TableCell align="center">{student.mobile}</TableCell>
+                            <TableCell
+                              align="center">{student.mobile}</TableCell>
 
                             <TableCell
                               align="center">{student.domicile}</TableCell>
                             <TableCell align="center"
-                              style={{ backgroundColor: "green", color: "whitesmoke", fontWeight: "bold" }}>
+                              style={{
+                                backgroundColor: "green",
+                                color: "whitesmoke", fontWeight: "bold"
+                              }}>
                               {student.address ?
                                 (Object.values(student.address ||
-                                  {}).some(value => value === "") ? 'Pending' : 'Update')
+                                  {}).some(value => value === "") ?
+                                  'Pending' : 'Update')
                                 : 'Pending'
                               }
                             </TableCell>
@@ -401,6 +447,7 @@ const Adminser = () => {
                             <TableCell
                               align="center">{student.qualification}</TableCell>
                             <TableCell
+
                               align="center">{student.qualificationPercentage}</TableCell>
                             <TableCell
                               align="center">{student.courseType}</TableCell>
@@ -411,22 +458,48 @@ const Adminser = () => {
 
                             <TableCell align="center" style={{
                               backgroundColor: "cadetblue",
-                              color: "whitesmoke", fontWeight: "bold"
+                              color: "whitesmoke",
+                              fontWeight: "bold"
                             }}>
-                              {student.academicDetails ?
-                                (Object.values(student.academicDetails
-                                  || {}).every(value => value === "") ? 'Pending' : 'Update')
-                                : 'Pending'
-                              }
+                              {student.academicDetails &&
+
+                                Object.keys(student.academicDetails).filter(key => [
+                                  'tenthBoard', 'tenthMarksObtain',
+                                  'tenthMaxMarks', 'tenthPassingYear',
+                                  'tenthPercentage', 'tenthRollNo',
+                                  'tenthSchool', 'twelfthBoard',
+                                  'twelfthMarksObtain',
+                                  'twelfthMaxMarks', 'twelfthPassingYear',
+                                  'twelfthPercentage',
+                                  'twelfthRollNo', 'twelfthSchool'
+                                ].includes(key)).every(key =>
+                                  student.academicDetails[key] !== "") ? 'Update' : 'Pending'}
                             </TableCell>
                             <TableCell
-                              align="center" style={{ backgroundColor: "grey", color: "whitesmoke", fontWeight: "bold" }}>
-                              {student.Documents ?
-                                (Object.values(student.Documents ||
-                                  {}).some(value => value === "") ? 'Pending' : 'Update')
-                                : 'Pending'
-                              }
+                              align="center"
+                              style={{
+                                backgroundColor: "grey", color:
+                                  "whitesmoke", fontWeight: "bold"
+                              }}
+                            >
+                              {/* {student.Documents ? (
+                                ['incomeCertificate',
+                                  'otherCertificate', 'postgraduateCertificate',
+                                  'undergraduateCertificate', "migrationCertificate"]
+                                  .every(key =>
+                                    !student.Documents[key] || student.Documents[key].trim() === "")
+                                  ? 'Pending' : 'Updated'
+                              ) : 'dekho'} */}
+                              {student.Documents ? (
+                                ['incomeCertificate',
+                                  'otherCertificate', 'postgraduateCertificate',
+                                  'undergraduateCertificate', "migrationCertificate"]
+                                  .every(key =>
+                                    !student.Documents[key] || student.Documents[key].trim() === "")
+                                  ? 'Pending' : 'Updated'
+                              ) : 'Pending'}
                             </TableCell>
+
                             <TableCell align="center">
                               {student?.isEnrolled ? "Yes" : "No"}
                             </TableCell>

@@ -197,13 +197,13 @@ function ErpDashboard() {
     navigate("/registered/studentlist");
   };
 
-  function handleFee(){
+  function handleFee() {
     navigate("/student/totalfeepaid")
   }
-  function totalRegisteredStudent(){
+  function totalRegisteredStudent() {
     navigate("/student/totalregistered")
   }
-  function TotalEnrolled(){
+  function TotalEnrolled() {
     navigate("/student/totalenrolled")
   }
 
@@ -348,7 +348,7 @@ function ErpDashboard() {
               </div>
               <img
 
-src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(31).png"
+                src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(31).png"
                 alt="Views"
               />
             </div>
@@ -359,7 +359,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-
               </div>
               <img
 
-src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png"
+                src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png"
                 alt="likes"
               />
             </div>
@@ -370,7 +370,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png"
               </div>
               <img
 
-src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png"
+                src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png"
                 alt="comments"
               />
             </div>
@@ -381,7 +381,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-
               </div>
               <img
 
-src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png"
+                src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png"
                 alt="published"
               />
             </div>
@@ -442,3 +442,8 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png"
 }
 
 export default ErpDashboard;
+
+
+
+
+

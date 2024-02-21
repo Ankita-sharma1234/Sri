@@ -24,23 +24,23 @@ const theme = createTheme();
 const Pending = () => {
   const [approvedStudents, setApprovedStudents] = useState([]);
   const [collegeAssignments, setCollegeAssignments] = useState({});
-  
+
   const userData = JSON.parse(sessionStorage.getItem("AnkitHOD"));
   const [assignedCollege, setAssignedCollege] = useState();
   const hodId = userData?.user;
 
- const branch1 = userData.Branch;
-console.log("Branch:", branch1);
+  const branch1 = userData.Branch;
+  console.log("Branch:", branch1);
 
-const AYURVEDIC = "AYURVEDIC MEDICINE AND SURGERY";
+  const AYURVEDIC = "AYURVEDIC MEDICINE AND SURGERY";
 
-const collegeOptions = {
-  HOMEOPATHY : ["School of Homeopathy"],
-  AYURVEDIC : ["School of Ayurveda and Siddha Studies"],
-};
-const branchFirstWord = branch1.split(' ')[0];
-console.log(branchFirstWord , 'ding ding ding ')
-console.log("College Options:", collegeOptions[branchFirstWord]);
+  const collegeOptions = {
+    HOMEOPATHY: ["School of Homeopathy"],
+    AYURVEDIC: ["School of Ayurveda and Siddha Studies"],
+  };
+  const branchFirstWord = branch1.split(' ')[0];
+  console.log(branchFirstWord, 'ding ding ding ')
+  console.log("College Options:", collegeOptions[branchFirstWord]);
   const handleCollegeChange = (studentId, collegeName) => {
     setCollegeAssignments((prevAssignments) => {
 
@@ -89,7 +89,7 @@ console.log("College Options:", collegeOptions[branchFirstWord]);
     try {
       const response = await axios.post(
         `https://sssutms.ac.in/apitest/v2/hod/cancel`,
-        {     
+        {
           studentId,
         }
       );
@@ -145,257 +145,338 @@ console.log("College Options:", collegeOptions[branchFirstWord]);
     setSelectedDate(date);
   };
 
- 
+
   return (
     <>
-  
+
       <ThemeProvider theme={theme}>
         <Sidebar />
-        <Container
+        <div
           className="shadow p-3  bg-body rounded"
           style={{
+            // marginTop: "80px",
+            // width: "90%",
+            // textAlign: "center",
+            // justifyContent: "center",
+            // marginLeft:'80px',
+            // maxWidth: "300px", // Max width for larger screens
+
+            backgroundColor: "#e8e5d5",
+            width: "90%", // Adjusted width for mobile screens
+            marginLeft: "60px",
+            marginRight: "auto", // Center align on all screens
             marginTop: "80px",
-            width: "90%",
             textAlign: "center",
-            justifyContent: "center",
+            maxWidth: "1200px", // Max width for larger screens
           }}
+
+
+
         >
-          <h4> Pending Student </h4>
+          <h4 style={{ fontFamily: 'fantasy' }}> PENDING STUDENT </h4>
           <CardContent>
-          <Paper sx={{ width: "100%",overflow:'auto' }}>
-            <TableContainer sx={{ maxHeight: "440px" }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                     
-                    >
-                      <h5>
-                        <b>S.No.</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Session</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell 
-                      align="left"
-                     style={{ backgroundColor: "#e6ecf0" ,minWidth:'200px'}}>
-                      
-              
-                      <h5>
-                        <b>Student Name</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell 
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b> Email</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Date of Birth</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Father's Name</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Mother's Name</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Contact</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Nationality</b>
-                      </h5>
-                    </TableCell>
+            <Paper sx={{ width: "100%", overflow: 'auto' }}>
+              <TableContainer sx={{ maxHeight: "440px", }}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>S.No.</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Session</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
 
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Qualification</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0",minWidth:'150px' }}
-                    >
-                      <h5>
-                        <b>Qualification %</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Course Type</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'200px'}}
-                    >
-                      <h5>
-                        <b>Course Name</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0",minWidth:'200px' }}
-                    >
-                      <h5>
-                        <b>Course Branch</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Assign College</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Check Marksheet</b>
-                      </h5>
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ backgroundColor: "#e6ecf0" }}
-                    >
-                      <h5>
-                        <b>Edit</b>
-                      </h5>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {approvedStudents.map((student, index) => (
-                    <TableRow key={index}>
-                      <TableCell align="left">{index + 1}</TableCell>
-                      <TableCell align="left">2023</TableCell>
-                      <TableCell align="left">{student.name}</TableCell>
-                      <TableCell align="left">{student.email}</TableCell>
-                      <TableCell align="left">
-                        <DatePicker
-                          selected={selectedDate || new Date(student.dob)}
-                          onChange={(date) => handleDateChange(date)}
-                          dateFormat="dd/MM/yyyy"
-                          className="text-center"
-                        />
+                        <h5>
+                          <b>Student Name</b>
+                        </h5>
                       </TableCell>
-                      <TableCell align="left">{student.fathersname}</TableCell>
-                      <TableCell align="left">{student.mothersname}</TableCell>
-                      <TableCell align="left">{student.mobile}</TableCell>
-                      <TableCell align="left">{student.domicile}</TableCell>
-                      <TableCell align="left">
-                        {student.qualification}
+                      <TableCell
+                        align="center"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b> Email</b>
+                        </h5>
                       </TableCell>
-                      <TableCell align="left">
-                        {`${student.qualificationPercentage}%`}
+                      <TableCell
+                        align="center"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>DOB</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Father's Name</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '150px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Mother's Name</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '130px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Contact</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '130px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Nationality</b>
+                        </h5>
                       </TableCell>
 
-                      <TableCell align="left">{student.courseType}</TableCell>
-                      <TableCell align="left">{student.courseName}</TableCell>
-                      <TableCell align="left">{student.courseBranch}</TableCell>
-                      <TableCell align="center">
-                        <Form.Select
-                          style={{ height: "40px", width: "45vh" }}
-                          value={collegeAssignments[student._id] || ""}
-                          onChange={(e) =>
-                            handleCollegeChange(student._id, e.target.value)
-                          }
-                        >
-                          <option value="">Select College</option>
-                          {collegeOptions[branchFirstWord]?.map((college, index) => (
-                            <option key={index} value={college}>
-                              {college}
-                            </option>
-                          ))}
-                        </Form.Select>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '130px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Qualification</b>
+                        </h5>
                       </TableCell>
-                      <TableCell align="center">
-                        {student && student.Documents?.marksheet12th && (
-                          <a
-                            href={student.Documents.marksheet12th}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            View Marksheet
-                          </a>
-                        )}
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '150px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Qualification %</b>
+                        </h5>
                       </TableCell>
-
-                      <TableCell align="left" style={{ display: "flex",gap:'10px' ,marginTop:'20px'}}>
-                        <Button 
-                          variant="success"
-                          onClick={() => handleClick(student._id)}
-                        >
-                          Approve
-                        </Button>
-                        <Button variant="danger" onClick={() => handleCancel(student._id)}>Cancel</Button>
+                      <TableCell
+                        align="center"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '130px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Course Type</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Course Name</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Course Branch</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '250px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Assign College</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Check Marksheet</b>
+                        </h5>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        style={{
+                          backgroundColor: '#023047', color: 'white', position: "sticky",
+                          top: 0,
+                          zIndex: 1,
+                        }}
+                      >
+                        <h5>
+                          <b>Edit</b>
+                        </h5>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {approvedStudents.map((student, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="left">{index + 1}</TableCell>
+                        <TableCell align="left">2023</TableCell>
+                        <TableCell align="left" style={{ color: '#6a040f', fontWeight: 'bold' }}>{student.name}</TableCell>
+                        <TableCell align="left">{student.email}</TableCell>
+                        <TableCell align="left">
+                          <DatePicker
+                            selected={selectedDate || new Date(student.dob)}
+                            onChange={(date) => handleDateChange(date)}
+                            dateFormat="dd/MM/yyyy"
+                            className="text-center"
+                          />
+                        </TableCell>
+                        <TableCell align="left">{student.fathersname}</TableCell>
+                        <TableCell align="left">{student.mothersname}</TableCell>
+                        <TableCell align="left">{student.mobile}</TableCell>
+                        <TableCell align="left">{student.domicile}</TableCell>
+                        <TableCell align="center">
+                          {student.qualification}
+                        </TableCell>
+                        <TableCell align="center">
+                          {`${student.qualificationPercentage}%`}
+                        </TableCell>
 
-            <TablePagination
-              rowsPerPageOptions={[25, 50, 100]}
-              component="div"
-              count={approvedStudents.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
+                        <TableCell align="center">{student.courseType}</TableCell>
+                        <TableCell align="left">{student.courseName}</TableCell>
+                        <TableCell align="left">{student.courseBranch}</TableCell>
+                        <TableCell align="center">
+                          <Form.Select
+                            style={{ height: "40px", width: "45vh" }}
+                            value={collegeAssignments[student._id] || ""}
+                            onChange={(e) =>
+                              handleCollegeChange(student._id, e.target.value)
+                            }
+                          >
+                            <option value="">Select College</option>
+                            {collegeOptions[branchFirstWord]?.map((college, index) => (
+                              <option key={index} value={college}>
+                                {college}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </TableCell>
+                        <TableCell align="center">
+                          {student && student.Documents?.marksheet12th && (
+                            <a
+                              href={student.Documents.marksheet12th}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: 'blue' }}
+                            >
+                              View Marksheet
+                            </a>
+                          )}
+                        </TableCell>
+
+                        <TableCell align="left" style={{ display: "flex", gap: '10px', marginTop: '20px' }}>
+                          <Button
+                            variant="success"
+                            style={{ height: '40px', padding: '10px' }}
+                            onClick={() => handleClick(student._id)}
+                          >
+                            Approve
+                          </Button>
+                          <Button variant="danger" style={{ height: '40px', padding: '10px' }} onClick={() => handleCancel(student._id)}> Cancel</Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+
+              <TablePagination
+                rowsPerPageOptions={[25, 50, 100]}
+                component="div"
+                count={approvedStudents.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Paper>
           </CardContent>
-        </Container>
+        </div>
       </ThemeProvider>
     </>
   );
 };
 
 export default Pending;
-

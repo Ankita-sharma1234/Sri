@@ -1,16 +1,19 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminDashboard from './Admin_Dashboard/AdminDashboard'
 import Form from 'react-bootstrap/Form';
-import { FormControl } from "@mui/material";
+import { FormControl, Select, } from "@mui/material";
 import { Button, Row, Col, Container } from "react-bootstrap";
+import { Link, useHistory } from 'react-router-dom';
+import { useFormik } from "formik";
 import axios from "axios";
-import AdminUpdateStdDoc from "./AdminUpdateStdDoc";
+import AdminUpdateStd_Manually from "./Admin_Dashboard/AdminUpdtStd_Manually";
+import AdminUpdtStdt_Detail from "./AdminUpdtStdt_Detail";
 
-function AdminDocumentSearch() {
+const ManualEnrol_G = () =>{
   const [selectedField, setSelectedField] = useState("option1");
   const [enteredValue, setEnteredValue] = useState("");
   const [userData, setUserData] = useState([]);
-  const [showTable,setShowTable] = useState(false)
+  const [showTable, setShowTable] = useState(false);
 
   const handleSearch = async () => {
     if (selectedField === "option1" || !enteredValue) {
@@ -22,17 +25,15 @@ function AdminDocumentSearch() {
       const api = `https://sssutms.ac.in/apitest/admin/search2?search=${enteredValue}`;
       const response = await axios.get(api);
       setUserData(response.data);
-      setShowTable(true)
-      
-
+      setShowTable(true);
     } catch (error) {
       console.error("API Error:", error);
     }
   };
- 
+
   return (
     <>
-     <style>
+      <style>
         {`
           .shadow-box {
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -113,13 +114,14 @@ function AdminDocumentSearch() {
         `}
       </style>
       <AdminDashboard />
+
       <div style={{ marginLeft: '5%', display: "flex" }}>
         <div>
           <Container fluid style={{ paddingTop: '80px' }}>
             <Row>
               <Col xs={12} sm={12} md={10} lg={9} xl={8} className="custom-laptop-style">
                 <div className="shadow-box">
-                  <div className="header">Search Student</div>
+                  <div className="header">Manuall Search Student</div>
                   <div className="scroll-container" style={{ height: "290px" }}>
                     <form style={{ padding: "30px" }}>
                       <Row>
@@ -166,12 +168,10 @@ function AdminDocumentSearch() {
                               Enter *
                             </h1>
                           </label>
-                          <Form.Control
-                            className="login-input"
+                          <Form.Control className="login-input"
                             type="text"
                             value={enteredValue}
-                            onChange={(e) => setEnteredValue(e.target.value)}
-                          />
+                            onChange={(e) => setEnteredValue(e.target.value)} />
                           <br />
                         </FormControl>
                       </Row>
@@ -182,28 +182,39 @@ function AdminDocumentSearch() {
                           backgroundColor: "#004e92",
                           width: "110px",
                           height: "40px",
+                          padding: "5px"
                         }}
                       >
                         Search
                       </Button>
                     </form>
+
+
                   </div>
                 </div>
               </Col>
             </Row>
           </Container>
-        </div>
 
+        </div>
         <div>
-          {showTable &&  userData.length > 0  &&  (
+          {showTable && userData.length > 0 && (
             <div>
-              <AdminUpdateStdDoc userData={userData} />
+              <AdminUpdateStd_Manually userData={userData} />
             </div>
           )}
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default AdminDocumentSearch;
+// export default ManualEnrol_G
+// import React from 'react'
+
+// const ManualEnrol_G = () => {
+//   return (
+//     <div>ManualEnrol_G</div>
+//   )
+// }
+export default ManualEnrol_G

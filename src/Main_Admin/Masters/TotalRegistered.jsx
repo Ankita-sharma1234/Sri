@@ -12,8 +12,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import SearchIcon from '@mui/icons-material/Search';
 
-// import gallery from "../images/gallery.png";
-// import trash from "../images/trash.png";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
@@ -31,9 +29,11 @@ const theme = createTheme({
 
 
 function TotalRegistered() {
-  const [page, setPage] = React.useState(0);
-  const [rows, setRows] = React.useState([]);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const [studentdata, setStudentData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState([]);
@@ -66,7 +66,7 @@ function TotalRegistered() {
   }, []);
 
   useEffect(() => {
- 
+
     filterData();
   }, [searchQuery, studentdata]);
 
@@ -83,29 +83,55 @@ function TotalRegistered() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  
+
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value)
   }
+  /////////////////////////name sort ////////////////////////////
+  const handleSort = (column) => {
+    if (column === sortBy) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortOrder("asc");
+    }
+  };
+
+  const getSortedAndSlicedData = () => {
+    // Sort the data
+    const sortedData = [...filteredData].sort((a, b) => {
+      if (sortBy === "name") {
+        return sortOrder === "asc"
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
+      }
+      // Handle other columns for sorting if needed
+      return 0;
+    });
+
+    // Get the sliced data based on current page and rows per page
+    const startIndex = page * rowsPerPage;
+    return sortedData.slice(startIndex, startIndex + rowsPerPage);
+  };
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <AdminDashboard />
-        <Box sx={{ width: "90%",height:"50%", marginLeft: "100px", marginTop: "80px" }}>
+        <Box sx={{ width: "90%", height: "50%", marginLeft: "100px", marginTop: "80px" }}>
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
               <Box sx={{ p: 2 }}>
-              <SearchIcon sx={{ mr: 1 }} />
+                <SearchIcon sx={{ mr: 1 }} />
                 <input
                   type="text"
                   placeholder="Search  by ID or Name"
                   value={searchQuery}
-                  onChange={handleSearchChange} 
+                  onChange={handleSearchChange}
                 />
               </Box>
               <TableContainer sx={{ maxHeight: "430px" }}>
@@ -187,8 +213,13 @@ function TotalRegistered() {
                             color: "white",
                             fontFamily: "-moz-initial",
                           }}
+                          // /////////////for sorting name//////////////////
+                          onClick={() => handleSort("name")}
                         >
                           Candidate Name
+                          {sortBy === "name" && (
+                            <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
+                          )}
                         </h1>
                       </TableCell>
 
@@ -277,7 +308,7 @@ function TotalRegistered() {
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
-                            width:"150px"
+                            width: "150px"
                           }}
                         >
                           Course Name
@@ -293,69 +324,65 @@ function TotalRegistered() {
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
-                            width:"150px"
+                            width: "150px"
                           }}
                         >
-                         Branch
+                          Branch
                         </h1>
                       </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filteredData &&
-                      filteredData?.map((student, index) => (
-                        <TableRow key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
+                    {getSortedAndSlicedData().map((student, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
 
-                          <TableCell align="center">
-                            {student?.randomId}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.randomPassword}
-                          </TableCell>
+                        <TableCell align="center">
+                          {student?.randomId}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.randomPassword}
+                        </TableCell>
 
-                          <TableCell align="center">
-                            <DatePicker
-                              selected={selectedDate || (student?.createdAt ? new Date(student.createdAt) : null)}
-                              onChange={(date) => handleDateChange(date)}
-                              dateFormat="dd/MM/yyyy"
-                              className="text-center"
-                            />
-                          </TableCell>
-
-
-
-                          <TableCell align="center">
-                            {student?.name}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.fathersname}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.mothersname}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.email}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.mobile}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.courseType}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.courseName}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student?.courseBranch}
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                        <TableCell align="center">
+                          <DatePicker
+                            selected={selectedDate || (student?.createdAt ? new Date(student.createdAt) : null)}
+                            onChange={(date) => handleDateChange(date)}
+                            dateFormat="dd/MM/yyyy"
+                            className="text-center"
+                          />
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.name}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.fathersname}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.mothersname}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.email}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.mobile}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.courseType}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.courseName}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student?.courseBranch}
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[2, 25, 100]}
+                rowsPerPageOptions={[5, 25, 100]}
                 component="div"
                 count={filteredData.length}
                 rowsPerPage={rowsPerPage}

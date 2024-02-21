@@ -19,8 +19,12 @@ const theme = createTheme();
 
 const StudentVerify = () => {
   const [branch, setBranch] = useState("");
-  const [approvedStudents, setApprovedStudents] = useState([]); 
+  const [approvedStudents, setApprovedStudents] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("AnkitHOD"));
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc"); // or "desc"
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const branch1 = userData?.Branch;
 
@@ -29,27 +33,45 @@ const StudentVerify = () => {
       const response = await axios.get(
         `https://sssutms.ac.in/apitest/enrollement?Branch=${branch1}`
       );
-      
-      setApprovedStudents(response.data.students); 
+
+      setApprovedStudents(response.data.students);
     } catch (error) {
       console.error(error);
     }
   };
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(2);
-
+  // ///////////////////pagination///////////////////////////////////
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  // /////////////////////////////////name sort/////////////////////////
+  const handleSort = (column) => {
+    if (column === sortBy) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(column);
+      setSortOrder("asc");
+    }
+  };
+
+  const sortedStudents = [...approvedStudents].sort((a, b) => {
+    if (sortBy === "name") {
+      return sortOrder === "asc"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name);
+    }
+
+    return 0;
+  });
+  // ///////////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     fetchApprovedStudents();
   }, [branch]);
+
   /////////////////////datepicker/////////////////
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -62,11 +84,21 @@ const StudentVerify = () => {
       <ThemeProvider theme={theme}>
         <Sidebar />
 
-        <Container
+        <div
           className="shadow p-3 mb-3 bg-body rounded"
-          style={{ marginTop: "70px",  width: "90%",textAlign:"center",justifyContent:"center" }}
+          style={{
+            backgroundColor: "#e8e5d5",
+            width: "90%",
+            marginLeft: "80px",
+            marginRight: "auto",
+            marginTop: "50px",
+            textAlign: "center",
+            maxWidth: "1200px",
+          }}
         >
-          <h4>Verified Student</h4>
+          <br />
+          <h4 style={{ fontFamily: "fantasy" }}> VERIFIED STUDENT </h4>
+          <br />
           <Paper sx={{ width: "100%" }}>
             <TableContainer sx={{ maxHeight: "440px" }}>
               <Table stickyHeader aria-label="sticky table">
@@ -74,7 +106,13 @@ const StudentVerify = () => {
                   <TableRow>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: "#023047",
+                        color: "white",
+                        position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
                       <h5>
                         <b>S.No.</b>
@@ -82,7 +120,11 @@ const StudentVerify = () => {
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
                       <h5>
                         <b>Session</b>
@@ -90,15 +132,31 @@ const StudentVerify = () => {
                     </TableCell>
                     <TableCell
                       align="center"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'200px'}}>
-                    
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+                      // /////////////for sorting name//////////////////
+                      onClick={() => handleSort("name")}
+                    >
+
                       <h5>
                         <b>Student Name</b>
+                        {/* /////////////name sort////////////////////////// */}
+                        {sortBy === "name" && (
+                          <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
+                        )}
                       </h5>
                     </TableCell>
                     <TableCell
                       align="center"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+
                     >
                       <h5>
                         <b>Email</b>
@@ -106,31 +164,50 @@ const StudentVerify = () => {
                     </TableCell>
                     <TableCell
                       align="center"
-                      style={{ backgroundColor: "#e6ecf0",}}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
+
                       <h5>
                         <b>Date of Birth</b>
                       </h5>
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'150px'}}>
-                
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '150px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+                    >
+
                       <h5>
                         <b>Father's Name</b>
                       </h5>
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'150px'}}>
-                  
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '150px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+                    >
+
                       <h5>
                         <b>Mother's Name</b>
                       </h5>
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '130px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
                       <h5>
                         <b>Contact</b>
@@ -138,7 +215,11 @@ const StudentVerify = () => {
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
                       <h5>
                         <b>Nationality</b>
@@ -146,7 +227,11 @@ const StudentVerify = () => {
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
                       <h5>
                         <b>Qualification</b>
@@ -154,39 +239,62 @@ const StudentVerify = () => {
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'150px'}}>
-                
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '150px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+                    >
+
                       <h5>
                         <b>Qualification %</b>
                       </h5>
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
+
                       <h5>
                         <b>Course Type</b>
                       </h5>
                     </TableCell>
                     <TableCell
                       align="center"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'200px'}}>
-                
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+                    >
                       <h5>
                         <b>Course Name</b>
                       </h5>
                     </TableCell>
                     <TableCell
-                      align="left"
-                      style={{ backgroundColor: "#e6ecf0" ,minWidth:'200px'}}>
-                   
+                      align="center"
+                      style={{
+                        backgroundColor: '#023047', color: 'white', minWidth: '200px', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
+                    >
+
                       <h5>
                         <b>Course Branch</b>
                       </h5>
                     </TableCell>
                     <TableCell
                       align="left"
-                      style={{ backgroundColor: "#e6ecf0" }}
+                      style={{
+                        backgroundColor: '#023047', color: 'white', position: "sticky",
+                        top: 0,
+                        zIndex: 1,
+                      }}
                     >
                       <h5>
                         <b>Edit</b>
@@ -195,62 +303,63 @@ const StudentVerify = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {approvedStudents.map((student, index) => (
-                    <TableRow key={index}>
-                      <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell align="center">2023</TableCell>
-                      <TableCell align="center">{student.name}</TableCell>
-                      <TableCell align="center">{student.email}</TableCell>
-                      {/* Replace the line below with the DatePicker component */}
-                      <TableCell align="center" >
-                        <DatePicker 
-                          selected={selectedDate || new Date(student.dob)}
-                          onChange={(date) => handleDateChange(date)}
-                          dateFormat="dd/MM/yyyy"
-                          className="text-center"
-                        />
-                      </TableCell>
-                      <TableCell align="center">
-                        {student.fathersname}
-                      </TableCell>
-                      <TableCell align="center">
-                        {student.mothersname}
-                      </TableCell>
-                      <TableCell align="center">{student.mobile}</TableCell>
-                      <TableCell align="center">{student.domicile}</TableCell>
-                      <TableCell align="center">
-                        {student.qualification}
-                      </TableCell>
-                      <TableCell align="center">
-                        {student.qualificationPercentage}
-                      </TableCell>
-                      <TableCell align="center">{student.courseType}</TableCell>
-                      <TableCell align="center">{student.courseName}</TableCell>
-                      <TableCell align="center">
-                        {student.courseBranch}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Link to={`/studentverifieddetailed/${student._id}`}>
-                          <Button variant="success" disabled={!student.isEnrolled}>More....</Button>
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {sortedStudents
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((student, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        <TableCell align="center">2023</TableCell>
+                        <TableCell align="center" style={{ color: '#6a040f', fontWeight: 'bold' }}>{student.name}</TableCell>
+                        <TableCell align="center">{student.email}</TableCell>
+                        {/* Replace the line below with the DatePicker component */}
+                        <TableCell align="center" >
+                          <DatePicker
+                            selected={selectedDate || new Date(student.dob)}
+                            onChange={(date) => handleDateChange(date)}
+                            dateFormat="dd/MM/yyyy"
+                            className="text-center"
+                          />
+                        </TableCell>
+                        <TableCell align="center">
+                          {student.fathersname}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student.mothersname}
+                        </TableCell>
+                        <TableCell align="left">{student.mobile}</TableCell>
+                        <TableCell align="center">{student.domicile}</TableCell>
+                        <TableCell align="center">
+                          {student.qualification}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student.qualificationPercentage}
+                        </TableCell>
+                        <TableCell align="center">{student.courseType}</TableCell>
+                        <TableCell align="center">{student.courseName}</TableCell>
+                        <TableCell align="center">
+                          {student.courseBranch}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Link to={`/studentverifieddetailed/${student._id}`}>
+                            <Button variant="success" disabled={!student.isEnrolled}>More....</Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
 
             <TablePagination
-              rowsPerPageOptions={[25, 50, 100]}
               component="div"
-              count={approvedStudents.length} 
-              rowsPerPage={rowsPerPage}
+              count={approvedStudents.length}
               page={page}
               onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Paper>
-        </Container>
+        </div>
       </ThemeProvider>
     </>
   );

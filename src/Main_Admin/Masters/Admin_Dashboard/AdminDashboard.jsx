@@ -57,11 +57,13 @@ function AdminDashboard() {
           >
             <Toolbar>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <img
-                  style={{ height: "50px", width: "50px", marginRight: "20px" }}
-                  src={posImage}
-                  alt=""
-                />
+                <Link to="/admin/erpdasboard">
+                  <img
+                    style={{ height: "50px", width: "50px", marginRight: "20px" }}
+                    src={posImage}
+                    alt="dwsedws"
+                  />
+                </Link>
                 <Typography
                   className="heading"
                   variant="h6"
@@ -402,6 +404,11 @@ a:hover {
                         <h6>Enrollment Generation</h6>
                       </li>
                     </Link>
+                    <Link to="/manual/enrollment/generation" >
+                      <li >
+                        <h6>Manul Enrollment Generation</h6>
+                      </li>
+                    </Link>
 
                     <Link to="/enrolled/student/search-result">
                       <li>
@@ -442,13 +449,13 @@ a:hover {
                   <ul>
                     <Link to="/erpdashboard/student/search" >
                       <li >
-                        <h6>Update Student</h6>
+                        <h6>Upload Student</h6>
                       </li>
                     </Link>
 
                     <Link to="/erpdashboard/student/document/search">
                       <li >
-                        <h6>Update Documents</h6>
+                        <h6>Upload Documents</h6>
                       </li>
                     </Link>
 
@@ -456,7 +463,7 @@ a:hover {
                 </div>
 
               </ul>
-              
+
             </li>
             <li>
               <a href="#">
@@ -478,14 +485,14 @@ a:hover {
                     Search Student
                   </a>
                 </li>
-              
-<div class="scrollable-list-container">
+
+                <div class="scrollable-list-container">
                   <ul>
-                    <Link to="/erpdashboard/pending/student/search"> 
+                    <Link to="/erpdashboard/pending/student/search">
                       <li >
                         <h6>Pending Student List</h6>
                       </li>
-                    </Link> 
+                    </Link>
                     <Link to="/erpdashboard/verified/student/search">
                       <li >
                         <h6>Verified Student List</h6>
@@ -497,7 +504,7 @@ a:hover {
 
 
               </ul>
-              
+
             </li>
 
             <li>
@@ -923,9 +930,9 @@ a:hover {
                     <li>
                       <a href="#"> Update Manual Enrollment Fee</a>
                     </li>
-                    <li>
+                    <Link to="/paym"><li>
                       <a href="#">Verify Online Payment</a>
-                    </li>
+                    </li></Link>
                     <li>
                       <a href="#">Examination From Activation</a>
                     </li>
@@ -1167,3 +1174,6 @@ a:hover {
 }
 
 export default AdminDashboard;
+
+
+

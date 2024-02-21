@@ -1,11 +1,44 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import OnlyHeader from "../OnlyHeader";
 import { Button } from "react-bootstrap";
 
 function PaymentPage() {
   const [loading, setLoading] = useState(false);
+  const [enrollmentFee, setEnrollmentFee] = useState(0);
+  const [registrationFee, setRegistrationFee] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
 
+
+
+  const userData = JSON.parse(sessionStorage.getItem("currentUser"));
+
+  useEffect(() => {
   
+    fetchFeeInformation();
+  }, []); 
+  const fetchFeeInformation = () => {
+   
+    const admissionSession = userData.admissionSession;
+    const enrolledCourse = userData.courseName;
+
+    // Example URL structure assuming your API endpoint accepts query parameters
+    const apiUrl = `https://sssutms.ac.in/api/fee/search?admissionSession=${admissionSession}&courseName=${enrolledCourse}`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+         console.log(data, "data")
+         const totalAmount = data.enrollmentFee + data.registrationFee;
+         console.log(totalAmount)
+        setEnrollmentFee(data.enrollmentFee);
+        setRegistrationFee(data.registrationFee);
+        setTotalAmount(totalAmount);
+      })
+      .catch((error) => {
+        console.error("Error fetching fee information:", error);
+      });
+  };
+
 
   function isDate(val) {
     // Cross realm comptatible
@@ -58,7 +91,7 @@ function PaymentPage() {
       .then((response) => response.json())
       .catch((err) => console.log(err));
   };
-  const userData = JSON.parse(sessionStorage.getItem("currentUser"));
+  // const userData = JSON.parse(sessionStorage.getItem("currentUser"));
   const email = userData.email;
   const mobile = userData.mobile;
   const firstname = userData.name;
@@ -68,7 +101,7 @@ function PaymentPage() {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      getData({ amount: 1, email, mobile, userid }).then((response) => {
+      getData({ totalAmount , email, mobile, userid }).then((response) => {
         var information = {
           
           action: "https://securegw.paytm.in/order/process",
@@ -167,7 +200,7 @@ function PaymentPage() {
                   Enrollment Fee
                 </td>
                 <td style={{ padding: "10px", border: "1px solid #ddd" }}>
-                  ₹ 5000
+                  ₹ {enrollmentFee}
                 </td>
               </tr>
               <tr>
@@ -175,7 +208,7 @@ function PaymentPage() {
                   Registration Fee
                 </td>
                 <td style={{ padding: "10px", border: "1px solid #ddd" }}>
-                  ₹ 480
+                  ₹ {registrationFee}
                 </td>
               </tr>
             
@@ -204,7 +237,7 @@ function PaymentPage() {
                   >
                     ₹
                   </span>{" "}
-                  5480
+                  {totalAmount}
                 </td>
               </tr>
             </tbody>

@@ -18,7 +18,7 @@ function Signup() {
   const [fathersname, setFathersname] = useState("");
   const [mothersname, setMothersname] = useState("");
   const [mobile, setMobile] = useState("");
-  const [dob, setDob] = useState("");
+  const [dob, setDob] = useState(null);
   
   const [emailRegisteredMessage, setEmailRegisteredMessage] = useState("");
 
@@ -442,6 +442,7 @@ function Signup() {
               </span>
               <input type="date" placeholder="Dath of Birth" color="#3c6880"
                 name="dob"
+                dateFormat="dd/MM/yyyy" 
                 value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 autoComplete="off" />

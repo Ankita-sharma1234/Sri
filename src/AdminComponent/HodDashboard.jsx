@@ -1,22 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-////////////nav//////////////////////////
+
+import React from 'react'
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import OnlyHeaders from "./OnlyHeaders";
-import PropTypes from "prop-types";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import posImage from "./12.png";
 import AppBar from "@mui/material/AppBar";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Hidden from "@mui/material/Hidden";
+
+import { Link } from "react-router-dom";
 
 
 const theme = createTheme({
@@ -24,428 +15,405 @@ const theme = createTheme({
     fontWeightBold: 700,
   },
 });
-function HodDashboard() {
+
+const HodDashboard = () => {
   return (
     <>
       <style>
-        {`
-      @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300&family=Tinos&display=swap');
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Tinos', serif;
-}
-.sidebar {
-  margin-top: 64px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 260px;
- 
-  z-index: 100;
-  transition: all 0.5s ease;
-}
-.sidebar.close {
-  width: 78px;
-   /* box-shadow: 5px 10px #888888; */
-}
-.sidebar .logo-details {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-.sidebar .logo-details i {
-  font-size: 30px;
-  /* color: #fff; */
-  height: 50px;
-  min-width: 78px;
-  text-align: center;
-  line-height: 50px;
-}
-.sidebar .logo-details .logo_name {
-  font-size: 22px;
-  /* color: #fff; */
-  font-weight: 600;
-  transition: 0.3s ease;
-  transition-delay: 0.1s;
-}
-.sidebar.close .logo-details .logo_name {
-  transition-delay: 0s;
-  opacity: 0;
-  pointer-events: none;
-}
-.sidebar .nav-links {
-  height: 100%;
-  padding: 0 0 150px 0;
-  overflow: auto;
-}
-.sidebar.close .nav-links {
-  overflow: visible;
-}
-.sidebar .nav-links::-webkit-scrollbar {
-  display: none;
-}
-.sidebar .nav-links li {
-  position: relative;
-  list-style: none;
-  transition: all 0.4s ease;
-}
-.sidebar .nav-links li:hover {
-  background: #a1c8e6;
-}
-.sidebar .nav-links li .icon-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.sidebar.close .nav-links li .icon-link {
-  display: block;
-}
-.sidebar .nav-links li i {
-  height: 50px;
-  min-width: 78px;
-  text-align: center;
-  line-height: 50px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-/* .sidebar .nav-links li.showMenu i.arrow {
-  transform: rotate(-180deg);
-} */
-/* .sidebar.close .nav-links i.arrow {
-  display: none;
-} */
-.sidebar .nav-links li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-/* .sidebar .nav-links li a .link_name {
-  font-size: 18px;
-  font-weight: 400;
-  color: #fff;
-  transition: all 0.4s ease;
-} */
-.sidebar.close .nav-links li a .link_name {
-  opacity: 0;
-  pointer-events: none;
-}
-.sidebar .nav-links li .sub-menu {
-  padding: 6px 6px 14px 80px;
-  margin-top: -10px;
-  background: #1d1b31;
-  display: none;
-}
-/* .sidebar .nav-links li.showMenu .sub-menu {
-  display: block;
-} */
-.sidebar .nav-links li .sub-menu a {
-  color: #fff;
-  font-size: 15px;
-  padding: 5px 0;
-  white-space: nowrap;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-}
-.sidebar .nav-links li .sub-menu a:hover {
-  opacity: 1;
-}
-.sidebar.close .nav-links li .sub-menu {
-  position: absolute;
-  left: 100%;
-  top: -10px;
-  margin-top: 0;
-  padding: 10px 20px;
-  border-radius: 0 6px 6px 0;
-  opacity: 0;
-  display: block;
-  pointer-events: none;
-  transition: 0s;
-}
-.sidebar.close .nav-links li:hover .sub-menu {
-  top: 0;
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-}
-/* .sidebar .nav-links li .sub-menu .link_name {
-  display: none;
-} */
-.sidebar.close .nav-links li .sub-menu .link_name {
-  font-size: 18px;
-  opacity: 1;
-  display: block;
-}
-.sidebar .nav-links li .sub-menu.blank {
-  opacity: 1;
-  pointer-events: auto;
-  padding: 3px 20px 6px 16px;
-  opacity: 0;
-  pointer-events: none;
-}
-/* .sidebar .nav-links li:hover .sub-menu.blank {
-  top: 50%;
-  transform: translateY(-50%);
-} */
-/* .sidebar .profile-details {
-  position: fixed;
-  bottom: 0;
-  width: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 12px 0;
-  transition: all 0.5s ease;
-} */
-/* .sidebar.close .profile-details {
-  background: none;
-}
-.sidebar.close .profile-details {
-  width: 78px;
-} */
-/* .sidebar .profile-details .profile-content {
-  display: flex;
-  align-items: center;
-} */
-/* .sidebar .profile-details img {
-  height: 52px;
-  width: 52px;
-  object-fit: cover;
-  border-radius: 16px;
-  margin: 0 14px 0 12px;
- 
-  transition: all 0.5s ease;
-} */
-/* .sidebar.close .profile-details img {
-  padding: 10px;
-} */
-/* .sidebar .profile-details .profile_name,
-.sidebar .profile-details .job {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-  white-space: nowrap;
-} */
-/* .sidebar.close .profile-details i,
-.sidebar.close .profile-details .profile_name,
-.sidebar.close .profile-details .job {
-  display: none;
-} */
-/* .sidebar .profile-details .job {
-  font-size: 12px;
-} */
-/* .home-section {
-  position: relative;
-  background: #e4e9f7;
-  height: 100vh;
-  left: 260px;
-  width: calc(100% - 260px);
-  transition: all 0.5s ease;
-} */
-/* .sidebar.close ~ .home-section {
-  left: 78px;
-  width: calc(100% - 78px);
-} */
-/* .home-section .home-content {
-  height: 60px;
-  display: flex;
-  align-items: center;
-} */
-/* .home-section .home-content .bx-menu,
-.home-section .home-content .text {
-  color: #11101d;
-  font-size: 35px;
-} */
-/* .home-section .home-content .bx-menu {
-  margin: 0 15px;
-  cursor: pointer;
-} */
-/* .home-section .home-content .text {
-  font-size: 26px;
-  font-weight: 600;
-} */
-@media (max-width: 420px) {
-  .sidebar.close .nav-links li .sub-menu {
-    display: none;
-  }
-}
-      `}
+        {
+          `
+        /* Google Font Link */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        
+        /* General styles */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: "Poppins", sans-serif;
+        }
+        
+        /* Sidebar styles */
+        .sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 76px;
+          // background: #11101D;
+          // background:linear-gradient(to right  , #b15b86,#440f50);
+          background: #000328;
+          padding: 6px 14px;
+          z-index: 99;
+          transition: all 0.5s ease;
+        }
+        
+        .sidebar.open {
+          width: 250px;
+        }
+        
+        .sidebar .logo-details {
+          height: 60px;
+          display: flex;
+          align-items: center;
+          position: relative;
+        }
+        
+        .sidebar .logo-details .icon,
+        .sidebar .logo-details .logo_name {
+          opacity: 0;
+          transition: all 0.5s ease;
+        }
+        
+        .sidebar.open .logo-details .icon,
+        .sidebar.open .logo-details .logo_name {
+          opacity: 1;
+        }
+        
+        .sidebar .logo-details #btn {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          font-size: 23px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.5s ease;
+        }
+        
+        .sidebar.open .logo-details #btn {
+          text-align: right;
+        }
+        
+        .sidebar i {
+          color: #fff;
+          height: 60px;
+          min-width: 50px;
+          font-size: 28px;
+          text-align: center;
+          line-height: 60px;
+        }
+        
+        .sidebar .nav-list {
+          margin-top: 20px;
+        }
+        
+        .sidebar li {
+          position: relative;
+          margin: 8px 0;
+          list-style: none;
+        }
+        
+        .sidebar li .tooltip {
+          position: absolute;
+          top: -20px;
+          left: calc(100% + 15px);
+          z-index: 3;
+          background: #fff;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-size: 15px;
+          font-weight: 400;
+          opacity: 0;
+          white-space: nowrap;
+          pointer-events: none;
+          transition: 0s;
+        }
+        
+        .sidebar li:hover .tooltip {
+          opacity: 1;
+          pointer-events: auto;
+          transition: all 0.4s ease;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        
+        .sidebar.open li .tooltip {
+          display: none;
+        }
+        
+        .sidebar input {
+          font-size: 15px;
+          color: #fff;
+          font-weight: 400;
+          outline: none;
+          height: 50px;
+          width: 50px;
+          border: none;
+          border-radius: 12px;
+          transition: all 0.5s ease;
+          background: #1d1b31;
+        }
+        
+        .sidebar.open input {
+          padding: 0 20px 0 50px;
+          width: 100%;
+        }
+        
+        // .sidebar .bx-search {
+        //   position: absolute;
+        //   top: 50%;
+        //   left: 0;
+        //   transform: translateY(-50%);
+        //   font-size: 22px;
+        //   background: #1d1b31;
+        //   color: #fff;
+        // }
+        
+        // .sidebar.open .bx-search:hover {
+        //   background: #1d1b31;
+        //   color: #fff;
+        // }
+        
+        // .sidebar .bx-search:hover {
+        //   background: #fff;
+        //   color: #11101d;
+        // }
+        
+        .sidebar li a {
+          display: flex;
+          height: 100%;
+          width: 100%;
+          border-radius: 12px;
+          align-items: center;
+          text-decoration: none;
+          transition: all 0.4s ease;
+          background: #11101D;
+        }
+        
+        .sidebar li a:hover {
+          background: #FFF;
+        }
+        
+        .sidebar li a .links_name {
+          color: #fff;
+          font-size: 15px;
+          font-weight: 400;
+          white-space: nowrap;
+          opacity: 0;
+          pointer-events: none;
+          transition: 0.4s;
+        }
+        
+        .sidebar.open li a .links_name {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        
+        .sidebar li a:hover .links_name,
+        .sidebar li a:hover i {
+          transition: all 0.5s ease;
+          color: #11101D;
+        }
+        
+        .sidebar li i {
+          height: 50px;
+          line-height: 50px;
+          font-size: 18px;
+          border-radius: 12px;
+        }
+        
+        .sidebar li.profile {
+          position: fixed;
+          height: 60px;
+          width: 78px;
+          left: 0;
+          bottom: -8px;
+          padding: 10px 14px;
+          background: #1d1b31;
+          transition: all 0.5s ease;
+          overflow: hidden;
+        }
+        
+        .sidebar.open li.profile {
+          width: 250px;
+        }
+        
+        .sidebar li .profile-details {
+          display: flex;
+          align-items: center;
+          flex-wrap: nowrap;
+        }
+        
+        .sidebar li img {
+          height: 45px;
+          width: 45px;
+          object-fit: cover;
+          border-radius: 6px;
+          margin-right: 10px;
+        }
+        
+        .sidebar li.profile .name,
+        .sidebar li.profile .job {
+          font-size: 15px;
+          font-weight: 400;
+          color: #fff;
+          white-space: nowrap;
+        }
+        
+        .sidebar li.profile .job {
+          font-size: 12px;
+        }
+        
+        .sidebar .profile #log_out {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          background: #1d1b31;
+          width: 100%;
+          height: 60px;
+          line-height: 60px;
+          border-radius: 0px;
+          transition: all 0.5s ease;
+        }
+        
+        .sidebar.open .profile #log_out {
+          width: 50px;
+          background: none;
+        }
+        
+        /* Home section */
+        .home-section {
+          position: relative;
+          background: #E4E9F7;
+          min-height: 100vh;
+          top: 0;
+          left: 78px;
+          width: calc(100% - 78px);
+          transition: all 0.5s ease;
+          z-index: 2;
+        }
+        
+        .sidebar.open ~ .home-section {
+          left: 250px;
+          width: calc(100% - 250px);
+        }
+        
+        .home-section .text {
+          display: inline-block;
+          color: #11101d;
+          font-size: 25px;
+          font-weight: 500;
+          margin: 18px;
+        }
+        
+        /* Media query for smaller screens */
+        @media (max-width: 420px) {
+          .sidebar li .tooltip {
+            display: none;
+          }
+        }
+        `
+        }
       </style>
+
+
+      <meta charSet="UTF-8" />
+
+      <link rel="stylesheet" href="style.css" />
+
+      <link
+        href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+        rel="stylesheet"
+      />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <ThemeProvider theme={theme}>
-    
-
         <Box sx={{ display: "flex" }}>
-     
-     <AppBar
-       position="fixed"
-       sx={{
-         width: "100%",
-         top: 0,
-         zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundImage: "linear-gradient(to right ,#1d2671, #C33764)",
-       
-       }}
-     >
-       <Toolbar>
-         <Box sx={{ display: "flex", alignItems: "center" }}>
-           <img
-             style={{ height: "50px", width: "50px", marginRight: "20px" }}
-             src={posImage}
-             alt=""
-           />
-           <Typography
-             className="heading"
-             variant="h6"
-             component="div"
-             sx={{
-               flexGrow: 1,
-               textShadow: "2px 2px 5px red",
-               marginLeft:"30px"
-             }}
-           >
-             Sri Satya Sai University Of Technology And Medical Sciences
-             (SSSUTMS)
-           </Typography>
-         </Box>
-       </Toolbar>
-     </AppBar>
-   
-   </Box>
 
-        <div className="sidebar close" style={{backgroundColor:"#E5E6E4" ,borderRightStyle:"solid",boxShadow:"2px solid black"}}>
-          <ul className="nav-links" style={{ marginTop: "50px" }}>
-            <Link to="/dashboard">
-              {" "}
-              <li>
+          <AppBar
+            position="fixed"
+            sx={{
+              width: "100%",
+              top: 0,
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+              // backgroundImage: "linear-gradient(to right, #b15b86,#440f50) ",
+background:'#000328',
+            }}
+          >
+            <Toolbar>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
                 <img
-                  src="https://cdn.icon-icons.com/icons2/1863/PNG/512/dashboard_119241.png"
-                  alt="logo"
-                  style={{ width: "22px", marginLeft: "18px" }}
+                  style={{ height: "50px", width: "50px", marginRight: "20px" }}
+                  src={posImage}
+                  alt=""
                 />
-                <a href="#">
-                  <span className="link_name">Dashboard</span>
-                </a>
-                <ul className="sub-menu blank">
-                  <li>
-                    <a className="link_name" href="#">
-                      Dashboard
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </Link>
+                <Typography
+                  className="heading"
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    flexGrow: 1,
+                    textShadow: "2px 2px 5px red",
+                    marginLeft: "30px"
+                  }}
+                >
+                  Sri Satya Sai University Of Technology And Medical Sciences
+                  (SSSUTMS)
+                </Typography>
+              </Box>
+            </Toolbar>
+          </AppBar>
 
+        </Box>
+        <div className="sidebar">
+          <div className="logo-details">
+            <i className="bx bxl-c-plus-plus icon" />
+
+            <i className="bx bx-menu" id="btn" />
+          </div>
+          <ul className="nav-list">
+          <Link to="/dashboard">
+            <li>
+              <a href="#">
+                <i className="bx bx-grid-alt" />
+                <span className="links_name"></span>
+              </a>
+              <span className="tooltip">Dashboard</span>
+            </li>
+            </Link>
             <Link to="/hodDetail">
-              <li>
-                <a href="#">
-
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/education-school/education-icon.png"
-                    style={{
-                      width: "29px",
-                      marginLeft: "15px",
-                      marginTop: "-4px",
-                    }}
-                  />
-                  <span className="link_name">Verification</span>
-                </a>
-                <ul className="sub-menu blank">
-                  <li>
-                    <a className="link_name" href="#">
-                      Verification
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </Link>
-
-<Link to="/erp/hodlogin">
             <li>
               <a href="#">
-                {/* <i className="bx bx-bar-chart" /> */}
-                <img
-                  src="https://seekicon.com/free-icon-download/copy-add_1.svg"
-                  alt="logo"
-                  style={{ width: "29px", marginLeft: "15px", marginTop: "16px" }}
-                />
-                <span className="link_name">Logout</span>
+                <i className="bx bx-user" />
+                <span className="links_name"></span>
               </a>
-              <ul className="sub-menu blank">
-                <li>
-                  <a className="link_name" href="#">
-                   Logout
-                  </a>
-                </li>
-              </ul>
+              <span className="tooltip">Verification</span>
             </li>
             </Link>
+            <Link to="/erp/hodlogin">
+            <li>
+              <a href="#">
+                <i className="bx bx-chat" />
+                <span className="links_name"></span>
+              </a>
+              <span className="tooltip">Logout</span>
+            </li></Link>
+            <li>
+              <a href="#">
+                <i className="bx bx-pie-chart-alt-2" />
+                <span className="links_name"></span>
+              </a>
+              <span className="tooltip"></span>
+            </li>
+
 
             <li>
               <a href="#">
-                {/* <i className="bx bx-bar-chart" /> */}
-                <img
-                  src="https://pic.onlinewebfonts.com/thumbnails/icons_507246.svg"
-                  alt="logo"
-                  style={{ width: "37px", marginLeft: "13px", marginTop: "16px" }}
-                />
-                <span className="link_name">Setting</span>
+                <i className="bx bx-cog" />
+                <span className="links_name"></span>
               </a>
-              <ul className="sub-menu blank">
-                <li>
-                  <a className="link_name" href="#">
-                    madel
-                  </a>
-                </li>
-              </ul>
+              <span className="tooltip">Setting</span>
             </li>
 
-            <li>
-              <a href="#">
-                {/* <i className="bx bx-bar-chart" /> */}
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Settings-icon-symbol-vector.png"
-                  alt="logo"
-                  style={{ width: "29px", marginLeft: "15px", marginTop: "16px" }}
-                />
-                <span className="link_name">Setting</span>
-              </a>
-              <ul className="sub-menu blank">
-                <li>
-                  <a className="link_name" href="#">
-                    Chart
-                  </a>
-                </li>
-              </ul>
-            </li>
-
-            <li>
-              <a href="#">
-                {/* <i className="bx bx-bar-chart" /> */}
-                <img
-                  src="https://uxwing.com/wp-content/themes/uxwing/download/editing-user-action/add-employee-icon.png"
-                  alt="logo"
-                  style={{ width: "31px", marginLeft: "15px", marginTop: "16px" }}
-                />
-                <span className="link_name">Setting</span>
-              </a>
-              <ul className="sub-menu blank">
-                <li>
-                  <a className="link_name" href="#">
-                    madel
-                  </a>
-                </li>
-              </ul>
-            </li>
           </ul>
         </div>
       </ThemeProvider>
     </>
-  );
+
+
+  )
 }
-export default HodDashboard;
+
+export default HodDashboard
