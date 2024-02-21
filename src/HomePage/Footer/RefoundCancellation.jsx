@@ -1,4 +1,6 @@
 import React from "react";
+import Navbarcontanct from "../../Navbarcontanct";
+import FooterContanct from "../../FooterContanct";
 // import Navbar from "../HomePage/Navbar";
 
 const  RefoundCancellation = () => {
@@ -100,7 +102,7 @@ const  RefoundCancellation = () => {
             font-family: 'serif';
             color: gray;
             /* padding-top: 50px; */
-            font-size: 2.5em;
+            font-size: 2.1em;
         }
         
         .paragraph {
@@ -109,7 +111,7 @@ const  RefoundCancellation = () => {
             margin-left: 50px;
             margin-right: 25px;
             padding-top: -10px;
-            font-size: 1.5em;
+            font-size: 1.2em;
             line-height: 1.3em;
             font-weight: 500;
         }
@@ -237,17 +239,22 @@ const  RefoundCancellation = () => {
         `}
     </style>
     {/* <Navbar/> */}
-      <div className="card">
-        <h5 className="primary-heading" style={{ color: "black" }}>
+    <Navbarcontanct />
+      <div className="card"  style={{
+          boxShadow: '1px 2px 9px black',
+          margin: '4em',
+          padding: '1em',
+        }}>
+        <h5 className="primary-heading" style={{ color: "black",marginTop:"10px",textDecoration:"underline" }}>
           SSSUTMS UNIVERSITY Refund and Cancellation Policy
         </h5>
         <br />
 
         {/* <h3 style={{padding:'10px',color:'gray'}}>The "SSSUTMS UNIVERSITY " supports the students . However, if there is a clear error in the amount of payment or payee, please contact our office within 30 days in the hours of 10 am and 5pm indian Standard Time to resolve the issue.</h3> */}
-        <h3 style={{ color: "white", padding: "20px", color: "green" }}>
-          Refund and Cancellation Policy:
-        </h3>
-        <p className="paragraph">
+        <h5 style={{ color: "white", padding: "20px", color: "#8B008B"}}>
+         <b>Refund and Cancellation Policy :-</b> 
+        </h5>
+        <p className="paragraph" style={{color:"black"}}>
           The "SSSUTMS UNIVERSITY " supports the students . However, if there is
           a clear error in the amount of payment or payee, please contact our
           office within 30 days in the hours of 10 am and 5pm indian Standard
@@ -287,6 +294,7 @@ const  RefoundCancellation = () => {
         © Copyright 2020-2021 beCoditive. All rights reserved.
       </p>
     </footer> */}
+    <FooterContanct />
     </>
   );
 };

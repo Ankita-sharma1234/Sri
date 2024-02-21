@@ -1,4 +1,6 @@
 import React from "react";
+import Navbarcontanct from "../../Navbarcontanct";
+import FooterContanct from "../../FooterContanct";
 // import Navbar from "../HomePage/Navbar";
 
 const PrivacyPolicy = () => {
@@ -99,7 +101,7 @@ const PrivacyPolicy = () => {
             font-family: 'serif';
             color: gray;
             /* padding-top: 50px; */
-            font-size: 2.5em;
+            font-size: 2.1em;
         }
         
         .paragraph {
@@ -109,7 +111,7 @@ const PrivacyPolicy = () => {
             margin-right: 25px;
             /* padding-top: 10px; */
            
-            font-size: 1.3em;
+            font-size: 1.2em;
             line-height: 1.6em;
             font-weight: 500;
         }
@@ -236,23 +238,28 @@ const PrivacyPolicy = () => {
         `}
       </style>
       {/* <Navbar /> */}
-      <div className="card">
-        <h2 className="primary-heading" style={{ color: "black" }}>
+      <Navbarcontanct />
+      <div className="card" style={{
+          boxShadow: '1px 2px 9px black',
+          margin: '4em',
+          padding: '1em',
+        }}>
+        <h2 className="primary-heading" style={{ color: "black",marginTop:"20px",textDecoration:"underline" }}>
           SSSUTMS UNIVERSITY POLICY
         </h2>
-        <h3
+        <h5
           style={{
             color: "white",
             paddingTop: "50px",
             paddingBottom: "10px",
             paddingLeft: "50px",
-            color: "black",
+            color: "#8B008B",
             fontWeight: "bolder",
           }}
         >
-          Privacy Policy
-        </h3>
-        <p className="paragraph">
+          <b>Privacy Policy :-</b>
+        </h5>
+        <p className="paragraph" style={{color:"black",marginTop:"10px"}}>
           The "UNIVERSITY" protects the personal information collected from and
           about students, graduates, staff and other business partners. This
           includes the training of employees and the establishment of control
@@ -266,20 +273,20 @@ const PrivacyPolicy = () => {
           Confidentiality Agreement.
         </p>
 
-        <h3
+        <h5
           style={{
             color: "white",
             paddingTop: "50px",
             paddingBottom: "10px",
             paddingLeft: "50px",
-            color: "black",
+            color: "#8B008B",
             fontWeight: "bolder",
           }}
         >
-          In general, access to personal information is limited to the
-          following:
-        </h3>
-        <p className="paragraph">
+        <b> In general, access to personal information is limited to the
+          following :-</b> 
+        </h5>
+        <p className="paragraph"  style={{color:"black", marginTop:"10px"}}>
           An individual accessing his or her own personal information An
           employee or agent of The "UNIVERSITY" with authorized access based on
           a legitimate academic or business need to know Any organization or
@@ -291,19 +298,19 @@ const PrivacyPolicy = () => {
           "UNIVERSITY" business
         </p>
 
-        <h3
+        <h5
           style={{
             color: "white",
             paddingTop: "50px",
             paddingBottom: "10px",
             paddingLeft: "50px",
-            color: "black",
+            color: "#8B008B",
             fontWeight: "bolder",
           }}
         >
-          Privacy
-        </h3>
-        <p className="paragraph">
+        <b> Privacy :-</b> 
+        </h5>
+        <p className="paragraph"  style={{color:"black",marginTop:"10px"}}>
           The "UNIVERSITY" does not sell, rent or otherwise make available a
           student's personal information to any third parties for marketing
           purposes except where noted above. Notwithstanding the previously
@@ -327,7 +334,9 @@ const PrivacyPolicy = () => {
         © Copyright 2020-2021 beCoditive. All rights reserved.
       </p>
     </footer> */}
+    <FooterContanct />
     </>
+    
   );
 };
 

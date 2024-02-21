@@ -125,6 +125,9 @@ import Adminser from "./Main_Admin/Masters/Adminser.jsx"
 import ManualEnrol_G from "./Main_Admin/Masters/ManualEnrol_G.jsx";
 import Paym from "./Main_Admin/Masters/Admin_Dashboard/Paym.jsx";
 import Paymen from "./Main_Admin/Masters/Admin_Dashboard/Paymen.jsx";
+import TermsConditions from "./HomePage/Footer/TermsConditions.jsx";
+import PrivacyPolicy from "./HomePage/Footer/PrivacyPolicy.jsx";
+import RefoundCancellation from "./HomePage/Footer/RefoundCancellation.jsx";
 
 
 function App() {
@@ -152,6 +155,10 @@ function App() {
   return (
     <>
       <Routes>
+ 
+      <Route path="/terms-conditions" element={<TermsConditions/>} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/refound-cancellation" element={<RefoundCancellation/>} />
         {/*------------------------Student Routes-----------------------------------------*/}
         <Route path="/erp/studentregister" element={<Signup />} />
         <Route path="/erp/studentlogin" element={<Signin />} />

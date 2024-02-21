@@ -6,7 +6,7 @@
   }
   
   
-  @media (max-width: 600px) {
+  @media (maxWidth: 600px) {
     .button-container {
       flex-direction: column;
       margin-left: 0;

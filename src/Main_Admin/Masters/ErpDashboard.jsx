@@ -341,8 +341,8 @@ function ErpDashboard() {
       <div className="main-container">
         <div className="main">
           <div className="box-container">
-            <div className="box box1">
-              <div className="text" onClick={totalRegisteredStudent}>
+            <div className="box box1" onClick={totalRegisteredStudent}>
+              <div className="text" >
                 <h2 className="topic-heading">{totalRegisteredCount}</h2>
                 <h2 className="topic">Total Registered</h2>
               </div>
@@ -352,8 +352,8 @@ function ErpDashboard() {
                 alt="Views"
               />
             </div>
-            <div className="box box2">
-              <div className="text" onClick={TotalEnrolled} >
+            <div className="box box2"  onClick={TotalEnrolled}>
+              <div className="text" >
                 <h2 className="topic-heading">{totalEnrolled}</h2>
                 <h2 className="topic">Total Enrolled Student</h2>
               </div>
@@ -363,8 +363,8 @@ function ErpDashboard() {
                 alt="likes"
               />
             </div>
-            <div className="box box3">
-              <div className="text" onClick={handleFee}>
+            <div className="box box3" onClick={handleFee}>
+              <div className="text" >
                 <h2 className="topic-heading">{totalPaidStudentCount}</h2>
                 <h2 className="topic">Registration & Fee Paid</h2>
               </div>
@@ -374,8 +374,8 @@ function ErpDashboard() {
                 alt="comments"
               />
             </div>
-            <div className="box box4">
-              <div className="text" onClick={handleClick}>
+            <div className="box box4" onClick={handleClick}>
+              <div className="text" >
                 <h2 className="topic-heading">{todayRegisteredCount}</h2>
                 <h2 className="topic">Today Registered</h2>
               </div>

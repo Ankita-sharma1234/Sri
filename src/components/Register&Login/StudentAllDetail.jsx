@@ -90,7 +90,7 @@ function StudentAllDetail() {
     const imageDataUrl = await getImageDataUrl(userData.Documents?.applicantPhoto);
 
 
-    pdf.addImage(logo, "JPEG", 10, 7, 30, 30); 
+    pdf.addImage(logo, "JPEG", 10, 7, 30, 30);
     pdf.setFont("helvetica", "bold");
     pdf.text("Sri Satya Sai University of Technology and Medical Science Sehore", 105, 10, { align: "center" });
     pdf.text("[Establiish Under Govt. of (M.P.) & Registered UGC 2(F),1956]", 105, 18, { align: "center" });
@@ -147,7 +147,7 @@ function StudentAllDetail() {
 
     const educationHeaders = ["Degree/Course", "Specialization/Subject", "Board/University", "Passing Year", "Obtain Marks", "Percentage"];
     const educationData = [
-      ["10th", "ALL COMPULSORY", `${userData.academicDetails.tenthBoard}`, `${userData.academicDetails?.tenthPassingYear}`, `${userData.academicDetails.twelfthMarksObtain}`, `${userData.academicDetails.twelfthPercentage}`],
+      ["10th", "ALL COMPULSORY", `${userData.academicDetails.tenthBoard}`, `${userData.academicDetails?.tenthPassingYear}`, `${userData.academicDetails.tenthMarksObtain}`, `${userData.academicDetails.tenthPercentage}`],
       ["12th/Diploma", `${userData.QualifiedCourse}`, `${userData.academicDetails.twelfthBoard}`, `${userData.academicDetails.twelfthPassingYear}`, `${userData.academicDetails.twelfthMarksObtain}`, `${userData.academicDetails.twelfthPercentage}`],
       ["Other", " ", " ", " ", " ", " "],
     ];
@@ -353,7 +353,7 @@ function StudentAllDetail() {
                               Enrollment Number
                             </th>
                             <td width="2%">:</td>
-                            <td>{userData.enrollmentNumber ? `${userData.enrollmentNumber}`: "Not Generated"}</td>
+                            <td>{userData.enrollmentNumber ? `${userData.enrollmentNumber}` : "Not Generated"}</td>
                           </tr>
 
                           <tr>
@@ -502,14 +502,11 @@ function StudentAllDetail() {
                             <td width="2%">:</td>
 
                             <td>
-                              {
-                                shouldDisplaySection(
-                                  userData?.professional?.ScholarshipRequired
-                                )
-                                  ? userData?.professional?.ScholarshipRequired
-                                  : "Not Eligible"
-                              }
+                              {userData?.professional?.ScholarshipRequired
+                                ? userData.professional.ScholarshipRequired
+                                : "Not Eligible"}
                             </td>
+
                           </tr>
 
                           <tr>
@@ -691,8 +688,13 @@ function StudentAllDetail() {
                             Samagra ID
                           </th>
                           <td width="2%">:</td>
-                          <td>{userData?.professional?.SamagraId}</td>
+                          <td>
+                            {userData?.professional?.SamagraId
+                              ? userData.professional.SamagraId
+                              : "Not Available"}
+                          </td>
                         </tr>
+
 
                         <tr>
                           <th

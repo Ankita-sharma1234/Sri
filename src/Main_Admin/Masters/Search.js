@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+// import { Button } from "react-bootstrap";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   TableCell,
   Box
 } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import axios from "axios";
 import closebutton from "../../images/close-button.png"
 import Paper from "@mui/material/Paper";
@@ -38,12 +39,14 @@ const Search = () => {
   const [enrollmentGenerated, setEnrollmentGenerated] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+  const [loading,setLoading] = useState(false)
 
   const { session, courseType, course, branch, college } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         const url = 'https://sssutms.ac.in/apitest/v2/newenrollmentrequest';
         const requestData = {
           session,
@@ -65,6 +68,8 @@ const Search = () => {
       } catch (error) {
         console.error('Error fetching data:', error);
         setDataNotFound(true);
+      } finally{
+        setLoading(false)
       }
     };
 
@@ -148,29 +153,37 @@ const Search = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <AdminDashboard />
-      <>
-        <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "100px" }}>
-          <CardContent>
-            {dataNotFound ? (
-              <div>
-                <h2>Oops! No Student Available in this Course!!!!</h2>
-              </div>
-            ) : (
+    <AdminDashboard />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "50px",
+      }}
+    >
+          {loading && <CircularProgress color="success" />} {/* Display spinner if loading is true */}
+      {dataNotFound ? (
+        <div>
+          <h2>Oops! No Student Available in this Course!!!!</h2>
+        </div>
+      ) : (
 
-              <Paper sx={{ width: "100%", overflow: "auto" }}>
+              <Box sx={{ width: "90%", marginTop: "20px" }}>
+              <CardContent>
+                <Paper sx={{ width: "100%", overflow: "auto" }}>
 
-                <Box sx={{ p: 2 }}>
-                  <SearchIcon sx={{ mr: 1 }} />
-                  <input
-                    type="text"
-                    placeholder="Search  by ID or Name"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                  />
-                </Box>
+<Box sx={{ p: 2 }}>
+                <SearchIcon sx={{ mr: 1 }} />
+                <input
+                  type="text"
+                  placeholder="Search  by ID or Name"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+              </Box>
                 <TableContainer sx={{ maxHeight: 440 }}>
-                  <Table stickyHeader aria-label="sticky table">
+                <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                       <TableRow>
                         <TableCell
@@ -362,7 +375,7 @@ const Search = () => {
                             {student.assignedCollege}
                           </TableCell>
                           <TableCell align="center"> <Button
-                            variant="success"
+                           variant="contained" color="success"
                             onClick={() => handleClick()}
                             disabled={enrollmentGenerated}
                           >
@@ -383,13 +396,12 @@ const Search = () => {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
               </Paper>
-            )
-            }
           </CardContent>
-          <br></br>
+          <br />
         </Box>
-      </>
-    </ThemeProvider>
+      )}
+    </Box>
+  </ThemeProvider>
   );
 };
 

@@ -1,4 +1,6 @@
 import React from "react";
+import Navbarcontanct from "../../Navbarcontanct";
+import FooterContanct from "../../FooterContanct";
 // import Navbar from "../HomePage/Navbar";
 
 
@@ -27,11 +29,7 @@ const TermsConditions = () => {
             box-sizing: border-box;
         } */
         
-        body, html {
-            width: 100%;
-            min-height: 100%;
-            /* background-color: #242836; */
-        }
+        
         
         .main-header {
             width: 100%;
@@ -100,7 +98,7 @@ const TermsConditions = () => {
             font-family: 'serif';
             color: gray;
             /* padding-top: 50px; */
-            font-size: 2.5em;
+            font-size: 2em;
         }
         
         .paragraph {
@@ -109,7 +107,7 @@ const TermsConditions = () => {
             margin-left: 50px;
             margin-right: 25px;
             padding-top: 10px;
-            font-size: 1.5em;
+            font-size: 1.3em;
             line-height: 1.3em;
             font-weight: 500;
         }
@@ -236,20 +234,24 @@ const TermsConditions = () => {
         
         `}
             </style>
-            {/* <Navbar /> */}
-            <div className="card">
-                <h2 className="primary-heading" style={{ color: "black" ,marginBottom:"40px"}}>
-                    SSSUTMS UNIVERSITY Terms of Condition
-                </h2>
-                <h3 style={{ padding: "10px", color: "gray"}}>
+            <Navbarcontanct />
+            <div className="card"    style={{
+          boxShadow: '1px 2px 9px black',
+          margin: '4em',
+          padding: '1em',
+        }}>
+                <h3 className="primary-heading" style={{ color: "black" ,marginBottom:"30px",textDecoration:"underline",marginTop:"20px"}}>
+                  SSSUTMS UNIVERSITY Terms of Condition
+                </h3>
+                <h5 style={{ padding: "10px", color: "gray"}}>
                     Welcome to our website. If you continue to browse and use this website
                     you are agreeing to comply with and be bound by the following terms
                     and conditions of use
-                </h3>
-                <h3 style={{ color: "white", padding: "10px", color: "green" }}>
-                    The use of this website is subject to the following terms of use:
-                </h3>
-                <p className="paragraph">
+                </h5>
+                <h4 style={{ color: "white", padding: "10px", color: "#8B008B" }}>
+                   <b>The use of this website is subject to the following terms of use :-   </b> 
+                </h4>
+                <p className="paragraph" style={{color:"black"}}>
                     1) The content of the pages of this website is for your general
                     information and use only. It is subject to change without notice.{" "}
                     <br /> <br />
@@ -297,12 +299,7 @@ const TermsConditions = () => {
                     <br /> <br />
                 </p>
             </div>
-            {/* </section> */}
-            {/* <footer>
-      <p className="footer-heading">
-        © Copyright 2020-2021 beCoditive. All rights reserved.
-      </p>
-    </footer> */}
+          <FooterContanct />
         </>
     );
 };
