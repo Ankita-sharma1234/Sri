@@ -14,7 +14,7 @@ import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
 import HodDashboard from "../../AdminComponent/HodDashboard";
-
+import axios from 'axios'
 const theme = createTheme({
   typography: {
     fontWeightBold: 700,
@@ -28,18 +28,23 @@ function TotalFeePaidHod() {
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
   const [studentdata, setStudentData] = useState([]);
  
-  const { session, courseType, course, branch, college } = useParams();
+ // const { session, courseType, course, branch, college } = useParams();
   // console.log(session, courseType, course, branch, college, "data from query");
+  const hod = JSON.parse(sessionStorage.getItem("AnkitHOD"));
+ 
+ const branch = hod.Branch
+  //console.log( , "branch")
   useEffect(() => {
     const fetchData = async () => {
       try {
       
-        const response = await fetch(
-          `https://sssutms.ac.in/apitest/admin/students/paidlist`
+        const response = await axios.post(
+          `https://sssutms.ac.in/apitest/hod/students/paidlist?branch=${branch}`
         );
-        const data = await response.json();
-        setStudentData(data.students);
-        console.log(data, "data from api");
+        const data = response.data;
+        console.log(response.data, "dataresponse")
+       setStudentData(data.students);
+       // console.log(data, "data from api");
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,52 +66,9 @@ function TotalFeePaidHod() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  // console.log(studentdata, "data of student from use state");
+ 
 
-  const branchname = studentdata.courseBranch;
-  const coursename = studentdata.coursename;
-  const studentId = studentdata._id;
-  const assignedCollege = studentdata.assignedCollege;
 
-  const handleClick = async () => {
-    try {
-      const response = await fetch(
-        "https://sssutms.ac.in/apitest/generate-enrollment2",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            branchname,
-            studentId,
-            coursename,
-            assignedCollege,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      // console.log(data.message);
-
-      swal({
-        title: "Success",
-        text: "Enrollment Generated Successfully!",
-        icon: "success",
-        buttons: "OK",
-      });
-
-      setStudentData((prevStudentData) => {
-        return prevStudentData.filter((student) => student._id !== studentId);
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
   return (
     <>
      <ThemeProvider theme={theme}>

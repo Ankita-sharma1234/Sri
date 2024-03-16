@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Grid, Button } from '@mui/material';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import OnlyHeader from "../../AdminComponent/OnlyHeader";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 // import domtoimage from "dom-to-image";
@@ -255,7 +254,7 @@ function StudentAllDetail() {
             boxShadow: "2px solid black",
           }}
         >
-          <Grid container sx={{ justifyContent: "center", }}>
+          <Grid container sx={{ justifyContent: "center"}}>
             <Grid item xs={12} sm={5} >
               <Item style={{ marginTop: '80px' }}>
                 <div class="card shadow-lg" style={{ height: "80%" }}>

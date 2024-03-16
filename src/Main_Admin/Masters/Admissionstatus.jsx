@@ -101,7 +101,7 @@ const Admissionstatus = () => {
                         className="custom-laptop-style">
                         <div className="shadow-box">
                             <div className="header">Admission Status</div>
-                            <div className="scroll-container" style={{ height: "520px" }}>
+                            <div className="scroll-container" style={{ height: "460px" }}>
                                 <form style={{ padding: "30px" }}>
                                     <Row>
                                         <FormControl>
@@ -131,11 +131,6 @@ const Admissionstatus = () => {
                                             </select>
                                         </FormControl>
                                     </Row>
-
-
-
-
-
                                     <br></br>
                                     <Row>
                                         <FormControl>

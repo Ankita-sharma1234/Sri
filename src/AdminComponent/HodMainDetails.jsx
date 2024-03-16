@@ -50,25 +50,16 @@ const HodMainDetails = () => {
             <ThemeProvider theme={theme}>
                 <HodDashboard />
                 {showForm && (
-                    // <div
-                    //   className="shadow p-3 bg-body rounded"
-                    //   style={{
-                    //     backgroundColor: "#e8e5d5",
-                    //     width: "90%", // Adjusted width for mobile screens
-                    //     // margin: "20px auto",
-                    //     marginTop:'100px',
-                    //     marginLeft:'80px' // Center align on mobile screens
-                    //   }}
-                    // >
-                    <div
+                    <div 
+
                         className="shadow p-3 bg-body rounded"
                         style={{
                             backgroundColor: "#e8e5d5",
-                            width: "90%", // Adjusted width for mobile screens
+                            width: "90%",
                             marginLeft: "90px",
-                            marginRight: "auto", // Center align on all screens
+                            marginRight: "auto",
                             marginTop: "100px",
-                            maxWidth: "350px", // Max width for larger screens
+                            maxWidth: "350px",
                         }}
                     >
                         <div
@@ -91,7 +82,7 @@ const HodMainDetails = () => {
                                 <b>Admission Session</b>
                             </h5>
                             <Form.Group className="mb-3" controlId="">
-                                <b>2023</b>
+                                <b>{admissionSession}</b>
                             </Form.Group>
                             <RadioGroup
                                 aria-labelledby="demo-radio-buttons-group-label"
@@ -110,14 +101,6 @@ const HodMainDetails = () => {
                                     label="Check Verified Student List"
                                 />
                             </RadioGroup>
-                            {/* <div
-                style={{
-                  backgroundColor: "skyblue",
-                  borderRadius: "7px",
-                  textAlign: "center",
-                  width:'350px'
-                }}
-              > */}
                             <Button
                                 backgroundColor='yellow'
                                 size="small"

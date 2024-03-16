@@ -25,7 +25,6 @@ import StudentAllDetail from './components/Register&Login/StudentAllDetail';
 
 /*-------------------- Website Main Page Routes----------------------------------------------*/
 import MainPage from './HomePage/MainPage';
-import Cards from './components/Register&Login/Erp';
 
 /*--------------------HOD Routes----------------------------------------------*/
 import HodDashboard from './AdminComponent/HodDashboard';
@@ -128,14 +127,22 @@ import Paymen from "./Main_Admin/Masters/Admin_Dashboard/Paymen.jsx";
 import TermsConditions from "./HomePage/Footer/TermsConditions.jsx";
 import PrivacyPolicy from "./HomePage/Footer/PrivacyPolicy.jsx";
 import RefoundCancellation from "./HomePage/Footer/RefoundCancellation.jsx";
+import Admission_Slip from "./Main_Admin/Masters/Admission_Slip.jsx"
+import Admission_Slip_Search from "./Main_Admin/Masters/Admission_Slip_Search.jsx";
+import { useNavigate } from "react-router-dom";
+import NIRF_Eng from "./HomePage/NIRF_Eng.jsx";
+import NIRF_Agri from "./HomePage/NIRF_Agri.jsx";
+import NIRF_Phar from "./HomePage/NIRF_Phr.jsx";
 
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
   function isAuthenticated() {
     const userData = JSON.parse(sessionStorage.getItem("AnkitHOD"));
     const hodData = JSON.parse(sessionStorage.getItem("currentUser"));
-    if (userData || hodData) {
+    const AdminData = JSON.parse(sessionStorage.getItem("Admin"));
+    if (userData || hodData || AdminData) {
       return true
     }
     return false;
@@ -152,13 +159,21 @@ function App() {
   useEffect(() => {
     console.log("Location changed:", location.pathname);
   }, [location]);
+  useEffect(() => {
+    const logoutTimer = setTimeout(() => {
+      sessionStorage.clear();
+      navigate('/erp');
+    }, 20 * 60 * 1000);
+    return () => clearTimeout(logoutTimer);
+  }, []);
+
   return (
     <>
       <Routes>
- 
-      <Route path="/terms-conditions" element={<TermsConditions/>} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/refound-cancellation" element={<RefoundCancellation/>} />
+
+        <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/refound-cancellation" element={<RefoundCancellation />} />
         {/*------------------------Student Routes-----------------------------------------*/}
         <Route path="/erp/studentregister" element={<Signup />} />
         <Route path="/erp/studentlogin" element={<Signin />} />
@@ -210,39 +225,45 @@ function App() {
 
         {/*------------------------Admin Routes-----------------------------------------*/}
 
+ 
+
         <Route path='/adminlogin' element={< AdminLogin />} />
 
-        <Route path='/admindashboard' element={< AdminDashboard />} />
-        <Route path="/admin/erpdasboard" element={<ErpDashboard />} />
+        <Route path='/admindashboard' element={<PrivateRoute element={< AdminDashboard />} />} />
 
-        <Route path='/student/totalfeepaid' element={< TotalFeePaid />} />
-        <Route path='/student/totalenrolled' element={< TotalEnrolledAdmin />} />
-        <Route path='/student/totalregistered' element={< TotalRegistered />} />
-        <Route path='/registered/studentlist' element={< StudentRegistrationList />} />
+        <Route path="/admin/erpdasboard" element={<PrivateRoute element={<ErpDashboard />} />} />
+  
+        <Route path='/student/totalfeepaid' element={<PrivateRoute element={< TotalFeePaid />} />} />
+        <Route path='/student/totalenrolled' element={<PrivateRoute element={< TotalEnrolledAdmin />} />} />
+        <Route path='/student/totalregistered' element={<PrivateRoute element={< TotalRegistered />} />} />
+        <Route path='/registered/studentlist' element={<PrivateRoute element={< StudentRegistrationList />} />} />
 
-        <Route path='/erpdashboard/student/updatedetails' element={<AdminUpdtStdt_Detail />} />
-        <Route path="/erpdashboard/student/updatealldetails/:id" element={<AdminUpdateAllDetail />} />
-        <Route path="/erpdashboard/student/search" element={<AdminStdtSearch />} />
+        <Route path='/erpdashboard/student/updatedetails' element={<PrivateRoute element={<AdminUpdtStdt_Detail />} />} />
+        <Route path="/erpdashboard/student/updatealldetails/:id" element={<PrivateRoute element={<AdminUpdateAllDetail />} />} />
+        <Route path="/erpdashboard/student/search" element={<PrivateRoute element={<AdminStdtSearch />} />} />
 
-        <Route path="/erpdashboard/pending/student/search" element={<AdminPenSearch />} />
-        <Route path="/search/:admissionSession/:courseType/:courseName/:courseBranch" element={<SearchPen />} />
-        <Route path="/searchver/:admissionSession/:courseType/:courseName/:courseBranch" element={<SearchVer />} />
-        <Route path="/sea/:admissionSession/:courseType/:courseName/:courseBranch" element={<Adminser />} />
-        <Route path="/student/status" element={<Admissionstatus />} />
-        <Route path="/erpdashboard/verified/student/search" element={<AdminVeriStdSearch />} />
+        <Route path="/erpdashboard/pending/student/search" element={<PrivateRoute element={<AdminPenSearch />} />} />
+        <Route path="/search/:admissionSession/:courseType/:courseName/:courseBranch" element={<PrivateRoute element={<SearchPen />} />} />
+        <Route path="/searchver/:admissionSession/:courseType/:courseName/:courseBranch" element={<PrivateRoute element={<SearchVer />} />} />
+        <Route path="/sea/:admissionSession/:courseType/:courseName/:courseBranch" element={<PrivateRoute element={<Adminser />} />} />
+        <Route path="/student/status" element={<PrivateRoute element={<Admissionstatus />} />} />
+        <Route path="/erpdashboard/verified/student/search" element={<PrivateRoute element={<AdminVeriStdSearch />} />} />
 
-        <Route path="/erpdashboard/student/document/search" element={<AdminDocumentSearch />} />
-        <Route path="/erpdashboard/student/updatedocuments/:id" element={<AdminUpdate_Documents />} />
+        <Route path="/erpdashboard/student/document/search" element={<PrivateRoute element={<AdminDocumentSearch />} />} />
+        <Route path="/erpdashboard/student/updatedocuments/:id" element={<PrivateRoute element={<AdminUpdate_Documents />} />} />
 
-        <Route path="/admin/search/student-pending/list" element={<Admin_Pending />} />
+        <Route path="/admin/search/student-pending/list" element={<PrivateRoute element={<Admin_Pending />} />} />
 
 
-        <Route path="/enrollment" element={<EnrollementG />} />
+        <Route path="/enrollment" element={<PrivateRoute element={<EnrollementG />} />} />
         <Route path="/manual/enrollment/generation" element={<ManualEnrol_G />} />
 
-        <Route path="/search-result/:session/:courseType/:course/:branch/:college" element={<Search />} />
-        <Route path="/enrolled/student/list/:session/:courseType/:course/:branch/:college" element={<EnrolledStudentlist />} />
-        <Route path="/enrolled/student/search-result" element={<EnrollementStudentSearch />} />
+        <Route path="/admin/erpdashboard/admissionslip/search" element={<PrivateRoute element={<Admission_Slip_Search />} />} />
+        <Route path="/admissionslip/:session/:courseType/:course/:branch/:college" element={<PrivateRoute element={<Admission_Slip />} />} />
+
+        <Route path="/search-result/:session/:courseType/:course/:branch/:college" element={<PrivateRoute element={<Search />} />} />
+        <Route path="/enrolled/student/list/:session/:courseType/:course/:branch/:college" element={<PrivateRoute element={<EnrolledStudentlist />} />} />
+        <Route path="/enrolled/student/search-result" element={<PrivateRoute element={<EnrollementStudentSearch />} />} />
         <Route path="/brancmapping-session" element={<Branchmapping />} />
         <Route path="/center-master" element={<Centermaster />} />
         <Route path="/specialization-master" element={<SpecializationMaster />} />
@@ -251,7 +272,8 @@ function App() {
         <Route path="/subject-header-insert" element={<SubjectHeaderInsert />} />
         <Route path="/upload-subject-master-from-excel-data" element={<UploadSubjectMasterFromExcelData />} />
         <Route path="/create-collage" element={<CreateCollege />} />
-        <Route path="/admission-session-master" element={<AdmissionSessionMaster />} />
+
+        <Route path="/admission-session-update" element={<AdmissionSessionMaster />} />
         <Route path="/faculty-master" element={<FacultyMaster />} />
         <Route path="/department-master" element={<DepartmentMaster />} />
         <Route path="/course-type" element={<CourseType />} />
@@ -273,13 +295,17 @@ function App() {
 
 
 
-        <Route path="/paym" element={<Paym />} />
-        <Route path="/paymen" element={<Paymen />} />
+        <Route path="/paym" element={<PrivateRoute element={<Paym />} />} />
+        <Route path="/paymen" element={<PrivateRoute element={<Paymen />} />} />
 
 
 
         {/* ======================================================= */}
         <Route path="/contact" element={<Contactpage />} />
+        <Route path="/Nirf/Engenerring" element={<NIRF_Eng />} />
+        <Route path="/Nirf/Agriculter" element={<NIRF_Agri />} />
+        <Route path="/Nirf/Pharamacy" element={<NIRF_Phar />} />
+       
         <Route path="/background-page" element={<BackgroundPage />} />
         <Route path="/institutes" element={<Institutepage />} />
         <Route path="/promoting-society" element={<PromotingSociety />} />

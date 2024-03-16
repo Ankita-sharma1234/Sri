@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, label, Button } from "react-bootstrap";
+import {Button ,CircularProgress} from "@mui/material"
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TableCell, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -32,14 +32,12 @@ function TotalFeePaid() {
   const [studentdata, setStudentData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState([]);
-
-
-
+ const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-
+ setLoading(true)
         const response = await fetch(
           `https://sssutms.ac.in/apitest/admin/students/paidlist`
         );
@@ -49,6 +47,8 @@ function TotalFeePaid() {
 
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally{
+        setLoading(false)
       }
     };
 
@@ -118,6 +118,7 @@ function TotalFeePaid() {
       <ThemeProvider theme={theme}>
         <AdminDashboard />
         <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "85px" }}>
+        {loading ? ( <CircularProgress color="success" style={{marginTop:"80px",marginLeft:"50%"}} />):(
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
               <Box sx={{ p: 2 }}>
@@ -418,7 +419,8 @@ function TotalFeePaid() {
 
             </Paper>
           </CardContent>
-          {/* </Card> */}
+        )}
+         
           <br></br>
         </Box>
       </ThemeProvider>

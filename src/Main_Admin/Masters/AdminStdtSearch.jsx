@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminDashboard from './Admin_Dashboard/AdminDashboard'
 import Form from 'react-bootstrap/Form';
-import { FormControl, Select, } from "@mui/material";
+import { FormControl } from "@mui/material";
 import { Button, Row, Col, Container } from "react-bootstrap";
-import { Link, useHistory } from 'react-router-dom';
-import { useFormik } from "formik";
 import axios from "axios";
 import AdminUpdtStdt_Detail from "./AdminUpdtStdt_Detail";
 
@@ -25,12 +23,12 @@ function AdminStdtSearch() {
       const response = await axios.get(api);
       setUserData(response.data);
       setShowTable(true); // Show the table when data is fetched
-      // console.log("API Response:", response.data[0]);
+    
     } catch (error) {
       console.error("API Error:", error);
     }
   };
-  // console.log(userData, "something")
+ 
   return (
     <>
       <style>

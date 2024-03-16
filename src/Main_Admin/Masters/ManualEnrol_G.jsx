@@ -14,6 +14,7 @@ const ManualEnrol_G = () =>{
   const [enteredValue, setEnteredValue] = useState("");
   const [userData, setUserData] = useState([]);
   const [showTable, setShowTable] = useState(false);
+  const [loading,setLoading]= useState(false);
 
   const handleSearch = async () => {
     if (selectedField === "option1" || !enteredValue) {
@@ -22,12 +23,15 @@ const ManualEnrol_G = () =>{
     }
 
     try {
+      setLoading(true)
       const api = `https://sssutms.ac.in/apitest/admin/search2?search=${enteredValue}`;
       const response = await axios.get(api);
       setUserData(response.data);
       setShowTable(true);
     } catch (error) {
       console.error("API Error:", error);
+    } finally{
+      setLoading(false)
     }
   };
 
@@ -39,7 +43,7 @@ const ManualEnrol_G = () =>{
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 10px;
-            width:300px;
+            width:250px;
             margin-Top:10%;
           
           }
@@ -113,6 +117,7 @@ const ManualEnrol_G = () =>{
 
         `}
       </style>
+      
       <AdminDashboard />
 
       <div style={{ marginLeft: '5%', display: "flex" }}>
@@ -198,6 +203,7 @@ const ManualEnrol_G = () =>{
 
         </div>
         <div>
+   
           {showTable && userData.length > 0 && (
             <div>
               <AdminUpdateStd_Manually userData={userData} />
@@ -209,12 +215,4 @@ const ManualEnrol_G = () =>{
   )
 }
 
-// export default ManualEnrol_G
-// import React from 'react'
-
-// const ManualEnrol_G = () => {
-//   return (
-//     <div>ManualEnrol_G</div>
-//   )
-// }
 export default ManualEnrol_G

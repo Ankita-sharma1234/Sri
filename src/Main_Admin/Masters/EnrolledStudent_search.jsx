@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FormControl } from "@mui/material";
 import { Button, Row, Col, Container } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-
 import AdminDashboard from './Admin_Dashboard/AdminDashboard';
+import EnrolledStudent_list from "./EnrolledStudent_list";
 
 function EnrollementStudentSearch() {
   const [session, setSession] = useState('');
@@ -11,21 +11,24 @@ function EnrollementStudentSearch() {
   const [course, setCourse] = useState('');
   const [branch, setBranch] = useState('');
   const [college, setCollege] = useState('');
+  const [showTable, setShowTable] = useState(false)
 
-  // console.log(session , courseType, course , branch , college , " data of use State")
-
-
+  const handleSearch = () => {
+    setShowTable(true)
+  }
+console.log(showTable,"showtableeeee")
   return (
     <>
       <AdminDashboard />
       <style>
         {`
-          .shadow-box {
+           .shadow-box {
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 10px;
-            margin-top: 20px;
-            margin-right:600px;
+            margin-top: 5px;
+            width: 100%; /* Adjusted width */
+            margin-left:75px;
           }
 
           .header {
@@ -98,182 +101,202 @@ function EnrollementStudentSearch() {
         `}
       </style>
 
-      <Container fluid style={{ paddingTop: '80px' }}>
-        <Row>
-          <Col xs={12} sm={12} md={10} lg={9} xl={8} className="custom-laptop-style">
-            <div className="shadow-box">
-              <div className="header">Enrolled Student List</div>
-              <div className="scroll-container" style={{ height: "520px" }}>
-                <form style={{ padding: "30px" }}>
-                  <Row>
-                    <FormControl>
-                      <label>
-                        <h1
-                          style={{
-                            color: "#264653",
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          Session *
-                        </h1>
-                      </label>
-                      <select
-                        className="login-input"
-                        required={true}
-                        onChange={(e) => setSession(e.target.value)}
-                        autoFocus={true}
+      <div style={{ display: "flex",backgroundColor:"red" }}>
+      <div style={{ width: '25%' }}>
+          <Container fluid style={{ paddingTop: '80px' }}>
+            <Row>
+              <Col  >
+                <div className="shadow-box">
+                  <div className="header">Enrolled Student List</div>
+                  <div className="scroll-container" style={{ height: "441px" }}>
+                    <form style={{ padding: "20px" }}>
+                      <Row>
+                        <FormControl>
+                          <label>
+                            <h1
+                              style={{
+                                color: "#264653",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              Session *
+                            </h1>
+                          </label>
+                          <select
+                            className="login-input"
+                            required={true}
+                            onChange={(e) => setSession(e.target.value)}
+                            autoFocus={true}
 
+                          >
+
+                            <option value="option1"> Select</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                          </select>
+                        </FormControl>
+                      </Row>
+                      <br></br>
+                      <Row>
+                        <FormControl>
+                          <label>
+                            <h1
+                              style={{
+                                color: "#264653",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              Course Type *
+                            </h1>
+                          </label>
+                          <select
+                            className="login-input"
+                            required={true}
+                            onChange={(e) => setCourseType(e.target.value)}
+                            autoFocus={true}
+                          >
+
+                            <option value="option1"> Select</option>
+                            <option value="UG">UG</option>
+
+                          </select>
+                        </FormControl>
+                      </Row>
+
+                      <br></br>
+                      <Row>
+                        <FormControl>
+                          <label>
+                            <h1
+                              style={{
+                                color: "#264653",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              Course *
+                            </h1>
+                          </label>
+                          <select
+                            className="login-input"
+                            required={true}
+                            onChange={(e) => setCourse(e.target.value)}
+                            autoFocus={true}
+                          >
+                            {/* Add your dropdown options here */}
+                            <option value="option1"> Select</option>
+                            <option value="BACHELOR OF AYURVEDIC MEDICINE AND SURGERY">BAMS</option>
+                            <option value="BACHELOR OF HOMEOPATHY MEDICINE AND SURGERY">BHMS</option>
+                          </select>
+                        </FormControl>
+                      </Row>
+                      <br></br>
+                      <Row>
+                        <FormControl>
+                          <label>
+                            <h1
+                              style={{
+                                color: "#264653",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              Branch *
+                            </h1>
+                          </label>
+                          <select
+                            className="login-input"
+                            required={true}
+                            onChange={(e) => setBranch(e.target.value)}
+                            autoFocus={true}
+                          >
+                            {/* Add your dropdown options here */}
+                            <option value="option1"> Select</option>
+                            {course === "BACHELOR OF AYURVEDIC MEDICINE AND SURGERY" && <option value="AYURVEDIC MEDICINE AND SURGERY">AYURVEDIC MEDICINE AND SURGERY</option>}
+                            {course === "BACHELOR OF HOMEOPATHY MEDICINE AND SURGERY" && <option value="HOMEOPATHY">HOMEOPATHY</option>}
+                          </select>
+                        </FormControl>
+                      </Row>
+
+
+
+                      <br></br>
+                      <Row>
+                        <FormControl>
+                          <label>
+                            <h1
+                              style={{
+                                color: "#264653",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                fontFamily: "sans-serif",
+                              }}
+                            >
+                              College *
+                            </h1>
+                          </label>
+                          <select
+                            className="login-input"
+                            required={true}
+                            onChange={(e) => setCollege(e.target.value)}
+                            autoFocus={true}
+                          >
+                            {/* Add your dropdown options here */}
+                            <option value="option1"> Select</option>
+                            <option value="School of Ayurveda and Siddha Studies">School of Ayurveda and Siddha Studies</option>
+                            <option value="School of Homeopathy">School of Homeopathy</option>
+                          </select>
+                        </FormControl>
+                      </Row>
+                      <br></br>
+
+
+
+                      <br></br>
+
+                      {/* <Link to={`/enrolled/student/list/${session}/${courseType}/${course}/${branch}/${college}`} style={{ textDecoration: 'none' }}> */}
+                      <Button
+                        style={{
+                          marginLeft: "40px",
+                          backgroundColor: "#004e92",
+                          width: "110px",
+                          height: "40px",
+                          padding: "5px"
+                        }}
+                        onClick={handleSearch}
                       >
 
-                        <option value="option1"> Select</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                      </select>
-                    </FormControl>
-                  </Row>
-                  <br></br>
-                  <Row>
-                    <FormControl>
-                      <label>
-                        <h1
-                          style={{
-                            color: "#264653",
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          Course Type *
-                        </h1>
-                      </label>
-                      <select
-                        className="login-input"
-                        required={true}
-                        onChange={(e) => setCourseType(e.target.value)}
-                        autoFocus={true}
-                      >
+                        Search
+                      </Button>
+                      {/* </Link> */}
+                    </form>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        <div style={{ backgroundColor:"" }}>
 
-                        <option value="option1"> Select</option>
-                        <option value="UG">UG</option>
-
-                      </select>
-                    </FormControl>
-                  </Row>
-
-                  <br></br>
-                  <Row>
-                    <FormControl>
-                      <label>
-                        <h1
-                          style={{
-                            color: "#264653",
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          Course *
-                        </h1>
-                      </label>
-                      <select
-                        className="login-input"
-                        required={true}
-                        onChange={(e) => setCourse(e.target.value)}
-                        autoFocus={true}
-                      >
-                        {/* Add your dropdown options here */}
-                        <option value="option1"> Select</option>
-                        <option value="BACHELOR OF AYURVEDIC MEDICINE AND SURGERY">BAMS</option>
-                        <option value="BACHELOR OF HOMEOPATHY MEDICINE AND SURGERY">BHMS</option>
-                      </select>
-                    </FormControl>
-                  </Row>
-                  <br></br>
-                  <Row>
-                    <FormControl>
-                      <label>
-                        <h1
-                          style={{
-                            color: "#264653",
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          Branch *
-                        </h1>
-                      </label>
-                      <select
-                        className="login-input"
-                        required={true}
-                        onChange={(e) => setBranch(e.target.value)}
-                        autoFocus={true}
-                      >
-                        {/* Add your dropdown options here */}
-                        <option value="option1"> Select</option>
-                        {course === "BACHELOR OF AYURVEDIC MEDICINE AND SURGERY" && <option value="AYURVEDIC MEDICINE AND SURGERY">AYURVEDIC MEDICINE AND SURGERY</option>}
-                        {course === "BACHELOR OF HOMEOPATHY MEDICINE AND SURGERY" && <option value="HOMEOPATHY">HOMEOPATHY</option>}
-                      </select>
-                    </FormControl>
-                  </Row>
-
-
-
-                  <br></br>
-                  <Row>
-                    <FormControl>
-                      <label>
-                        <h1
-                          style={{
-                            color: "#264653",
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          College *
-                        </h1>
-                      </label>
-                      <select
-                        className="login-input"
-                        required={true}
-                        onChange={(e) => setCollege(e.target.value)}
-                        autoFocus={true}
-                      >
-                        {/* Add your dropdown options here */}
-                        <option value="option1"> Select</option>
-                        <option value="School of Ayurveda and Siddha Studies">School of Ayurveda and Siddha Studies</option>
-                        <option value="School of Homeopathy">School of Homeopathy</option>
-                      </select>
-                    </FormControl>
-                  </Row>
-                  <br></br>
-
-
-
-                  <br></br>
-
-                  <Link to={`/enrolled/student/list/${session}/${courseType}/${course}/${branch}/${college}`} style={{ textDecoration: 'none' }}>
-                    <Button
-                      style={{
-                        marginLeft: "40px",
-                        backgroundColor: "#004e92",
-                        width: "110px",
-                        height: "40px",
-                        padding:"5px"
-                      }}
-                    >
-                      Search
-                    </Button>
-                  </Link>
-                </form>
-              </div>
+          {showTable && (
+            <div>
+              <EnrolledStudent_list
+                session={session}
+                courseType={courseType}
+                course={course}
+                branch={branch}
+                college={college}
+              />
             </div>
-          </Col>
-        </Row>
-      </Container>
+          )}
+        </div>
+      </div>
     </>
   );
 }

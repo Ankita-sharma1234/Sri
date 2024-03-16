@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, label, Button } from "react-bootstrap";
+import {Button, CircularProgress} from '@mui/material'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TableCell, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -26,7 +26,7 @@ function
   const [studentdata, setStudentData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState([]);
-
+  const [loading,setLoading] = useState(false)
 
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -39,7 +39,7 @@ function
   useEffect(() => {
     const fetchData = async () => {
       try {
-
+        setLoading(true)
         const response = await fetch(
           `https://sssutms.ac.in/apitest/admin/students/enrolledlist`
         );
@@ -49,6 +49,8 @@ function
 
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false)
       }
     };
     fetchData();
@@ -118,6 +120,7 @@ function
       <ThemeProvider theme={theme}>
         <AdminDashboard />
         <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "80px" }}>
+        {loading ? ( <CircularProgress color="success" style={{marginTop:"80px",marginLeft:"50%"}} />):(
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
               <Box sx={{ p: 2 }}>
@@ -385,7 +388,7 @@ function
                 </Table>
               </TableContainer>
               <TablePagination
-                rowsPerPageOptions={[5, 25, 100]}
+                rowsPerPageOptions={[4, 10, 25, 100]}
                 component="div"
                 count={filteredData.length}
                 rowsPerPage={rowsPerPage}
@@ -396,7 +399,7 @@ function
 
             </Paper>
           </CardContent>
-   
+   )}
           <br></br>
         </Box>
       </ThemeProvider>

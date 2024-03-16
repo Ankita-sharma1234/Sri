@@ -479,7 +479,16 @@ function TotalSession() {
                     </TableCell>
 
 
-
+                    <TableCell align="left" style={{
+                      backgroundColor: '#023047', color: 'white', position: "sticky",
+                      top: 0,
+                      zIndex: 1,
+                    }}
+                    >
+                      <h5 style={{ color: 'white' }}>
+                        <b>Branch</b>
+                      </h5>
+                    </TableCell>
 
                   </TableRow>
                 </TableHead>

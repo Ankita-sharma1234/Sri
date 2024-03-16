@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { Button } from "react-bootstrap";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   TableCell,
@@ -27,7 +26,14 @@ const theme = createTheme({
   },
 });
 
-const Search = () => {
+const Search = ({
+  session,
+  courseType,
+  course,
+  branch,
+  college,
+}) => {
+  console.log(session, courseType , course,  branch,  college, "session")
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [page, setPage] = useState(0);
@@ -39,9 +45,9 @@ const Search = () => {
   const [enrollmentGenerated, setEnrollmentGenerated] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const { session, courseType, course, branch, college } = useParams();
+ // const { session, courseType, course, branch, college } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,9 +61,11 @@ const Search = () => {
           branch,
           college
         };
-
+ 
         const response = await axios.post(url, requestData);
         const data = response.data;
+
+         console.log(response,"response")
 
         if (!data || data.length === 0) {
           setDataNotFound(true);
@@ -68,7 +76,7 @@ const Search = () => {
       } catch (error) {
         console.error('Error fetching data:', error);
         setDataNotFound(true);
-      } finally{
+      } finally {
         setLoading(false)
       }
     };
@@ -101,8 +109,9 @@ const Search = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleClick = async () => {
-    const  studentId = studentdata[0]?._id
+  
+
+  const handleClick = async (studentId) => {
     try {
       const response = await axios.post(`https://sssutms.ac.in/apitest/generate-enrollment2/`, {
         branchname: studentdata[0]?.courseBranch,
@@ -118,12 +127,14 @@ const Search = () => {
         buttons: "OK",
       });
 
-      setEnrollmentGenerated(true);
-      setStudentData(prevStudentData => prevStudentData.filter(student => student._id !== studentId));
+      // Remove the student's entry from filteredData
+      setFilteredData(prevFilteredData => prevFilteredData.filter(student => student._id !== studentId));
+
     } catch (error) {
       console.error('Error generating enrollment:', error);
     }
   };
+
 
 
   /////////////////////////name sort ////////////////////////////
@@ -153,255 +164,266 @@ const Search = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-    <AdminDashboard />
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: "50px",
-      }}
-    >
-          {loading && <CircularProgress color="success" />} {/* Display spinner if loading is true */}
-      {dataNotFound ? (
-        <div>
-          <h2>Oops! No Student Available in this Course!!!!</h2>
-        </div>
-      ) : (
+      <AdminDashboard />
 
-              <Box sx={{ width: "90%", marginTop: "20px" }}>
-              <CardContent>
-                <Paper sx={{ width: "100%", overflow: "auto" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "60px",
+        }}
+      >
+        {dataNotFound ? (
+          <div>
+            <h2>Oops! No Student Available in this Course!!!!</h2>
+          </div>
+        ) : (
+          <>
 
-<Box sx={{ p: 2 }}>
-                <SearchIcon sx={{ mr: 1 }} />
-                <input
-                  type="text"
-                  placeholder="Search  by ID or Name"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-              </Box>
-                <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            S.No.
-                          </h1>
-                        </TableCell>
+            <Box sx={{ width: "90%", marginTop: "20px" }}>
+              {loading ? (<CircularProgress color="success" style={{ marginTop: "80px", marginLeft: "50%" }} />) : (
+                <CardContent>
+                  <Paper sx={{ width: "100%", overflow: "auto" }}>
 
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            Enrollment Status
-                          </h1>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            Registration No
-                          </h1>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                        </TableCell>
+                    <Box sx={{ p: 2 }}>
+                      <SearchIcon sx={{ mr: 1 }} />
+                      <input
+                        type="text"
+                        placeholder="Search  by ID or Name"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                      />
+                    </Box>
 
+                    <TableContainer sx={{ maxHeight: 440 }}>
+                      <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                S.No.
+                              </h1>
+                            </TableCell>
 
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                Enrollment Status
+                              </h1>
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                Registration No
+                              </h1>
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                                // /////////////for sorting name//////////////////
+                                onClick={() => handleSort("name")}
+                              >
+                                Candidate Name
+                                {sortBy === "name" && (
+                                  <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
+                                )}
+                              </h1>
+                            </TableCell>
 
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                Father's Name
+                              </h1>
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                Branch
+                              </h1>
+                            </TableCell>
 
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                Course Name
+                              </h1>
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                College Name
+                              </h1>
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{ backgroundColor: "#004e92" }}
+                            >
+                              <h1
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "bolder",
+                                  color: "white",
+                                  fontFamily: "-moz-initial",
+                                }}
+                              >
+                                Edit
+                              </h1>
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
 
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                            // /////////////for sorting name//////////////////
-                            onClick={() => handleSort("name")}
-                          >
-                            Candidate Name
-                            {sortBy === "name" && (
-                              <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
-                            )}
-                          </h1>
-                        </TableCell>
+                        <TableBody>
+                          {getSortedAndSlicedData().map((student, index) => (
+                            <TableRow key={index}>
 
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            Father's Name
-                          </h1>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            Branch
-                          </h1>
-                        </TableCell>
+                              <TableCell align="center">{index + 1}</TableCell>
+                 
+                              <TableCell align="center">
+                                {/* <Button variant="danger">Not generated</Button> */}
+                                {student.IsEnrollGenerated?<img src={closebutton} alt="" height="40px" width="40px" /> : "true"}
+                                
+                              </TableCell>
+                              <TableCell align="center">
+                                {student.randomId}
+                              </TableCell>
+                              <TableCell align="center">
 
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            Course Name
-                          </h1>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            College Name
-                          </h1>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          style={{ backgroundColor: "#004e92" }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: "20px",
-                              fontWeight: "bolder",
-                              color: "white",
-                              fontFamily: "-moz-initial",
-                            }}
-                          >
-                            Edit
-                          </h1>
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {getSortedAndSlicedData().map((student, index) => (
-                        <TableRow key={index}>
-
-                          <TableCell align="center">{index + 1}</TableCell>
-                          {/* <TableCell align="center">2023</TableCell>
-                        <TableCell align="center">{student.name}</TableCell>
-                        <TableCell align="center">{student.email}</TableCell>
-                        {/* Replace the line below with the DatePicker component */}
-
-
-                          <TableCell align="center">
-                            {/* <Button variant="danger">Not generated</Button> */}
-                            <img src={closebutton} alt="" height="40px" width="40px" />
-                          </TableCell>
-                          <TableCell align="center">
-                            {student.randomId}
-                          </TableCell>
-                          <TableCell align="center">
-
-                          </TableCell>
-                          <TableCell align="center">
-                            {student.name}
-                          </TableCell>
-                          <TableCell align="center">{student.fathersname
-                          }</TableCell>
-                          <TableCell align="center">{student.courseBranch}</TableCell>
-                          <TableCell align="center">
-                            {student.courseName}
-                          </TableCell>
-                          <TableCell align="center">
-                            {student.assignedCollege}
-                          </TableCell>
-                          <TableCell align="center"> <Button
-                           variant="contained" color="success"
+                              </TableCell>
+                              <TableCell align="center">
+                                {student.name}
+                              </TableCell>
+                              <TableCell align="center">{student.fathersname
+                              }</TableCell>
+                              <TableCell align="center">{student.courseBranch}</TableCell>
+                              <TableCell align="center">
+                                {student.courseName}
+                              </TableCell>
+                              <TableCell align="center">
+                                {student.assignedCollege}
+                              </TableCell>
+                              <TableCell align="center">
+                                {/* <Button
+                            variant="contained" color="success"
                             onClick={() => handleClick()}
                             disabled={enrollmentGenerated}
                           >
                             Generate Enrollment
-                          </Button></TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[5, 25, 100]}
-                  component="div"
-                  count={filteredData.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Paper>
-          </CardContent>
-          <br />
-        </Box>
-      )}
-    </Box>
-  </ThemeProvider>
+                          </Button> */}
+                                <Button
+                                  variant="contained"
+                                  color="success"
+                                  onClick={() => handleClick(student._id)} // Pass student._id as an argument
+                                // disabled={enrollmentGenerated}
+                                >
+                                  Generate Enrollment
+                                </Button>
+
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+
+                      </Table>
+
+                    </TableContainer>
+
+                    <TablePagination
+                      rowsPerPageOptions={[5, 25, 100]}
+                      component="div"
+                      count={filteredData.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+
+                  </Paper>
+                </CardContent>)}
+              <br />
+            </Box>
+          </>
+        )}
+      </Box>
+    </ThemeProvider>
   );
 };
 

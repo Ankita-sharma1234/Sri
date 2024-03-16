@@ -131,7 +131,7 @@ function Cards() {
           <div className="container " style={{ marginTop: 10 }}>
             <div className="row">
               <div className="col-lg-4 col-sm-4 col-md-4 col-xl-4 col-xs-12">
-                <Link to="" style={{ textDecoration: "none" }}>
+                <Link to="https://sssutms.ac.in:2096/" target="_blank" style={{ textDecoration: "none" }}>
                   <div className="card">
                     <div className="card-body">
                       <div className="card-image" style={{ color: "#213661" }}>
@@ -144,7 +144,7 @@ function Cards() {
                         />
                       </div>
 
-                      <p className="card-text"> LIBRARY</p>
+                      <p className="card-text"> Web Mail login </p>
                       <p
                         style={{
                           color: "black",
@@ -153,7 +153,7 @@ function Cards() {
                           textAlign: "center",
                         }}
                       >
-                        Click here for Library Login
+                        Click here for Web Mail  Login
                       </p>
                     </div>
                   </div>

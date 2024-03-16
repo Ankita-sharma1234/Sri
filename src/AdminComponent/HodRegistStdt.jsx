@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, label, Button } from "react-bootstrap";
+import {Button } from "react-bootstrap";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   TableCell,
@@ -14,7 +14,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useParams } from "react-router-dom";
-import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import HodDashboard from "./HodDashboard"
 import {Container}  from 'react-bootstrap'
@@ -67,9 +66,6 @@ const TotalRegisStdtHod = () => {
     fetchData();
   }, []);
   // console.log(studentdata);
-  const handleDropdownChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

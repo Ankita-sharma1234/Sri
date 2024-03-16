@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Modal, label, Button } from "react-bootstrap";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import edit1 from "../images/edit1.png";
 import DatePicker from "react-datepicker";
@@ -11,14 +10,13 @@ import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import SearchIcon from '@mui/icons-material/Search';
-
+import { CircularProgress} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useParams } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
-import swal from "sweetalert";
+
 import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
 
 const theme = createTheme({
@@ -37,6 +35,7 @@ function TotalRegistered() {
   const [studentdata, setStudentData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   /////////////////////datepicker/////////////////
   const [selectedDate, setSelectedDate] = useState(null);
@@ -50,16 +49,20 @@ function TotalRegistered() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data from API based on selected parameters
+        setLoading(true)
+       
         const response = await fetch(
           `https://sssutms.ac.in/apitest/admin/students/totallist`
         );
         const data = await response.json();
         setStudentData(data.students);
         setFilteredData(data.students);
-        // console.log(data, "data from api");
+       
       } catch (error) {
         console.error("Error fetching data:", error);
+
+      } finally {
+        setLoading(false)
       }
     };
     fetchData();
@@ -78,7 +81,7 @@ function TotalRegistered() {
     setFilteredData(filtered);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
@@ -109,11 +112,11 @@ function TotalRegistered() {
           ? a.name.localeCompare(b.name)
           : b.name.localeCompare(a.name);
       }
-      // Handle other columns for sorting if needed
+     
       return 0;
     });
 
-    // Get the sliced data based on current page and rows per page
+ 
     const startIndex = page * rowsPerPage;
     return sortedData.slice(startIndex, startIndex + rowsPerPage);
   };
@@ -123,6 +126,7 @@ function TotalRegistered() {
       <ThemeProvider theme={theme}>
         <AdminDashboard />
         <Box sx={{ width: "90%", height: "50%", marginLeft: "100px", marginTop: "80px" }}>
+        {loading ? ( <CircularProgress color="success" style={{marginTop:"80px",marginLeft:"50%"}} />):(
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
               <Box sx={{ p: 2 }}>
@@ -392,7 +396,7 @@ function TotalRegistered() {
               />
             </Paper>
           </CardContent>
-
+        )}
           <br></br>
         </Box>
       </ThemeProvider>

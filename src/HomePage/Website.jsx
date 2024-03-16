@@ -14,8 +14,10 @@ import PosI1 from '../images/Event5.png';
 import PosI2 from '../images/Event14.png';
 import PosI3 from '../images/Event12.png';
 import logo from '../images/sssutms.jpg';
+import logoo from "../images/logoo.png"
 import Counter from "./Counter";
 import Imp from '../images/IMG_00011_page-0001.jpg'
+import Whatsapplogo from '../images/whatsapp.png'
 import Off from '../images/office_Order_page-0001.jpg'
 import Not from '../images/IMG_page-0001.jpg'
 import ex from '../images/Notice_Copy_page-0001.jpg'
@@ -152,8 +154,8 @@ const Website = () => {
         type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
       />
-   {/*TOP MENU*/}
-   <menu className="top_menu flex">
+      {/*TOP MENU*/}
+      <menu className="top_menu flex">
         <section className="flex_content">
           <a href="emailto:info@lilliovi.com">
             <i className="fa fa-envelope-o" />
@@ -200,9 +202,10 @@ const Website = () => {
             </Link>
 
             <div class="dropdown">
-              {/* <Link>  <h4 style={{color:"#6e6e9e", marginLeft:"30px"}}>About</h4></Link> */}
+
+
               <a href="#">
-                <h5 style={{ color: "black", marginLeft: "-20px" }}><b>About</b></h5>
+                <h5 style={{ color: "black", marginLeft: "-25px" }}><b>About</b></h5>
                 {/*SVG dropdown icon*/}
                 <svg
                   className="icon"
@@ -219,129 +222,129 @@ const Website = () => {
               <div class="dropdown-content">
                 <Link to="/background-page" >Background</Link>
                 <Link to="/institutes">Institutes</Link>
-            
 
-  <div className="dropdown">
-  <a
-    className="dropdown"
-    style={{ color: "black" }}
-  >
-    University Officials
-    <span className="arw4 is-triangle arw-bar is-right" />
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-45%", marginLeft: "100%", maxHeight: "500px", overflowY: "auto", backgroundColor:"#D3D3D3" }}>
-  <li>
-      {/* <a href="#"></a> */}
-      <Link to = "/chancellor">Chancellor</Link>
-    </li>
-    <li>
-    <Link to = "/vice-chancellor">Vice Chancellor</Link>
-    </li>
-   <li>
-   <Link to = "/registrar">Registrar</Link>
-    </li>
-    <li>
-    <Link to = "/deputy-registrar">Deputy Registrar</Link>
-   </li>
-    <li>
-      <a href="#">Governing Body</a>
-    </li>
-    <li>
-      <a href="#">Dean</a>
-    </li>
-    <li>
-      <a href="#">Board Of Management</a>
-    </li>
-    <li>
-      <a href="#">Head Of The Department</a>
-    </li>
-    <li>
-      <a href="#">Academic Council</a>
-    </li>
-    <li>
-      <a href="#">Finance Committee</a>
-    </li>
-    <li>
-      <a href="#">Standing Committee</a>
-    </li>
- </ul>
-</div>
-               
-           <Link to="/promoting-society">Promoting Society</Link>
+
+                <div className="dropdown">
+                  <a
+                    className="dropdown"
+                    style={{ color: "black" }}
+                  >
+                    University Officials
+                    <span className="arw4 is-triangle arw-bar is-right" />
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-45%", marginLeft: "100%", maxHeight: "500px", overflowY: "auto", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      {/* <a href="#"></a> */}
+                      <Link to="/chancellor">Chancellor</Link>
+                    </li>
+                    <li>
+                      <Link to="/vice-chancellor">Vice Chancellor</Link>
+                    </li>
+                    <li>
+                      <Link to="/registrar">Registrar</Link>
+                    </li>
+                    <li>
+                      <Link to="/deputy-registrar">Deputy Registrar</Link>
+                    </li>
+                    <li>
+                      <a href="#">Governing Body</a>
+                    </li>
+                    <li>
+                      <a href="#">Dean</a>
+                    </li>
+                    <li>
+                      <a href="#">Board Of Management</a>
+                    </li>
+                    <li>
+                      <a href="#">Head Of The Department</a>
+                    </li>
+                    <li>
+                      <a href="#">Academic Council</a>
+                    </li>
+                    <li>
+                      <a href="#">Finance Committee</a>
+                    </li>
+                    <li>
+                      <a href="#">Standing Committee</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <Link to="/promoting-society">Promoting Society</Link>
                 {/* <a href="#about">Approvals & Ordinances</a> */}
                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-Approvals & Ordinances
- <span className="arw4  is-triangle arw-bar is-right" />
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    Approvals & Ordinances
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">Approvals</a>
-    </li>
-    <li>
-      <a href="#">Ordinances</a>
-    </li>
-   </ul>
-               </div>
-               <Link to="/vision-mission">VisionMission</Link>
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">Approvals</a>
+                    </li>
+                    <li>
+                      <a href="#">Ordinances</a>
+                    </li>
+                  </ul>
+                </div>
+                <Link to="/vision-mission">VisionMission</Link>
                 <Link to="/core-values">Core Values</Link>
                 <Link to="/best-practicess">Best Practices</Link>
                 <a href="#about">Notifications</a>
                 {/* <a href="#about">Amenities</a> */}
                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-Amenities
- <span className="arw4  is-triangle arw-bar is-right" />
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    Amenities
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-60%", marginLeft: "100%",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">Transportation</a>
-    </li>
-    <li>
-      <a href="#">Hostel</a>
-    </li>
-   <li>
-      <a href="#">Library</a>
-    </li>
-    <li>
-      <a href="#">Medical Factility </a>
-    </li>
-    <li>
-      <a href="#">Guest House</a>
-    </li>
-   </ul>
-               </div>
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-60%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">Transportation</a>
+                    </li>
+                    <li>
+                      <a href="#">Hostel</a>
+                    </li>
+                    <li>
+                      <a href="#">Library</a>
+                    </li>
+                    <li>
+                      <a href="#">Medical Factility </a>
+                    </li>
+                    <li>
+                      <a href="#">Guest House</a>
+                    </li>
+                  </ul>
+                </div>
 
 
                 {/* <a href="#about">NCC</a> */}
                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-NCC
- <span className="arw4  is-triangle arw-bar is-right" />
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    NCC
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">NCC MOU</a>
-    </li>
-    <li>
-      <a href="#">Activity</a>
-    </li>
-  
-  </ul>
-               </div>
-                
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">NCC MOU</a>
+                    </li>
+                    <li>
+                      <a href="#">Activity</a>
+                    </li>
+
+                  </ul>
+                </div>
+
               </div>
             </div>
 
@@ -349,7 +352,7 @@ NCC
               {/* <a href="#about">Examination</a> */}
               {/* <Link> <h4 style={{color:"#6e6e9e", marginLeft:"30px"}}>Examination</h4></Link>  */}
               <a href="#">
-                <h5 style={{ color: "black", marginLeft: "-20px" }}><b>Examination</b> </h5>
+                <h5 style={{ color: "black", marginLeft: "-25px" }}><b>Examination</b> </h5>
 
                 {/*SVG dropdown icon*/}
                 <svg
@@ -374,7 +377,7 @@ NCC
 
             <div class="dropdown">
               <a href="#">
-                <h5 style={{ color: "black", marginLeft: "-20px" }}><b>Academic</b></h5>
+                <h5 style={{ color: "black", marginLeft: "-25px" }}><b>Academic</b></h5>
 
                 {/*SVG dropdown icon*/}
                 <svg
@@ -448,193 +451,193 @@ Faculties And Department
    </ul>
                </div> */}
 
-<div className="dropdown">
-  <a
-    className="dropdown"
-    style={{ color: "black" }}
-  >
-    Faculties And Department
-    <span className="arw4 is-triangle arw-bar is-right" />
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-12%", marginLeft: "100%", maxHeight: "500px", overflowY: "auto",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">Engineering And Technology</a>
-    </li>
-    <li>
-      <a href="#">Pharmacy</a>
-    </li>
-    <li>
-      <a href="#">Education</a>
-    </li>
-    <li>
-      <a href="#">Management</a>
-    </li>
-    <li>
-      <a href="#">Design</a>
-    </li>
-    <li>
-      <a href="#">Humanities And Languages</a>
-    </li>
-    <li>
-      <a href="#">Computer Science And Application</a>
-    </li>
-    <li>
-      <a href="#">Commerce</a>
-    </li>
-    <li>
-      <a href="#">Science</a>
-    </li>
-    <li>
-      <a href="#">Ayurveda</a>
-    </li>
-    <li>
-      <a href="#">Law</a>
-    </li>
-    <li>
-      <a href="#">Homeopathy</a>
-    </li>
-    <li>
-      <a href="#">Paramedical</a>
-    </li>
-    <li>
-      <a href="#">Nursing</a>
-    </li>
-    
+                <div className="dropdown">
+                  <a
+                    className="dropdown"
+                    style={{ color: "black" }}
+                  >
+                    Faculties And Department
+                    <span className="arw4 is-triangle arw-bar is-right" />
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-12%", marginLeft: "100%", maxHeight: "500px", overflowY: "auto", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">Engineering And Technology</a>
+                    </li>
+                    <li>
+                      <a href="#">Pharmacy</a>
+                    </li>
+                    <li>
+                      <a href="#">Education</a>
+                    </li>
+                    <li>
+                      <a href="#">Management</a>
+                    </li>
+                    <li>
+                      <a href="#">Design</a>
+                    </li>
+                    <li>
+                      <a href="#">Humanities And Languages</a>
+                    </li>
+                    <li>
+                      <a href="#">Computer Science And Application</a>
+                    </li>
+                    <li>
+                      <a href="#">Commerce</a>
+                    </li>
+                    <li>
+                      <a href="#">Science</a>
+                    </li>
+                    <li>
+                      <a href="#">Ayurveda</a>
+                    </li>
+                    <li>
+                      <a href="#">Law</a>
+                    </li>
+                    <li>
+                      <a href="#">Homeopathy</a>
+                    </li>
+                    <li>
+                      <a href="#">Paramedical</a>
+                    </li>
+                    <li>
+                      <a href="#">Nursing</a>
+                    </li>
 
-  </ul>
-</div>
+
+                  </ul>
+                </div>
 
                 <Link to="/phd-page">PHD</Link>
                 <Link to="/academic-calender">Academic Calender</Link>
-             
+
                 {/* <a href="#about">Committee</a> */}
                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-Committee
- <span className="arw4  is-triangle arw-bar is-right" />
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    Committee
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">Anti Ragging</a>
-    </li>
-    <li>
-      <a href="#">Proctorial Board</a>
-    </li>
-    <li>
-      <a href="#">Internal Complaint</a>
-    </li>
-    <li>
-      <a href="#">Grievance Redressal</a>
-    </li>
-    <li>
-      <a href="#">For SC-ST</a>
-    </li>
-    <li>
-      <a href="#">EDC</a>
-    </li>
-    <li>
-      <a href="#">International Higher Education Cell</a>
-    </li>
-    <li>
-      <a href="#">Incubation Cell</a>
-    </li>
-   </ul>
-               </div>
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">Anti Ragging</a>
+                    </li>
+                    <li>
+                      <a href="#">Proctorial Board</a>
+                    </li>
+                    <li>
+                      <a href="#">Internal Complaint</a>
+                    </li>
+                    <li>
+                      <a href="#">Grievance Redressal</a>
+                    </li>
+                    <li>
+                      <a href="#">For SC-ST</a>
+                    </li>
+                    <li>
+                      <a href="#">EDC</a>
+                    </li>
+                    <li>
+                      <a href="#">International Higher Education Cell</a>
+                    </li>
+                    <li>
+                      <a href="#">Incubation Cell</a>
+                    </li>
+                  </ul>
+                </div>
                 <Link to="/scholarship">Scholarship</Link>
                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-NAAC 
- <span className="arw4  is-triangle arw-bar is-right" />
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    NAAC
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">SSR</a>
-    </li>
-    <li>
-      <a href="#">Criteria-1</a>
-    </li>
-    <li>
-      <a href="#">Criteria-2</a>
-    </li>
-    <li>
-      <a href="#">Criteria-3</a>
-    </li>
-    <li>
-      <a href="#">Criteria-4</a>
-    </li>
-    <li>
-      <a href="#">Criteria-5</a>
-    </li>
-    <li>
-      <a href="#">Criteria-6</a>
-    </li>
-   </ul>
-               </div>
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">SSR</a>
+                    </li>
+                    <li>
+                      <a href="#">Criteria-1</a>
+                    </li>
+                    <li>
+                      <a href="#">Criteria-2</a>
+                    </li>
+                    <li>
+                      <a href="#">Criteria-3</a>
+                    </li>
+                    <li>
+                      <a href="#">Criteria-4</a>
+                    </li>
+                    <li>
+                      <a href="#">Criteria-5</a>
+                    </li>
+                    <li>
+                      <a href="#">Criteria-6</a>
+                    </li>
+                  </ul>
+                </div>
                 <Link to="/constituent-units">Constituent Units</Link>
-                 {/* <a href="#about">Activities</a> */}
-                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-Activities  
- <span className="arw4  is-triangle arw-bar is-right" />
+                {/* <a href="#about">Activities</a> */}
+                <div className="dropdown">
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    Activities
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-40%", marginLeft: "100%" ,backgroundColor:"#D3D3D3"}}>
-  <li>
-      <a href="#">Expert Lectures</a>
-    </li>
-    <li>
-      <a href="#">Webinar</a>
-    </li>
-    <li>
-      <a href="#">Industrial Visits</a>
-    </li>
-    <li>
-      <a href="#">Events</a>
-    </li>
-    <li>
-      <a href="#">FDP</a>
-    </li>
-    <li>
-      <a href="#">Workshop & Seminars</a>
-    </li>
-   </ul>
-               </div>
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-40%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">Expert Lectures</a>
+                    </li>
+                    <li>
+                      <a href="#">Webinar</a>
+                    </li>
+                    <li>
+                      <a href="#">Industrial Visits</a>
+                    </li>
+                    <li>
+                      <a href="#">Events</a>
+                    </li>
+                    <li>
+                      <a href="#">FDP</a>
+                    </li>
+                    <li>
+                      <a href="#">Workshop & Seminars</a>
+                    </li>
+                  </ul>
+                </div>
                 <Link to="/Hei-handbook">HEI Handbook</Link>
-                 {/* <a href="#about">Training & Placement</a> */}
-                 <div className="dropdown">
-  <a
-  style={{color:"black"}}
-    className="dropdown"
-  >
-Training & Placement  
- <span className="arw4  is-triangle arw-bar is-right" />
+                {/* <a href="#about">Training & Placement</a> */}
+                <div className="dropdown">
+                  <a
+                    style={{ color: "black" }}
+                    className="dropdown"
+                  >
+                    Training & Placement
+                    <span className="arw4  is-triangle arw-bar is-right" />
 
-  </a>
-  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%",backgroundColor:"#D3D3D3" }}>
-  <li>
-      <a href="#">Training And Placement Cell</a>
-    </li>
-    <li>
-      <a href="#">Training Partner</a>
-    </li>
-   </ul>
-               </div>
+                  </a>
+                  <ul className="dropdown-menu" style={{ marginTop: "-30%", marginLeft: "100%", backgroundColor: "#D3D3D3" }}>
+                    <li>
+                      <a href="#">Training And Placement Cell</a>
+                    </li>
+                    <li>
+                      <a href="#">Training Partner</a>
+                    </li>
+                  </ul>
+                </div>
                 <a href="#about">IQAC Cell</a>
                 <Link to="/mandatory-discIosures">Mandatory DiscIosures</Link>
 
                 {/* <a href="#about">NAAC</a> */}
-              
+
 
               </div>
             </div>
@@ -643,7 +646,7 @@ Training & Placement
               {/* <a href="#about">Research</a> */}
               {/* <Link><h4 style={{color:"#6e6e9e", marginLeft:"30px"}}>Research</h4></Link>  */}
               <a href="#">
-                <h5 style={{ color: "black", marginLeft: "-20px" }}><b>Research</b> </h5>
+                <h5 style={{ color: "black", marginLeft: "-25px" }}><b>Research</b> </h5>
 
                 {/*SVG dropdown icon*/}
                 <svg
@@ -685,7 +688,7 @@ Training & Placement
               {/* <a href="#about">Admission</a> */}
               {/* <Link>   <h4 style={{color:"#6e6e9e", marginLeft:"30px"}}>Admission</h4></Link> */}
               <a href="#">
-                <h5 style={{ color: "black", marginLeft: "-20px" }}><b>Admission</b>  </h5>
+                <h5 style={{ color: "black", marginLeft: "-25px" }}><b>Admission</b>  </h5>
 
                 {/*SVG dropdown icon*/}
                 <svg
@@ -711,12 +714,35 @@ Training & Placement
             </div>
 
             <div class="dropdown">
-              <Link to="/contact"><h5 style={{ color: "black", marginLeft: "-20px" }}><b>Contact</b></h5></Link>
+              <Link to="/contact"><h5 style={{ color: "black", marginLeft: "-25px" }}><b>Contact</b></h5></Link>
               {/* <Link> <h4 style={{ marginLeft:"30px", color:"red"}}>Erp</h4></Link>   */}
 
             </div>
+            <div class="dropdown">
+              <a href="#"><h5 style={{ color: "black", marginLeft: "-25px" }}><b>NIRF</b></h5>
 
-            <Link to="/erp"><h5 style={{ color: "red", marginLeft: "-20px" }}><b>ERP</b></h5></Link>
+                <svg
+                  className="icon"
+                  width={14}
+                  height={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 320 512"
+                >
+                  <path d="M151.5 347.8L3.5 201c-4.7-4.7-4.7-12.3 0-17l19.8-19.8c4.7-4.7 12.3-4.7 17 0L160 282.7l119.7-118.5c4.7-4.7 12.3-4.7 17 0l19.8 19.8c4.7 4.7 4.7 12.3 0 17l-148 146.8c-4.7 4.7-12.3 4.7-17 0z" />
+                </svg>
+              </a>
+              <div class="dropdown-content">
+                <a href="/Nirf/Engenerring">Engineering</a>
+                <a href="/Nirf/Agriculter">Agriculture</a>
+                <a href="/Nirf/Pharamacy">Pharmacy </a>
+
+
+              </div>
+
+            </div>
+
+
+            <Link to="/erp"><h5 style={{ color: "red", marginLeft: "-25px" }}><b>ERP</b></h5></Link>
             <div class="dropdown">
 
               {/* <Link> <h4 style={{ marginLeft:"30px", color:"red"}}>Erp</h4></Link>   */}
@@ -1173,10 +1199,10 @@ Training & Placement
         <div className="footer_body flex">
           <section className="flex_content padding_1x">
             <figure className="logo fixed_flex">
-              <img src={logo} alt="" />
-              <figcaption>
-                <strong className="title">Sri Satya Sai </strong> University of Technology & Medical Science
-              </figcaption>
+              <img src={logoo} alt="" style={{height:"50%", width:"80%"}}/>
+              {/* <figcaption>
+                <strong className="title">Sri Satya Sai </strong> <b>University of Technology & Medical Science</b>
+              </figcaption> */}
             </figure>
             <a href="#">
               <i className="fa fa-map-marker" />{" "}
@@ -1217,7 +1243,6 @@ Training & Placement
             <a href="#">Verify Marksheet</a>
             <a href="#">E-Pravesh 2023</a>
             <a href="#">Entrance Exam Form</a>
-            <a href="#">Entrance Exam Form</a>
             <a href="#">Alumni Registration Form</a>
             <a href="#">Online Grievance for Student</a>
             {/* <a href="#">Terms &amp; Conditions</a> */}
@@ -1246,24 +1271,20 @@ Training & Placement
             </fieldset> */}
           </section>
         </div>
-        <div className="flex">
-          <section className="flex-content padding_1x">
-            <p>Copyright ©2024 SSSUTMS . All Rights Reserved</p>
+        <div style={{ display: "column", alignItems: "center", textAlign: "center", marginTop: "30px" }}>
+          <section style={{ display: "flex", gap: "15px", marginLeft: "41%" }}>
+            <img width="45" height="45" src="https://img.icons8.com/fluency/40/linkedin.png" alt="linkedin" />
+            <img width="50" height="50" src="https://img.icons8.com/fluency/48/instagram-new.png" alt="instagram-new" />
+
+            <img width="45" height="45" src="https://img.icons8.com/3d-fluency/100/youtube-play.png" alt="youtube-play" />
+            <img width="50" height="45" src="https://img.icons8.com/fluency/48/facebook-new.png" alt="facebook-new" />
+            <img width="45" height="45" src={Whatsapplogo} alt="whatsapp--v6" />
+            {/* <img width="30" height="20" src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/30/external-whatsapp-messenger-is-a-freeware-cross-platform-messaging-and-voice-over-ip-service-logo-color-tal-revivo.png" alt="external-whatsapp-messenger-is-a-freeware-cross-platform-messaging-and-voice-over-ip-service-logo-color-tal-revivo"/> */}
           </section>
           <section className="flex-content padding_1x">
-            <a href="#">
-              <i className="fa fa-facebook" />
-            </a>
-            <a href="#">
-              <i className="fa fa-twitter" />
-            </a>
-            <a href="#">
-              <i className="fa fa-dribbble" />
-            </a>
-            <a href="#">
-              <i className="fa fa-linkedin" />
-            </a>
+            <p>©2024,  SSSUTMS. All Rights Reserved</p>
           </section>
+
         </div>
       </footer>
       {/*ADDITIONAL*/}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, label, Button } from "react-bootstrap";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import edit1 from "../images/edit1.png";
 
@@ -10,7 +10,7 @@ import {
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-
+import { Button,CircularProgress } from "@mui/material"
 // import gallery from "../images/gallery.png";
 // import trash from "../images/trash.png";
 import TableContainer from "@mui/material/TableContainer";
@@ -40,11 +40,12 @@ const StudentRegistrationList = () => {
   const [studentdata, setStudentData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState([]);
+  const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-
+ setLoading(true)
         const response = await fetch(
           `https://sssutms.ac.in/apitest/students/today/list`
         );
@@ -53,6 +54,8 @@ const StudentRegistrationList = () => {
 
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally{
+        setLoading(false)
       }
     };
 
@@ -123,6 +126,7 @@ const StudentRegistrationList = () => {
       <AdminDashboard />
       <>
         <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "100px" }}>
+        {loading ? ( <CircularProgress color="success" style={{marginTop:"80px",marginLeft:"50%"}} />):(
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
               <Box sx={{ p: 2 }}>
@@ -371,6 +375,7 @@ const StudentRegistrationList = () => {
               />
             </Paper>
           </CardContent>
+        )}
           {/* </Card> */}
           <br></br>
         </Box>

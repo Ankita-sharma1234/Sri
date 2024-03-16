@@ -49,7 +49,7 @@ export default function HodLogin() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, event) => {
-      
+
 
       try {
         const response = await fetch("https://sssutms.ac.in/apitest/hod/login", {
@@ -93,7 +93,7 @@ export default function HodLogin() {
             component="main"
             sx={{ height: "90vh", marginTop: "2%" }}
           >
-           
+
             <Grid
               borderRadius={2}
               boxShadow={20}
@@ -219,3 +219,4 @@ export default function HodLogin() {
     </div>
   );
 }
+

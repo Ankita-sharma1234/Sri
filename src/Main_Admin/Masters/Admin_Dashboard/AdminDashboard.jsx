@@ -420,6 +420,11 @@ a:hover {
                         <h6>Admission Status</h6>
                       </li>
                     </Link>
+                    <Link to="/admin/erpdashboard/admissionslip/search">
+                      <li>
+                        <h6>Admission Slip</h6>
+                      </li>
+                    </Link>
                   </ul>
                 </div>
               </ul>
@@ -572,7 +577,7 @@ a:hover {
                         <h6>Create College</h6>
                       </li>
                     </Link>
-                    <Link to="/admission-session-master">
+                    <Link to="/admission-session-update">
                       <li>
                         <h6>Admission Session Master</h6>
                       </li>

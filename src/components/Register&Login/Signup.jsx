@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import logo from "../../HomePage/12.png"
+// import logo from "../../HomePage/12.png"
 import {
   Alert,
 } from "@chakra-ui/react";
@@ -166,7 +166,7 @@ function Signup() {
         swal({
           icon: "error",
           title: "Error",
-          text: "Mobile number must be 10 digits",
+          text: "Incorrect OTP!!",
         });
       }
       else if (data.status === 401) {
@@ -371,7 +371,8 @@ function Signup() {
 
           <img
             style={{ height: "50px", width: "50px", borderRadius: "25px", marginLeft: "140px" }}
-            src={logo}
+            src={""}
+            alt="logo"
 
           />
           <div className="heading">REGISTER</div>

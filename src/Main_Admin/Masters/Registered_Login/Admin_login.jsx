@@ -35,7 +35,7 @@ const AdminLogin = () => {
     },
     
     validationSchema: validationSchema,
-    onSubmit: async (values, event) => {
+    onSubmit: async (values) => {
       try {
         if (!formik.isValid) {
           console.error("Please fill in all required fields");
@@ -53,7 +53,7 @@ const AdminLogin = () => {
         if (response.ok) {
           const data = await response.json();
           const user = data.UserResponse;
-          sessionStorage.setItem("AnkitHOD", JSON.stringify(user));
+          sessionStorage.setItem("Admin", JSON.stringify(user));
           // console.log("Registration successful");
           console.log("Response Data:", response);
 

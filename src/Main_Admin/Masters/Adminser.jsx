@@ -5,38 +5,83 @@ import {
   Box
 } from "@mui/material";
 import axios from "axios";
-import closebutton from "../../images/close-button.png"
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import { Button, TextField } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import { useParams } from 'react-router-dom';
 import CardContent from "@mui/material/CardContent";
 import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
-// import Sidebar from "./Sidebar";
 import SearchIcon from '@mui/icons-material/Search';
 import DatePicker from "react-datepicker";
-
+import * as XLSX from 'xlsx';
+import Button  from "@mui/material/Button"
 
 
 const theme = createTheme({
   typography: {
     fontWeightBold: 700,
   },
-});
-
+})
 const Adminser = () => {
   const [page, setPage] = React.useState(0);
-  const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
   const [studentdata1, setStudentData] = useState({ students: [] });
   const [dataNotFound, setDataNotFound] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
+
+  const moye = studentdata1.students.map(student => ({
+    EnrollmentNumber: student.enrollmentNumber,
+    Name: student.name,
+    Fathers_Name: student.fathersname,
+    Email : student.email ,
+    Mobile :student.mobile,
+
+
+    Registered : student?.isRegistered ? "YES" : "NO",
+    Enrolled : student?.isEnrolled ? "Yes" : "No",
+   
+    FEE_PAID : student?.isPaid ? "Yes" : "No",
+    Student_address : student.address ?
+      (Object.values(student.address ||
+        {}).some(value => value === "") ?
+        'Pending' : 'Update')
+      : 'Pending',
+    
+    Academic_details: student.academicDetails &&
+
+      Object.keys(student.academicDetails).filter(key => [
+        'tenthBoard', 'tenthMarksObtain',
+        'tenthMaxMarks', 'tenthPassingYear',
+        'tenthPercentage', 'tenthRollNo',
+        'tenthSchool', 'twelfthBoard',
+        'twelfthMarksObtain',
+        'twelfthMaxMarks', 'twelfthPassingYear',
+        'twelfthPercentage',
+        'twelfthRollNo', 'twelfthSchool'
+      ].includes(key)).every(key =>
+        student.academicDetails[key] !== "") ? 'Update' : 'Pending',
+
+    Documents : student.Documents ? (
+      ['incomeCertificate',
+        'otherCertificate', 'postgraduateCertificate',
+        'undergraduateCertificate', "migrationCertificate"]
+        .every(key =>
+          !student.Documents[key] || student.Documents[key].trim() === "")
+        ? 'Pending' : 'Updated'
+    ) : 'Pending',
+    
+
+
+
+
+
+
+  }))
 
   const { admissionSession, courseType, courseName, courseBranch } =
     useParams();
@@ -46,15 +91,12 @@ const Adminser = () => {
     const fetchData = async () => {
       try {
         const url = 'https://sssutms.ac.in/apitest/admin/statusofstudent';
-
         const requestData = {
           admissionSession,
           courseType,
           courseName,
           courseBranch,
-
         };
-
         const response = await axios.post(url, requestData);
 
         const data = response.data;
@@ -71,8 +113,6 @@ const Adminser = () => {
         setDataNotFound(true);
       }
     };
-
-
     fetchData();
   }, [admissionSession, courseType, courseName, courseBranch]);
 
@@ -91,13 +131,13 @@ const Adminser = () => {
 
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
   const handleSearchInputChange = (event) => {
     setSearchQuery(event.target.value);
-    // Filter data based on search query
+
     const filteredResults = studentdata1.students.filter(student => {
       return student.randomId.toLowerCase().includes(event.target.value.toLowerCase())
         ||
@@ -106,9 +146,14 @@ const Adminser = () => {
     });
     setFilteredData(filteredResults);
   };
+  ////////////////export to excel///////////////////////////
+  const ExportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(moye);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "enrolled")
+    XLSX.writeFile(workbook, "STUDENTS_STATUS.xlsx");
 
-
-
+  }
 
   console.log(studentdata1, "helllo world")
   return (
@@ -118,10 +163,15 @@ const Adminser = () => {
         <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "100px" }}>
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
-              <Box sx={{ p: 2 }}>
+            <Button   style={{ float: "right", marginRight: "10px", marginBottom: "10px" }} onClick={ExportToExcel}>Export to Excel</Button>
+
+
+            <Box style={{ float: "left", marginBottom: "10px" }}>
+
                 <SearchIcon sx={{ mr: 1 }} />
                 <input
                   type="text"
+                 
                   placeholder="Search by ID,Name or Branch"
                   onChange={handleSearchInputChange}
                   value={searchQuery}
@@ -527,7 +577,7 @@ const Adminser = () => {
                   <TablePagination
                     rowsPerPageOptions={[25, 50, 100]}
                     component="div"
-                    count={rows.length}
+                    count={filteredData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

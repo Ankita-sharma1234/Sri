@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Modal, label, Button } from "react-bootstrap";
+import {  Button } from "react-bootstrap";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   TableCell,
-  Box
+
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import DatePicker from "react-datepicker";
@@ -13,8 +13,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useParams } from "react-router-dom";
-import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import HodDashboard from "./HodDashboard"
 import { Container } from "react-bootstrap";
@@ -27,7 +25,6 @@ const theme = createTheme({
 });
 
 const TotalEnrolled = () => {
-  const [selectedOption, setSelectedOption] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
@@ -44,32 +41,26 @@ const TotalEnrolled = () => {
   const userData = JSON.parse(sessionStorage.getItem("AnkitHOD"));
   const branch1 = userData?.Branch;
 
-  const { session, courseType, course, branch, college } = useParams();
-  // console.log(session, courseType, course, branch, college, "data from query");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data from API based on selected parameters
+        
         const response = await fetch(
           `https://sssutms.ac.in/apitest/students/enrolledlist?branch=${branch1}`
         );
         const data = await response.json();
         setStudentData(data.students);
-        // console.log(data, "data from api");
+       
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
-    // Call the fetchData function whenever any of the dependencies (session, courseType, etc.) change
     fetchData();
   }, []);
-  // console.log(studentdata);
-  const handleDropdownChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
 
-  const handleChangePage = (event, newPage) => {
+
+  const handleChangePage = ( newPage) => {
     setPage(newPage);
   };
 
