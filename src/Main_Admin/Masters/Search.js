@@ -4,6 +4,7 @@ import {
   TableCell,
   Box
 } from "@mui/material";
+import { Container } from "react-bootstrap";
 import { Button, CircularProgress } from "@mui/material";
 import axios from "axios";
 import closebutton from "../../images/close-button.png"
@@ -19,6 +20,7 @@ import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import SearchIcon from "@mui/icons-material/Search";
 import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
+import { color } from "framer-motion";
 
 const theme = createTheme({
   typography: {
@@ -181,10 +183,10 @@ const Search = ({
         ) : (
           <>
 
-            <Box sx={{ width: "90%", marginTop: "20px" }}>
+            <Box sx={{ width: "90%", marginTop: "18px" }}>
               {loading ? (<CircularProgress color="success" style={{ marginTop: "80px", marginLeft: "50%" }} />) : (
                 <CardContent>
-                  <Paper sx={{ width: "100%", overflow: "auto" }}>
+                <Container className="shadow p-3 bg-body rounded" style={{ width: "95%", backgroundColor: "#00cdac" }}>
 
                     <Box sx={{ p: 2 }}>
                       <SearchIcon sx={{ mr: 1 }} />
@@ -196,72 +198,45 @@ const Search = ({
                       />
                     </Box>
 
-                    <TableContainer sx={{ maxHeight: 440 }}>
+                    <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
                       <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                           <TableRow>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            >      
                                 S.No.
-                              </h1>
                             </TableCell>
 
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            > 
+                              
                                 Enrollment Status
-                              </h1>
+                             
                             </TableCell>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            > 
                                 Registration No
-                              </h1>
+                             
                             </TableCell>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
+                              style={{ backgroundColor: "#e6ecf0" }}
                             >
                             </TableCell>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                         
                                 // /////////////for sorting name//////////////////
                                 onClick={() => handleSort("name")}
                               >
@@ -269,84 +244,48 @@ const Search = ({
                                 {sortBy === "name" && (
                                   <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
                                 )}
-                              </h1>
+                     
                             </TableCell>
-
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            > 
                                 Father's Name
-                              </h1>
+                          
                             </TableCell>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            > 
                                 Branch
-                              </h1>
+                          
                             </TableCell>
 
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black",minWidth:"250px"   }}
+                            > 
                                 Course Name
-                              </h1>
+                             
                             </TableCell>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            > 
                                 College Name
-                              </h1>
+                            
                             </TableCell>
                             <TableCell
                               align="left"
-                              style={{ backgroundColor: "#004e92" }}
-                            >
-                              <h1
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "bolder",
-                                  color: "white",
-                                  fontFamily: "-moz-initial",
-                                }}
-                              >
-                                Edit
-                              </h1>
+                              style={{ backgroundColor: "#e6ecf0",fontWeight: "bold",
+                              color: "black"   }}
+                            > 
+                              Generate Enrollement
+                 
                             </TableCell>
                           </TableRow>
                         </TableHead>
@@ -359,7 +298,7 @@ const Search = ({
                  
                               <TableCell align="center">
                                 {/* <Button variant="danger">Not generated</Button> */}
-                                {student.IsEnrollGenerated?<img src={closebutton} alt="" height="40px" width="40px" /> : "true"}
+                              <span style={{color:"red",fontWeight:"bold"}}> {student.IsEnrollGenerated?<img src={closebutton} alt="" height="40px" width="40px" /> : "Not Generatd"}</span> 
                                 
                               </TableCell>
                               <TableCell align="center">
@@ -368,33 +307,27 @@ const Search = ({
                               <TableCell align="center">
 
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center"  style={{ color: '#6a040f', fontWeight: 'bold' }}>
                                 {student.name}
                               </TableCell>
                               <TableCell align="center">{student.fathersname
                               }</TableCell>
                               <TableCell align="center">{student.courseBranch}</TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center"  style={{ color: '#6930c3', fontWeight: 'bold' }}>
                                 {student.courseName}
                               </TableCell>
-                              <TableCell align="center">
+                              <TableCell align="center" style={{width:"250px"}}>
                                 {student.assignedCollege}
                               </TableCell>
                               <TableCell align="center">
-                                {/* <Button
-                            variant="contained" color="success"
-                            onClick={() => handleClick()}
-                            disabled={enrollmentGenerated}
-                          >
-                            Generate Enrollment
-                          </Button> */}
+                            
                                 <Button
                                   variant="contained"
                                   color="success"
                                   onClick={() => handleClick(student._id)} // Pass student._id as an argument
                                 // disabled={enrollmentGenerated}
                                 >
-                                  Generate Enrollment
+                                  Generate
                                 </Button>
 
                               </TableCell>
@@ -416,7 +349,7 @@ const Search = ({
                       onRowsPerPageChange={handleChangeRowsPerPage}
                     />
 
-                  </Paper>
+</Container>
                 </CardContent>)}
               <br />
             </Box>

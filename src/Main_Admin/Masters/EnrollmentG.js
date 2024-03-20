@@ -31,6 +31,7 @@ function EnrollementG() {
         margin-top: 20px;
         width: 100%; /* Adjusted width */
         margin-left:75px;
+        height:92%;
       }
 
       .header {

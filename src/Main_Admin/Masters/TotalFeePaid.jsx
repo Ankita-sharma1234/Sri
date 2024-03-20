@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Button ,CircularProgress} from "@mui/material"
+import { Button, CircularProgress } from "@mui/material"
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TableCell, Box } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import SearchIcon from "@mui/icons-material/Search";
+import * as  XLSX from 'xlsx'; 
 import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
 
 const theme = createTheme({
@@ -32,12 +33,27 @@ function TotalFeePaid() {
   const [studentdata, setStudentData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
   const [filteredData, setFilteredData] = useState([]);
- const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+
+  const Excel = studentdata.map(student =>({
+    EnrollmentNumber: student.IsEnrollGenerated,
+    Random_Id: student.randomId,
+    Random_Password: student.randomPassword,
+    Name: student.name,
+    Fathers_Name: student.fathersname,
+    Mothers_Name: student.mothersname,
+    Email: student.email,
+    Mobile: student.mobile,
+    Course_Type: student.courseType,
+    Course_Name: student.courseName,
+    Branch: student.courseBranch
+  }))
 
   useEffect(() => {
     const fetchData = async () => {
       try {
- setLoading(true)
+        //  setLoading(true)
         const response = await fetch(
           `https://sssutms.ac.in/apitest/admin/students/paidlist`
         );
@@ -47,7 +63,7 @@ function TotalFeePaid() {
 
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally{
+      } finally {
         setLoading(false)
       }
     };
@@ -82,6 +98,13 @@ function TotalFeePaid() {
     setSearchQuery(e.target.value)
   }
 
+  ///////////////////////////export data to excel//////////////////
+  const exportToExcel=()=>{
+    const worksheet = XLSX.utils.json_to_sheet(Excel)
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet,'Enrolled Student')
+    XLSX.writeFile(workbook,"enrolled_student.xlsx")
+  }
 
 
 
@@ -117,310 +140,329 @@ function TotalFeePaid() {
     <>
       <ThemeProvider theme={theme}>
         <AdminDashboard />
-        <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "85px" }}>
-        {loading ? ( <CircularProgress color="success" style={{marginTop:"80px",marginLeft:"50%"}} />):(
-          <CardContent>
-            <Paper sx={{ width: "100%", overflow: "auto" }}>
-              <Box sx={{ p: 2 }}>
-                <SearchIcon sx={{ mr: 1 }} />
-                <input
-                  type="text"
-                  placeholder="Search  by ID or Name"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-              </Box>
-              <TableContainer sx={{ maxHeight: "430px" }}>
-                <Table stickyHeader aria-label="sticky table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
+        <Box sx={{ width: "auto", marginLeft: "5%", marginTop: "65px",overflowY:"auto"}}>
+          {loading ? (<CircularProgress color="success" style={{ marginTop: "80px", marginLeft: "50%" }} />) : (
+         <CardContent>
+          <Button style={{float:"right",marginRight:"10px"}} variant="outlined" onClick={exportToExcel}>Export to Excel</Button>
+              <Paper sx={{ width: "100%", overflow: "auto",height:"80%" }}>
+                <Box sx={{ p: 2 }}>
+                  <SearchIcon sx={{ mr: 1 }} />
+                  <input
+                    type="text"
+                    placeholder="Search  by ID or Name"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                </Box>
+                <TableContainer sx={{ maxHeight: "400px" }}>
+                  <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
                         >
-                          S.No.
-                        </h1>
-                      </TableCell>
-
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Enrollment Status
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          AdmissionSession
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Registration ID
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                            width: "100px"
-                          }}
-                        >
-                          Password
-                        </h1>
-                      </TableCell>
-
-                      <TableCell
-                        align="center"
-                        style={{
-                          backgroundColor: "#004e92", color: 'white', minWidth: '200px', position: "sticky",
-                          top: 0,
-                          zIndex: 1,
-                        }}
-                        // /////////////for sorting name//////////////////
-                        onClick={() => handleSort("name")}
-                      >
-
-                        <h5>
-                          <b>Student Name</b>
-                          {/* /////////////name sort////////////////////////// */}
-                          {sortBy === "name" && (
-                            <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
-                          )}
-                        </h5>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                            width: "150px"
-                          }}
-                        >
-                          Father's Name
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Mother's Name
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Email
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                            width: "100px"
-                          }}
-                        >
-                          Mobile No.
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Course Type
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                            width: "200px"
-                          }}
-                        >
-                          Course Name
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                            width: "200px"
-                          }}
-                        >
-                          Course Branch
-                        </h1>
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ backgroundColor: "#004e92" }}
-                      >
-                        <h1
-                          style={{
-                            fontSize: "20px",
-                            fontWeight: "bolder",
-                            color: "white",
-                            fontFamily: "-moz-initial",
-                          }}
-                        >
-                          Fee Status
-                        </h1>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {getSortedAndSlicedData().map((student, index) => (
-                      <TableRow key={index}>
-                        <TableCell align="center">{index + 1}</TableCell>
-                        <TableCell align="center">
-                          {student?.IsEnrollGenerated ? <Button variant="success"> Generated</Button> : <Button variant="danger">Not generated</Button>}
-
-                        </TableCell>
-                        <TableCell align="center">
-                          {student?.admissionSession}
-                        </TableCell>
-                        <TableCell align="center">
-                          {student?.randomId}
-                        </TableCell>
-                        <TableCell align="center">
-                          {student?.randomPassword}
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                            }}
+                          >
+                            S.No.
+                          </h1>
                         </TableCell>
 
-                        <TableCell align="center" sx={{ width: "500px" }}>
-                          {student?.name}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                            }}
+                          >
+                            Enrollment Status
+                          </h1>
                         </TableCell>
-                        <TableCell align="center">
-                          {student?.fathersname}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                              <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "100px"
+                            }}
+                          >
+                            Admission Session
+                          </h1>
                         </TableCell>
-                        <TableCell align="center">
-                          {student?.mothersname}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                              <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "100px"
+                            }}
+                          >
+                            Registration ID
+                          </h1>
                         </TableCell>
-                        <TableCell align="center">
-                          {student?.email}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "100px"
+                            }}
+                          >
+                            Password
+                          </h1>
                         </TableCell>
-                        <TableCell align="center">
-                          {student?.mobile}
+
+                        <TableCell
+                          align="center"
+                          style={{
+                            backgroundColor: "#004e92", color: 'white', minWidth: '200px', position: "sticky",
+                            top: 0,
+                            zIndex: 1,
+                          }}
+                          // /////////////for sorting name//////////////////
+                          onClick={() => handleSort("name")}
+                        >
+
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "150px"
+                            }}
+                          >
+                            Student Name
+                            {/* /////////////name sort////////////////////////// */}
+                            {sortBy === "name" && (
+                              <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
+                            )}
+                          </h1>
                         </TableCell>
-                        <TableCell align="center" >
-                          {student?.courseType}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "150px"
+                            }}
+                          >
+                            Father's Name
+                          </h1>
                         </TableCell>
-                        <TableCell align="center" sx={{ width: "500px" }}>
-                          {student?.courseName}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                         
+                                <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "150px"
+                            }}
+                          >
+                            Mother's Name
+                          </h1>
                         </TableCell>
-                        <TableCell align="center" sx={{ width: "500px" }}>
-                          {student?.courseBranch}
+                        <TableCell
+                          align="center"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                        
+                                <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "100px"
+                            }}
+                          >
+                            Email
+                          </h1>
                         </TableCell>
-                        <TableCell align="center" style={{ fontSize: "20px", color: "green", font: "bold" }}>
-                          {student?.isPaid ? "Paid" : "Not Paid"}
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "100px"
+                            }}
+                          >
+                            Mobile No.
+                          </h1>
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                            }}
+                          >
+                            Course Type
+                          </h1>
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "200px"
+                            }}
+                          >
+                            Course Name
+                          </h1>
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                              width: "200px"
+                            }}
+                          >
+                            Course Branch
+                          </h1>
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          style={{ backgroundColor: "#004e92" }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: "18px",
+                              fontWeight: "bolder",
+                              color: "white",
+                              fontFamily: "-moz-initial",
+                            }}
+                          >
+                            Fee Status
+                          </h1>
                         </TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <TablePagination
-                rowsPerPageOptions={[5, 25, 100]}
-                component="div"
-                count={filteredData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
+                    </TableHead>
+                    <TableBody>
+                      {getSortedAndSlicedData().map((student, index) => (
+                        <TableRow key={index}>
+                          <TableCell align="center">{index + 1}</TableCell>
+                          <TableCell align="center">
+                            {student?.IsEnrollGenerated ? <Button variant="contained" color="success"> Generated</Button> : <Button variant="contained" color="error">Not Genrt</Button>}
 
-            </Paper>
-          </CardContent>
-        )}
-         
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.admissionSession}
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.randomId}
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.randomPassword}
+                          </TableCell>
+
+                          <TableCell align="center" sx={{ width: "500px", color: '#6a040f', fontWeight: 'bold' }}>
+                            {student?.name}
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.fathersname}
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.mothersname}
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.email}
+                          </TableCell>
+                          <TableCell align="center">
+                            {student?.mobile}
+                          </TableCell>
+                          <TableCell align="center" >
+                            {student?.courseType}
+                          </TableCell>
+                          <TableCell align="center" sx={{ width: "500px" }}>
+                            {student?.courseName === 'BACHELOR OF AYURVEDIC MEDICINE AND SURGERY' ? (
+                              <span style={{ color: '#1f487e', fontWeight: 'bold' }}>{student.courseName}</span>
+                            ) : (
+                              <span style={{ color: '#f77f00', fontWeight: 'bold' }}>{student.courseName}</span>
+                            )}
+                          </TableCell>
+                          <TableCell align="center" sx={{ width: "500px" }}>
+                            {student?.courseBranch}
+                          </TableCell>
+                          <TableCell align="center" style={{ fontSize: "15px", color: "green", fontWeight: "bold" }}>
+                            {student?.isPaid ? "Paid" : "Not Paid"}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={[5, 25, 100]}
+                  component="div"
+                  count={filteredData.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+
+              </Paper>
+              </CardContent>
+          )}
+
           <br></br>
         </Box>
       </ThemeProvider>

@@ -14,6 +14,7 @@ import CardContent from "@mui/material/CardContent";
 import swal from "sweetalert";
 import SearchIcon from "@mui/icons-material/Search";
 import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
+import *  as XLSX from 'xlsx';
 
 const theme = createTheme({
   typography: {
@@ -34,12 +35,24 @@ function
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
-  // const { session, courseType, course, branch, college } = useParams();
-  // // console.log(session, courseType, course, branch, college, "data from query");
+const Excel = studentdata.map(student =>({
+  EnrollmentNumber: student.IsEnrollGenerated,
+  Random_Id: student.randomId,
+  Random_Password: student.randomPassword,
+  Name: student.name,
+  Fathers_Name: student.fathersname,
+  Mothers_Name: student.mothersname,
+  Email: student.email,
+  Mobile: student.mobile,
+  Course_Type: student.courseType,
+  Course: student.courseName,
+  Branch: student.courseBranch
+}))
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
+        // setLoading(true)
         const response = await fetch(
           `https://sssutms.ac.in/apitest/admin/students/enrolledlist`
         );
@@ -112,17 +125,27 @@ function
     setSearchQuery(e.target.value)
   }
 
-
+/////////////////////export data to excel//////////////
+const  exportToExcel =()=>{
+  const worksheet = XLSX.utils.json_to_sheet(Excel)
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet,'Enrolled Student')
+  XLSX.writeFile(workbook,"enrolled_students.xlsx")
+}
 
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <AdminDashboard />
-        <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "80px" }}>
-        {loading ? ( <CircularProgress color="success" style={{marginTop:"80px",marginLeft:"50%"}} />):(
+    <ThemeProvider theme={theme}>
+      <AdminDashboard />
+
+      <Box sx={{ width: "auto", marginLeft: "5%", marginTop: "75px", height: "auto" }}>
+        {loading ? (
+          <CircularProgress color="success" style={{ marginTop: "80px", marginLeft: "50%" }} />
+        ) : (
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
+              <Button style={{float:"right",marginRight:"10px"}} variant="outlined"  onClick={exportToExcel}>Export to Excel</Button>
               <Box sx={{ p: 2 }}>
                 <SearchIcon sx={{ mr: 1 }} />
                 <input
@@ -133,7 +156,7 @@ function
                   onChange={handleSearchChange}
                 />
               </Box>
-              <TableContainer sx={{ maxHeight: "430px" }}>
+              <TableContainer sx={{ maxHeight: "400px" }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
                     <TableRow>
@@ -144,7 +167,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -160,7 +183,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -175,7 +198,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -191,7 +214,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -213,13 +236,20 @@ function
                         onClick={() => handleSort("name")}
                       >
 
-                        <h5>
-                          <b>Student Name</b>
+                        <h1
+                         style={{
+                          fontSize: "18px",
+                          fontWeight: "bolder",
+                          color: "white",
+                          fontFamily: "-moz-initial",
+                        }}
+                        >
+                       Student Name
                           {/* /////////////name sort////////////////////////// */}
                           {sortBy === "name" && (
                             <span>{sortOrder === "asc" ? " ↑" : " ↓"}</span>
                           )}
-                        </h5>
+                        </h1>
                       </TableCell>
 
                       <TableCell
@@ -228,7 +258,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -244,7 +274,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -259,7 +289,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -274,7 +304,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -290,7 +320,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -305,7 +335,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -321,7 +351,7 @@ function
                       >
                         <h1
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "bolder",
                             color: "white",
                             fontFamily: "-moz-initial",
@@ -338,7 +368,7 @@ function
                       <TableRow key={index}>
                         <TableCell align="center">{index + 1}</TableCell>
                         <TableCell align="center">
-                          {student?.IsEnrollGenerated ? <Button variant="success"> Generated</Button>:<Button variant="danger">Not generated</Button> }
+                          {student?.IsEnrollGenerated ? <Button variant="contained" color="success"> Generated</Button>:<Button variant="contained" color="error" >Not generated</Button> }
                           
                         </TableCell>
                         <TableCell align="center">
@@ -396,7 +426,6 @@ function
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
-
             </Paper>
           </CardContent>
    )}

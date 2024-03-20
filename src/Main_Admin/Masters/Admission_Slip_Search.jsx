@@ -1,29 +1,35 @@
 import React, { useState } from "react";
-import { FormControl} from "@mui/material";
+import { FormControl } from "@mui/material";
 import { Button, Row, Col, Container } from "react-bootstrap";
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AdminDashboard from './Admin_Dashboard/AdminDashboard';
+import Admission_Slip from "./Admission_Slip";
 
 function Admission_Slip_Search() {
-  const [session, setSession] = useState(''); 
-  const [courseType, setCourseType] = useState(''); 
-  const [course, setCourse] = useState(''); 
-  const [branch, setBranch] = useState(''); 
-  const [college, setCollege] = useState(''); 
- 
-  
+  const [session, setSession] = useState('');
+  const [courseType, setCourseType] = useState('');
+  const [course, setCourse] = useState('');
+  const [branch, setBranch] = useState('');
+  const [college, setCollege] = useState('');
+  const [showTable, setShowtable] = useState(false)
+
+  const handlSearch = () => {
+    setShowtable(true)
+  }
 
   return (
     <>
-      <AdminDashboard/>
+      <AdminDashboard />
       <style>
         {`
-          .shadow-box {
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 20px;
-            margin-right:600px;
+             .shadow-box {
+              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+              border-radius: 10px;
+              padding: 10px;
+              margin-top: 20px;
+              width: 100%; /* Adjusted width */
+              margin-left:75px;
+              height:92%;
           }
 
           .header {
@@ -96,9 +102,11 @@ function Admission_Slip_Search() {
         `}
       </style>
 
-      <Container fluid style={{ paddingTop: '80px' }}>
+      <div style={{ display: "flex" }}>
+        <div style={{width: '25%'}}>
+      <Container fluid style={{ paddingTop: '60px' }}>
         <Row>
-          <Col xs={12} sm={12} md={10} lg={9} xl={8} className="custom-laptop-style">
+          <Col>
             <div className="shadow-box">
               <div className="header">Admission Slip</div>
               <div className="scroll-container" style={{ height: "460px" }}>
@@ -122,15 +130,15 @@ function Admission_Slip_Search() {
                         required={true}
                         onChange={(e) => setSession(e.target.value)}
                         autoFocus={true}
-                    
+
                       >
-                        
+
                         <option value="option1"> Select</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
                       </select>
                     </FormControl>
-                  </Row>    
+                  </Row>
                   <br></br>
                   <Row>
                     <FormControl>
@@ -155,7 +163,7 @@ function Admission_Slip_Search() {
 
                         <option value="option1"> Select</option>
                         <option value="UG">UG</option>
-                       
+
                       </select>
                     </FormControl>
                   </Row>
@@ -247,29 +255,46 @@ function Admission_Slip_Search() {
                     </FormControl>
                   </Row>
                   <br></br>
-                 
+
 
 
                   <br></br>
-                  <Link to={`/admissionslip/${session}/${courseType}/${course}/${branch}/${college}`} >
-                    <Button
-                      style={{
-                        marginLeft: "50px",
-                        backgroundColor: "#004e92",
-                        width: "110px",
-                        height: "40px",
-                        padding:"5px"
-                      }}
-                    >
-                      Search
-                    </Button>
-                  </Link>
+
+                  <Button
+                    style={{
+                      marginLeft: "50px",
+                      backgroundColor: "#004e92",
+                      width: "110px",
+                      height: "40px",
+                      padding: "5px"
+                    }}
+                    onClick={handlSearch}
+                  >
+                    Search
+                  </Button>
+
                 </form>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
+      </div>
+      <div style={{ width: '83%' }}>
+
+        {showTable && (
+          <div>
+            <Admission_Slip
+              session={session}
+              courseType={courseType}
+              course={course}
+              branch={branch}
+              college={college}
+            />
+          </div>
+        )}
+      </div>
+      </div>
     </>
   );
 }

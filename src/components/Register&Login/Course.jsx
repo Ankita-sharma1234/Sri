@@ -1,250 +1,107 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Container } from "react-bootstrap";
-import { useFormik } from "formik";
+import axios from 'axios';
 import EligibilityForm from "./ElegibilyForm";
 import { Box, Stack, FormControl, FormLabel, Select } from "@chakra-ui/react";
-
-import * as Yup from "yup";
 import OnlyHeader from "../../AdminComponent/OnlyHeader";
 
-const CourseSchema = Yup.object().shape({
-  selectedType: Yup.string().min(2).max(10).required("Course Type is required"),
-  selectedCourse: Yup.string().required("Course is required"),
-  selectedBranch: Yup.string().required("Branch is required"),
-});
+function Course() {
+  const [courseTypes, setCourseTypes] = useState([]);
+  const [courseNames, setCourseNames] = useState([]);
+  const [branchNames, setBranchNames] = useState([]);
+  const [selectedCourseType, setSelectedCourseType] = useState('');
+  const [selectedCourseName, setSelectedCourseName] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('');
+  const [eligible, setEligible] = useState(false);
+  const [eligibilityGradPer, setEligibilityGradPer] = useState(null);
 
-const initialValues = {
-  selectedType: "",
-  selectedCourse: "",
-  selectedBranch: "",
-};
-
-const Course = () => {
-  const {errors, touched } = useFormik({
-    initialValues: initialValues,
-    validationSchema: CourseSchema,
-    onSubmit: (values) => {
-      handleSearch();
-    },
-  });
-  ///////////course/////
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedCourse, setSelectedCourse] = useState("");
-  const [selectedBranch, setSelectedBranch] = useState("");
-  const [eligible, setEligible] = useState("");
-  const [eligibilityGradPer, setEligibilityGradPer] = useState("");
-  const [errors2, setErrors2] = useState({
-    selectedType: "",
-    selectedCourse: "",
-    selectedBranch: "",
-  });
-
-  const courseData = {
-    UG: {
-      courses: [
-        "BACHELOR OF HOMEOPATHY MEDICINE AND SURGERY",
-        "BACHELOR OF AYURVEDIC MEDICINE AND SURGERY",
-        "BACHELOR OF ENGINEERING",
-        "BACHELOR OF ARCHITECTURE",
-        "BACHELOR OF ENGINEERING(Lateral)",
-        "BACHELOR OF DESIGN",
-        "BACHELOR OF PHARMACY",
-        "BACHELOR OF EDUCATION",
-        "BACHELOR OF ARTS",
-        "BACHELOR OF SCIENCE",
-        "BACHELOR OF COMMERCE",
-        "BSC(Nursing) SEMESTER",
-        "BACHELOR OF DESIGN(Lateral)",
-      ],
-      branches: {
-        "BACHELOR OF ENGINEERING": [
-          "AERONAUTICAL ENGINEERING",
-          "CHEMICAL ENGINEERING",
-          "CIVIL ENGINEERING",
-          "COMPUTER SCIENCE AND ENGINEERING",
-          "ELECTRICAL AND ELECTRONICS ENGINEERING",
-          "ELECTRICAL ENGINEERING",
-          "ELECTRONICS AND COMMUNICATION ENGINEERING",
-          "ELECTRONICS AND INSTRUMENTATION ENGINEERING",
-          "MECHANICAL ENGINEERING",
-          "MINING ENGINEERING",
-        ],
-        "BSC(Nursing) SEMESTER": ["Nursing"],
-        "BACHELOR OF PHARMACY":["BACHELOR OF PHARMACY"],
-        "BACHELOR OF ARCHITECTURE": ["ARCHITECTURE"],
-        "BACHELOR OF SCIENCE":["BACHELOR OF SCIENCE"],
-        "BACHELOR OF HOMEOPATHY MEDICINE AND SURGERY": ["HOMEOPATHY"],
-        "BACHELOR OF COMMERCE":["BACHELOR OF COMMERCE"],
-        "BACHELOR OF ENGINEERING(Lateral)": [
-          "AERONAUTICAL ENGINEERING",
-          "CHEMICAL ENGINEERING",
-          "CIVIL ENGINEERING",
-          "COMPUTER SCIENCE AND ENGINEERING",
-          "ELECTRICAL AND ELECTRONICS ENGINEERING",
-          "ELECTRICAL ENGINEERING",
-          "ELECTRONICS AND COMMUNICATION ENGINEERING",
-          "ELECTRONICS AND INSTRUMENTATION ENGINEERING",
-          "MECHANICAL ENGINEERING",
-          "MINING ENGINEERING",
-        ],
-        "BACHELOR OF EDUCATION":[ "BACHELOR OF EDUCATION"],
-        "BACHELOR OF DESIGN": [
-          "INDUSTRIAL DESIGN",
-          "COMMUNICATION DESIGN",
-          "TEXTILE DESIGN",
-          "INTERIOR DESIGN",
-          "PRODUCT DESIGN",
-        ],
-        "BACHELOR OF ARTS":["BACHELOR OF ARTS"],
-        "BACHELOR OF DESIGN(Lateral)": ["INTERIOR DESIGN"],
-        "BACHELOR OF AYURVEDIC MEDICINE AND SURGERY": [
-          "AYURVEDIC MEDICINE AND SURGERY",
-        ],
-      },
-    },
-    PG: {
-      courses: [
-        "MASTER OF TECHNOLOGY",
-        "MASTER OF PHARMACY",
-        "MASTER OF ARTS",
-        "MASTER OF SCIENCE",
-        "MASTER OF COMMERCE",
-        "MASTER OF PHYSIOTHERAPHY (ORTHOPAEDIC)",
-        "MASTER OF MEDICAL LAB TECHNOLOGY(MMLT)",
-      ],
-      branches: {
-        "MASTER OF TECHNOLOGY": [
-          "COMPUTER SCIENCE AND ENGINEERING",
-          "COMPUTER TECHNOLOGY AND APPLICATION",
-          "INFORMATION TECHNOLOGY",
-          "SOFTWARE ENGINEERING",
-          "DIGITAL COMMUNICATION",
-          "ELECTRICAL POWER SYSTEM",
-          "INDUSTRIAL DESIGN",
-          "POWER ELECTRONICS",
-          "STRUCTURAL DESIGN",
-          "THERMAL ENGINEERING",
-          "VLSI",
-        ],
-        "MASTER OF PHARMACY": ["PHARMACEUTICS", "PHARMACOLOGY"],
-        "MASTER OF PHYSIOTHERAPHY (ORTHOPAEDIC)": ["ORTHOPAEDIC"],
-        "MASTER OF MEDICAL LAB TECHNOLOGY(MMLT)": ["HAEMOTOLOGY"],
-        "MASTER OF ARTS":["ARTS"],
-        "MASTER OF SCIENCE":[ "MASTER OF SCIENCE"],
-        "MASTER OF COMMERCE":["MASTER OF COMMERCE"],
-      },
-    },
-    Diploma: {
-      courses: [
-        "DIPLOMA PHARMACY",
-        "DIPLOMA BLOOD TRANSFUSION",
-        "DIPLOMA DIALYSIS TECHNICIAN",
-        "DIPLOMA PHARMACY (AYURVED)",
-        "DIPLOMA HUMAN NUTRITION",
-        "DIPLOMA MEDICAL LAB AND TECHNICIAN",
-        "DIPLOMA X-RAY RADIOGRAPHER TECHNICIAN",
-        "DIPLOMA YOGA",
-        "DIPLOMA ENGINEERING",
-        "DIPLOMA PHARMACY (HOMEOPATHY)",
-        "DIPLOMA PARAMEDICAL OPTHALMIC ASSISTENT",
-        "DIPLOMA ENGINEERING  (Lateral)",
-        "DIPLOMA IN PHARMACY",
-      ],
-      branches: {
-        "DIPLOMA IN PHARMACY":["DIPLOMA IN PHARMACY",],
-        "DIPLOMA PHARMACY": ["PHARMACY"],
-        "DIPLOMA BLOOD TRANSFUSION": ["BLOOD TRANSFUSION"],
-        "DIPLOMA DIALYSIS TECHNICIAN": ["DIALYSIS TECHNICIAN"],
-        "DIPLOMA PHARMACY (AYURVED)": ["AYURVED"],
-        "DIPLOMA HUMAN NUTRITION": ["HUMAN NUTRITION"],
-        "DIPLOMA MEDICAL LAB AND TECHNICIAN": ["HUMAN NUTRITION"],
-        "DIPLOMA X-RAY RADIOGRAPHER TECHNICIAN": [
-          "X-RAY RADIOGRAPHER TECHNICIAN",
-        ],
-        "DIPLOMA YOGA": ["YOGA"],
-        "DIPLOMA ENGINEERING": [
-          "CHEMICAL ENGINEERING",
-          "CIVIL ENGINEERING",
-          "COMPUTER SCIENCE AND ENGINEERING",
-          "MECHANICAL ENGINEERING",
-          "ELECTRICAL ENGINEERING",
-        ],
-        "DIPLOMA PHARMACY (HOMEOPATHY)": ["HOMEOPATHIC"],
-        "DIPLOMA PARAMEDICAL OPTHALMIC ASSISTENT": ["OPTHALMIC"],
-        "DIPLOMA ENGINEERING  (Lateral)": [
-          "CHEMICAL ENGINEERING",
-          "CIVIL ENGINEERING",
-          "COMPUTER SCIENCE AND ENGINEERING",
-          "MECHANICAL ENGINEERING",
-          "ELECTRICAL ENGINEERING",
-        ],
-      },
-    },
-    PG_DIPLOMA: {
-      courses: ["POST GRADUATION DIPLOMA IN COMPUTER APPLICATION"],
-      branches: {
-        "POST GRADUATION DIPLOMA IN COMPUTER APPLICATION": [
-          "COMPUTER APPLICATION",
-        ],
-      },
-    },
-  };
-
-  const handleTypeChange = (e) => {
-    setSelectedType(e.target.value);
-    setSelectedCourse("");
-    setSelectedBranch("");
-  };
-
-  const handleCourseChange = (e) => {
-    const courseValue = e.target.value;
-    setSelectedCourse(courseValue);
-    setErrors2((prevErrors) => ({
-      ...prevErrors,
-      selectedCourse: courseValue ? "" : "Course is required",
-    }));
-    setSelectedBranch("");
-  };
-
-  const handleBranchChange = (e) => {
-    setSelectedBranch(e.target.value);
-  };
-
-  ///////////////////////////
-  const handleSearch = () => {
-    if (!selectedCourse) {
-      setErrors2((prevErrors) => ({
-        ...prevErrors,
-        selectedCourse: "Course is required",
-      }));
-      return;
-    }
-
-    fetch("https://sssutms.ac.in/apitest/geteligibility", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        courseType: selectedType,
-        courseName: selectedCourse,
-        courseBranch: selectedBranch,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setEligible(data);
-        setEligibilityGradPer(data.eligibilityGradPer);
-
-        // console.log("Eligibility data:", data.eligibilityGradPer);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+  const handleSearch = async () => {
+    try {
+      const response = await axios.post('http://localhost:7786/entrycourse2', {
+        admissionSession: "2024",
+        courseType: selectedCourseType,
+        courseNames: [
+          {
+            courseName: selectedCourseName,
+            branches: [{ branchName: selectedBranch }]
+          }
+        ]
       });
+      console.log("Course saved:", response.data);
+
+
+      const eligibilityResponse = await fetch("http://localhost:7786/geteligibility", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courseType: selectedCourseType,
+          courseName: selectedCourseName,
+          courseBranch: selectedBranch,
+        }),
+      });
+      const data = await eligibilityResponse.json();
+      console.log("Eligibility data:", data.eligibilityGradPer);
+      setEligibilityGradPer(data.eligibilityGradPer);
+      setEligible(true);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
-  const isValid =
-    !errors2.selectedType && !errors2.selectedCourse && selectedBranch !== "";
+
+  useEffect(() => {
+    console.log('Fetching course types...');
+    axios.post('http://localhost:7786/entrycourse2')
+      .then(response => {
+        console.log('Course types response:', response.data);
+        if (response.data.courseType) {
+          setCourseTypes([response.data.courseType]);
+        } else {
+          console.error('Invalid data format for course types:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching course types:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+
+    if (selectedCourseType) {
+      axios.post('http://localhost:7786/entrycourse2', { courseType: selectedCourseType })
+        .then(response => {
+          console.log('Course names response:', response.data);
+          if (Array.isArray(response.data.courseNames)) {
+            setCourseNames(response.data.courseNames);
+          } else {
+            console.error('Invalid data format for course names:', response.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching course names:', error);
+        });
+    }
+  }, [selectedCourseType]);
+
+  useEffect(() => {
+
+    if (selectedCourseName) {
+      axios.post('http://localhost:7786/entrycourse2', { courseName: selectedCourseName })
+        .then(response => {
+          console.log('Branch names response:', response.data);
+          if (Array.isArray(response.data.courseNames[0].branches)) {
+            setBranchNames(response.data.courseNames[0].branches.map(branch => branch.branchName));
+          } else {
+            console.error('Invalid data format for branch names:', response.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching branch names:', error);
+        });
+    }
+  }, [selectedCourseName]);
 
   return (
     <>
@@ -265,6 +122,7 @@ const Course = () => {
             Select Course
           </Box>
           <Stack direction={["column", "row"]} spacing={4} mt={4}>
+
             <FormControl flex="1">
               <FormLabel>
                 <b>
@@ -272,84 +130,61 @@ const Course = () => {
                   <span style={{ color: "red" }}> * </span>
                 </b>
               </FormLabel>
-              <Select value={selectedType} onChange={handleTypeChange}>
-                <option value="">Select Type</option>
-                {Object.keys(courseData).map((type) => (
-                  <option key={type} value={type} >
-                    {type}
-                  </option>
+              <Select id="courseType" onChange={e => setSelectedCourseType(e.target.value)}>
+                <option value="">Select</option>
+                {courseTypes.map(courseType => (
+                  <option key={courseType} value={courseType}>{courseType}</option>
                 ))}
               </Select>
-              {errors.selectedType && touched.selectedType ? (
-                <p className="error">{errors.selectedType}</p>
-              ) : null}
             </FormControl>
+
 
             <FormControl flex="1">
               <FormLabel>
                 <b>Course</b>
                 <span style={{ color: "red" }}> * </span>
               </FormLabel>
-              <Select value={selectedCourse} onChange={handleCourseChange}>
-                <option value=""> Select Course </option>
-                {selectedType &&
-                  courseData[selectedType].courses.map((course) => (
-                    <option
-                      key={course}
-                      value={course}
-                      disabled={
-                        [
-                          
-                          "BSC(Nursing) SEMESTER",
-                          "BACHELOR OF DESIGN(Lateral)",
-                        ].indexOf(course) !== -1
-                      }
-                    >
-                      {course}
-                    </option>
-                  ))}
+              <Select id="courseName" onChange={e => setSelectedCourseName(e.target.value)}>
+                <option value="">Select</option>
+                {Array.isArray(courseNames) ? (
+                  courseNames.map(course => (
+                    <option key={course._id} value={course.courseName}>{course.courseName}</option>
+                  ))
+                ) : (
+                  <option value="">No options available</option>
+                )}
               </Select>
-              {errors.selectedCourse && touched.selectedCourse ? (
-                <p className="error">{errors.selectedCourse}</p>
-              ) : null}
             </FormControl>
+
 
             <FormControl flex="1">
               <FormLabel>
                 <b>Branch</b>
                 <span style={{ color: "red" }}> * </span>
               </FormLabel>
-              <Select value={selectedBranch} onChange={handleBranchChange}>
-                <option value="">Select Branch</option>
-                {selectedCourse &&
-                  courseData[selectedType].branches[selectedCourse].map(
-                    (branch) => (
-                      <option key={branch} value={branch}>
-                        {branch}
-                      </option>
-                    )
-                  )}
+              <Select id="branch" onChange={e => setSelectedBranch(e.target.value)}>
+                <option value="">Select</option>
+                {branchNames.map(branchName => (
+                  <option key={branchName} value={branchName}>{branchName}</option>
+                ))}
               </Select>
-              {errors.selectedBranch && touched.selectedBranch ? (
-                <p className="error">{errors.selectedBranch}</p>
-              ) : null}
             </FormControl>
           </Stack>
+
           <Button
-           style={{
-            margin: "20px auto",
-            display: "block",
-            backgroundImage: "linear-gradient(96deg, #ff5f6d , #ffc371 100%)",
-            color: "white",
-            width: "w-20 w-md-auto",
-            border: "none",
-            borderRadius: "5px",
-            fontSize: "15px", // Adjusted fontSize
-            padding: "10px 20px", // Adjusted padding
-            
-          }}
+            style={{
+              margin: "20px auto",
+              display: "block",
+              backgroundImage: "linear-gradient(96deg, #ff5f6d , #ffc371 100%)",
+              color: "white",
+              width: "w-20 w-md-auto",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "15px",
+              padding: "10px 20px",
+            }}
             onClick={handleSearch}
-            disabled={!selectedCourse || !isValid}
+            disabled={!selectedBranch}
           >
             Search
           </Button>
@@ -359,13 +194,13 @@ const Course = () => {
         <EligibilityForm
           eligible={eligible}
           eligibilityGradPer={eligibilityGradPer}
-          courseType={selectedType}
-          courseName={selectedCourse}
+          courseType={selectedCourseType}
+          courseName={selectedCourseName}
           courseBranch={selectedBranch}
         />
       )}
     </>
   );
-};
+}
 
 export default Course;

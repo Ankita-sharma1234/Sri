@@ -26,7 +26,7 @@ console.log(showTable,"showtableeeee")
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 10px;
-            margin-top: 5px;
+            margin-top: 7px;
             width: 100%; /* Adjusted width */
             margin-left:75px;
           }
@@ -101,15 +101,15 @@ console.log(showTable,"showtableeeee")
         `}
       </style>
 
-      <div style={{ display: "flex",backgroundColor:"red" }}>
+      <div style={{ display: "flex" }}>
       <div style={{ width: '25%' }}>
-          <Container fluid style={{ paddingTop: '80px' }}>
+          <Container fluid style={{ paddingTop: '60px' }}>
             <Row>
               <Col  >
                 <div className="shadow-box">
                   <div className="header">Enrolled Student List</div>
                   <div className="scroll-container" style={{ height: "441px" }}>
-                    <form style={{ padding: "20px" }}>
+                    <form style={{ padding: "30px" }}>
                       <Row>
                         <FormControl>
                           <label>
@@ -282,8 +282,8 @@ console.log(showTable,"showtableeeee")
             </Row>
           </Container>
         </div>
-        <div style={{ backgroundColor:"" }}>
 
+        <div style={{ width: '83%' }}> 
           {showTable && (
             <div>
               <EnrolledStudent_list

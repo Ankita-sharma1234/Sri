@@ -54,7 +54,7 @@ const AdminUpdtStd_Manually = ({ userData }) => {
       <AdminDashboard />
       <Container className="shadow p-3 bg-body rounded" style={{ width: "90%", backgroundColor: "#00cdac", marginTop: "10%", marginLeft: "5%" }}>
         <TableContainer component={Paper} sx={{ minWidth: 50 }}>
-          <Table sx={{ minWidth: 50 }} aria-label="customized table">
+          <Table stickyHeader sx={{ minWidth: 50 }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell align="left" style={{ backgroundColor: "#e6ecf0", color: "black", fontWeight: "bold" }}>Name</StyledTableCell>

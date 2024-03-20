@@ -18,7 +18,7 @@ import AdminDashboard from "./Admin_Dashboard/AdminDashboard";
 import SearchIcon from '@mui/icons-material/Search';
 import DatePicker from "react-datepicker";
 import * as XLSX from 'xlsx';
-import Button  from "@mui/material/Button"
+import Button from "@mui/material/Button"
 
 
 const theme = createTheme({
@@ -38,20 +38,20 @@ const Adminser = () => {
     EnrollmentNumber: student.enrollmentNumber,
     Name: student.name,
     Fathers_Name: student.fathersname,
-    Email : student.email ,
-    Mobile :student.mobile,
+    Email: student.email,
+    Mobile: student.mobile,
 
 
-    Registered : student?.isRegistered ? "YES" : "NO",
-    Enrolled : student?.isEnrolled ? "Yes" : "No",
-   
-    FEE_PAID : student?.isPaid ? "Yes" : "No",
-    Student_address : student.address ?
+    Registered: student?.isRegistered ? "YES" : "NO",
+    Enrolled: student?.isEnrolled ? "Yes" : "No",
+
+    FEE_PAID: student?.isPaid ? "Yes" : "No",
+    Student_address: student.address ?
       (Object.values(student.address ||
         {}).some(value => value === "") ?
         'Pending' : 'Update')
       : 'Pending',
-    
+
     Academic_details: student.academicDetails &&
 
       Object.keys(student.academicDetails).filter(key => [
@@ -66,7 +66,7 @@ const Adminser = () => {
       ].includes(key)).every(key =>
         student.academicDetails[key] !== "") ? 'Update' : 'Pending',
 
-    Documents : student.Documents ? (
+    Documents: student.Documents ? (
       ['incomeCertificate',
         'otherCertificate', 'postgraduateCertificate',
         'undergraduateCertificate', "migrationCertificate"]
@@ -74,7 +74,7 @@ const Adminser = () => {
           !student.Documents[key] || student.Documents[key].trim() === "")
         ? 'Pending' : 'Updated'
     ) : 'Pending',
-    
+
 
 
 
@@ -160,18 +160,18 @@ const Adminser = () => {
     <ThemeProvider theme={theme}>
       <AdminDashboard />
       <>
-        <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "100px" }}>
+        <Box sx={{ width: "90%", marginLeft: "100px", marginTop: "70px" }}>
           <CardContent>
             <Paper sx={{ width: "100%", overflow: "auto" }}>
-            <Button   style={{ float: "right", marginRight: "10px", marginBottom: "10px" }} onClick={ExportToExcel}>Export to Excel</Button>
+              <Button style={{ float: "right", marginRight: "10px", marginBottom: "10px" }} variant="outlined" onClick={ExportToExcel}>Export to Excel</Button>
 
 
-            <Box style={{ float: "left", marginBottom: "10px" }}>
+              <Box style={{ float: "left", marginBottom: "10px" }}>
 
                 <SearchIcon sx={{ mr: 1 }} />
                 <input
                   type="text"
-                 
+
                   placeholder="Search by ID,Name or Branch"
                   onChange={handleSearchInputChange}
                   value={searchQuery}
@@ -184,7 +184,7 @@ const Adminser = () => {
               ) : (
 
                 <Paper sx={{ width: "100%" }}>
-                  <TableContainer sx={{ maxHeight: "440px" }}>
+                  <TableContainer sx={{ maxHeight: "420px" }}>
                     <Table stickyHeader aria-label="sticky table">
                       <TableHead>
                         <TableRow>
@@ -357,8 +357,7 @@ const Adminser = () => {
                             align="center"
                             style={{
                               backgroundColor: "#004e92", color:
-                                'white', minWidth: '200px'
-                            }}>
+                                'white', minWidth: '250px' }}>
 
                             <h5>
                               <b>Course Name</b>
@@ -368,7 +367,7 @@ const Adminser = () => {
                             align="left"
                             style={{
                               backgroundColor: "#004e92", color:
-                                'white', minWidth: '200px'
+                                'white', minWidth: '250px'
                             }}>
 
                             <h5>
